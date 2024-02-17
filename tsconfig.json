@@ -18,5 +18,5 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["packages/page/src"]
+  "include": ["packages/page/src", "packages/chromator/src", ".eslintrc.json"]
 }

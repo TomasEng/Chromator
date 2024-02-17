@@ -1,5 +1,5 @@
-import { NamedColour } from '../types/NamedColour';
-import { Rgb } from '../types/Rgb';
+import { type NamedColour } from '../types/NamedColour';
+import { type Rgb } from '../types/Rgb';
 
 export const namedColours: { [name in NamedColour]: Rgb } = {
   aliceblue: { red: 240, green: 248, blue: 255 },
@@ -149,5 +149,5 @@ export const namedColours: { [name in NamedColour]: Rgb } = {
   white: { red: 255, green: 255, blue: 255 },
   whitesmoke: { red: 245, green: 245, blue: 245 },
   yellow: { red: 255, green: 255, blue: 0 },
-  yellowgreen: { red: 154, green: 205, blue: 50 },
+  yellowgreen: { red: 154, green: 205, blue: 50 }
 };

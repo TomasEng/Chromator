@@ -6,8 +6,23 @@
     },
     "extends": "standard-with-typescript",
     "parserOptions": {
-        "ecmaVersion": "latest",
+        "parser": "@typescript-eslint/parser",
+        "project": "./tsconfig.json",
         "sourceType": "module"
     },
-    "rules": {}
+    "rules": {
+        "semi": "off",
+        "@typescript-eslint/semi": ["error", "always"],
+        "@typescript-eslint/no-non-null-assertion": "off",
+        "@typescript-eslint/member-delimiter-style": ["error", {
+            "multiline": {
+                "delimiter": "semi",
+                "requireLast": true
+            },
+            "singleline": {
+                "delimiter": "semi",
+                "requireLast": false
+            }
+        }]
+    }
 }

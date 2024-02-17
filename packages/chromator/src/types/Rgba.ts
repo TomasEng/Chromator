@@ -1,5 +1,5 @@
-import { Rgb } from './Rgb';
+import { type Rgb } from './Rgb';
 
 export interface Rgba extends Rgb {
-    alpha: number;
+  alpha: number;
 }

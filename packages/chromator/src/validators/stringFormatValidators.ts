@@ -66,17 +66,17 @@ export const isValidTransparentName = (value: string): boolean => {
   return trimmed === 'transparent';
 };
 
-export const isValidDegreeValue = (value: string) =>
+export const isValidDegreeValue = (value: string): boolean =>
   /^(((([12]?\d{1,2})|(3[012345]\d))(\.\d+)?)|360(\.0+)?|\.\d+)$/.test(value);
 
-export const isValidPercentageValue = (value: string) =>
+export const isValidPercentageValue = (value: string): boolean =>
   /^((((\d{1,2}(\.\d+)?)|(100(\.0+)?)|(\.\d+))%)|0)$/.test(value);
 
-export const isValid255ScaleValue = (value: string) =>
+export const isValid255ScaleValue = (value: string): boolean =>
   /^((((1?\d{1,2})|(2([01234]\d|5[01234])))(\.\d+)?)|255(\.0+)?|\.\d+)$/.test(value);
 
-export const isValidUnitIntervalValue = (value: string) =>
+export const isValidUnitIntervalValue = (value: string): boolean =>
   /^(0|0\.\d+|\.\d+|1(\.0+)?)$/.test(value);
 
-export const isValidUnitIntervalOrPercentageValue = (value: string) =>
+export const isValidUnitIntervalOrPercentageValue = (value: string): boolean =>
   isValidUnitIntervalValue(value) || isValidPercentageValue(value);

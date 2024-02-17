@@ -1,7 +1,7 @@
 import { ColourCodeFormat } from '../enums/ColourCodeFormat';
-import { StringColourFormat } from '../types/StringColourFormat';
+import { type StringColourFormat } from '../types/StringColourFormat';
 
-export const colourFormatRegex: {[key in StringColourFormat]: RegExp } = {
+export const colourFormatRegex: { [key in StringColourFormat]: RegExp } = {
   [ColourCodeFormat.HslString]: /^hsl\s*\(\s*(?<hue>\d*\.?\d*)\s*,\s*(?<saturation>\d*\.?\d*%?)\s*,\s*(?<lightness>\d*\.?\d*%?)\s*\)$/,
   [ColourCodeFormat.HslaString]: /^hsla\s*\(\s*(?<hue>\d*\.?\d*)\s*,\s*(?<saturation>\d*\.?\d*%?)\s*,\s*(?<lightness>\d*\.?\d*%?)\s*,\s*(?<alpha>\d*\.?\d*%?)\s*\)$/,
   [ColourCodeFormat.NamedColour]: /[\w-]+/,
@@ -15,5 +15,5 @@ export const colourFormatRegex: {[key in StringColourFormat]: RegExp } = {
   [ColourCodeFormat.RgbaHexLongWithHash]: /^#[0-9a-fA-F]{8}$/,
   [ColourCodeFormat.RgbaHexLongWithoutHash]: /^[0-9a-fA-F]{8}$/,
   [ColourCodeFormat.RgbaHexShortWithHash]: /^#[0-9a-fA-F]{4}$/,
-  [ColourCodeFormat.RgbaHexShortWithoutHash]: /^[0-9a-fA-F]{4}$/,
+  [ColourCodeFormat.RgbaHexShortWithoutHash]: /^[0-9a-fA-F]{4}$/
 };

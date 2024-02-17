@@ -1,10 +1,10 @@
-import { ColourCode } from '../types/ColourCode';
-import { Rgb } from '../types/Rgb';
-import { Rgba } from '../types/Rgba';
-import { Hsl } from '../types/Hsl';
-import { Hsla } from '../types/Hsla';
-import { Hsv } from '../types/Hsv';
-import { Hsva } from '../types/Hsva';
+import { type ColourCode } from '../types/ColourCode';
+import { type Rgb } from '../types/Rgb';
+import { type Rgba } from '../types/Rgba';
+import { type Hsl } from '../types/Hsl';
+import { type Hsla } from '../types/Hsla';
+import { type Hsv } from '../types/Hsv';
+import { type Hsva } from '../types/Hsva';
 
 export const isRgb = (value: ColourCode): value is Rgb =>
   (value as Rgb).red !== undefined &&

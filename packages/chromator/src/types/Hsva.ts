@@ -1,5 +1,5 @@
-import { Hsv } from './Hsv';
+import { type Hsv } from './Hsv';
 
 export interface Hsva extends Hsv {
-    alpha: number;
+  alpha: number;
 }

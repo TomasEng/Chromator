@@ -1,4 +1,4 @@
-import { NamedColour } from './types/NamedColour';
+import { type NamedColour } from './types/NamedColour';
 import { hslToHsv, hslToRgb, hsvToHsl, hsvToRgb, rgbToHsl, rgbToHsv } from './converters';
 import { testColours } from './test-data/namedColourList';
 
@@ -9,7 +9,7 @@ describe('converters', () => {
       expect(hslToRgb(hsl)).toEqual({
         red: expect.closeTo(rgb.red, 2),
         green: expect.closeTo(rgb.green, 2),
-        blue: expect.closeTo(rgb.blue, 2),
+        blue: expect.closeTo(rgb.blue, 2)
       });
     });
   });
@@ -20,7 +20,7 @@ describe('converters', () => {
       expect(rgbToHsl(rgb)).toEqual({
         hue: expect.closeTo(hsl.hue, 2),
         saturation: expect.closeTo(hsl.saturation, 4),
-        lightness: expect.closeTo(hsl.lightness, 4),
+        lightness: expect.closeTo(hsl.lightness, 4)
       });
     });
   });
@@ -31,7 +31,7 @@ describe('converters', () => {
       expect(hsvToRgb(hsv)).toEqual({
         red: expect.closeTo(rgb.red, 2),
         green: expect.closeTo(rgb.green, 2),
-        blue: expect.closeTo(rgb.blue, 2),
+        blue: expect.closeTo(rgb.blue, 2)
       });
     });
   });
@@ -42,7 +42,7 @@ describe('converters', () => {
       expect(rgbToHsv(rgb)).toEqual({
         hue: expect.closeTo(hsv.hue, 2),
         saturation: expect.closeTo(hsv.saturation, 4),
-        value: expect.closeTo(hsv.value, 4),
+        value: expect.closeTo(hsv.value, 4)
       });
     });
   });
@@ -53,7 +53,7 @@ describe('converters', () => {
       expect(hslToHsv(hsl)).toEqual({
         hue: hsv.hue,
         saturation: expect.closeTo(hsv.saturation, 4),
-        value: expect.closeTo(hsv.value, 4),
+        value: expect.closeTo(hsv.value, 4)
       });
     });
   });
@@ -64,7 +64,7 @@ describe('converters', () => {
       expect(hsvToHsl(hsv)).toEqual({
         hue: hsl.hue,
         saturation: expect.closeTo(hsl.saturation, 4),
-        lightness: expect.closeTo(hsl.lightness, 4),
+        lightness: expect.closeTo(hsl.lightness, 4)
       });
     });
   });

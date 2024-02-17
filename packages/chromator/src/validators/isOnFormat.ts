@@ -1,6 +1,6 @@
-import { ColourCode } from '../types/ColourCode';
+import { type ColourCode } from '../types/ColourCode';
 import { ColourCodeFormat } from '../enums/ColourCodeFormat';
-import { StringColourFormat } from '../types/StringColourFormat';
+import { type StringColourFormat } from '../types/StringColourFormat';
 import { colourFormatRegex } from '../data/colourFormatRegex';
 import {
   isValidColourName, isValidHslaString, isValidHslString,
@@ -9,7 +9,6 @@ import {
   isValidTransparentName
 } from './stringFormatValidators';
 import { isHsl, isHsla, isHsv, isHsva, isRgb, isRgba } from './objectValidators';
-
 
 export const isOnFormat = (value: ColourCode, format: ColourCodeFormat): boolean => {
   switch (format) {

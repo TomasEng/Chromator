@@ -1,7 +1,12 @@
 {
   "name": "root",
   "version": "0.0.0",
+  "scripts": {
+    "lint:chromator": "npx eslint \"packages/chromator/src/**\"",
+    "lint:chromator:fix": "npx eslint \"packages/chromator/src/**\" --fix"
+  },
   "devDependencies": {
+    "@stylistic/eslint-plugin-ts": "^1.6.2",
     "@types/jest": "^29.5.5",
     "@typescript-eslint/eslint-plugin": "^6.21.0",
     "eslint": "^8.56.0",

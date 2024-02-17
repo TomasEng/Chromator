@@ -54,7 +54,7 @@ describe('utils', () => {
       expect(hslStringToHsl('hsl(9, 100%, 64%)')).toEqual({
         hue: 9,
         saturation: 1,
-        lightness: 0.64,
+        lightness: 0.64
       });
     });
   });
@@ -65,7 +65,7 @@ describe('utils', () => {
         hue: 9,
         saturation: 1,
         lightness: 0.64,
-        alpha: 0.5,
+        alpha: 0.5
       });
     });
   });
