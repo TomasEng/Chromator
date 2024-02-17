@@ -1,11 +1,11 @@
-import { type Hsl } from './types/Hsl';
-import { type Rgb } from './types/Rgb';
-import { modulo } from './utils';
-import { type Hsv } from './types/Hsv';
-import { HueRegion } from './enums/HueRegion';
-import { type Hsla } from './types/Hsla';
-import { type Rgba } from './types/Rgba';
-import { type Hsva } from './types/Hsva';
+import { type Hsl } from '../types/Hsl.ts';
+import { type Rgb } from '../types/Rgb.ts';
+import { modulo } from '../utils.ts';
+import { type Hsv } from '../types/Hsv.ts';
+import { HueRegion } from '../enums/HueRegion.ts';
+import { type Hsla } from '../types/Hsla.ts';
+import { type Rgba } from '../types/Rgba.ts';
+import { type Hsva } from '../types/Hsva.ts';
 
 const rgb1ToRgb255 = (rgb1: Rgb): Rgb => {
   const { red, green, blue } = rgb1;

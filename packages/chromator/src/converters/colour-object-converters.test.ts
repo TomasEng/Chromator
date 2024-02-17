@@ -1,8 +1,8 @@
-import { type NamedColour } from './types/NamedColour';
-import { hslToHsv, hslToRgb, hsvToHsl, hsvToRgb, rgbToHsl, rgbToHsv } from './converters';
-import { testColours } from './test-data/namedColourList';
+import { type NamedColour } from '../types/NamedColour.ts';
+import { hslToHsv, hslToRgb, hsvToHsl, hsvToRgb, rgbToHsl, rgbToHsv } from './colour-object-converters.ts';
+import { testColours } from '../test-data/namedColourList.ts';
 
-describe('converters', () => {
+describe('Colour object converters', () => {
   describe('hslToRgb', () => {
     it.each(Object.keys(testColours) as NamedColour[])('Converts %s from HSL to RGB', (colour) => {
       const { rgb, hsl } = testColours[colour];

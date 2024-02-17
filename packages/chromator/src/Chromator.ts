@@ -1,9 +1,9 @@
 import { type ColourCode } from './types/ColourCode';
 import { type Hsl } from './types/Hsl';
-import { colourCodeToHsla } from './utils';
+import { colourCodeToHsla } from './converters/colourCodeToHsla';
 import { type Rgb } from './types/Rgb';
 import { type Hsla } from './types/Hsla';
-import { hslaToHsva, hslToHsv, hslToRgb } from './converters';
+import { hslaToHsva, hslToHsv, hslToRgb } from './converters/colour-object-converters.ts';
 import { type Rgba } from './types/Rgba';
 import { type Hsv } from './types/Hsv';
 import { type Hsva } from './types/Hsva';
