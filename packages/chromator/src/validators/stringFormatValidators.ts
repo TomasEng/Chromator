@@ -1,9 +1,8 @@
 import { colourFormatRegex } from '../data/colourFormatRegex';
-import { ColourCodeFormat } from '../enums/ColourCodeFormat';
 import { namedColours } from '../data/namedColours';
 
 export const isValidHslString = (value: string): boolean => {
-  const regex = colourFormatRegex[ColourCodeFormat.HslString];
+  const regex = colourFormatRegex.hsl;
   const trimmed = value.trim().toLowerCase();
   const hasExpectedFormat = regex.test(trimmed);
   if (!hasExpectedFormat) return false;
@@ -16,7 +15,7 @@ export const isValidHslString = (value: string): boolean => {
 };
 
 export const isValidHslaString = (value: string): boolean => {
-  const regex = colourFormatRegex[ColourCodeFormat.HslaString];
+  const regex = colourFormatRegex.hsla;
   const trimmed = value.trim().toLowerCase();
   const hasExpectedFormat = regex.test(trimmed);
   if (!hasExpectedFormat) return false;
@@ -30,7 +29,7 @@ export const isValidHslaString = (value: string): boolean => {
 };
 
 export const isValidRgb255String = (value: string): boolean => {
-  const regex = colourFormatRegex[ColourCodeFormat.Rgb255String];
+  const regex = colourFormatRegex.rgbDecimal;
   const trimmed = value.trim().toLowerCase();
   const hasExpectedFormat = regex.test(trimmed);
   if (!hasExpectedFormat) return false;
@@ -43,7 +42,7 @@ export const isValidRgb255String = (value: string): boolean => {
 };
 
 export const isValidRgba255String = (value: string): boolean => {
-  const regex = colourFormatRegex[ColourCodeFormat.Rgba255String];
+  const regex = colourFormatRegex.rgbaDecimal;
   const trimmed = value.trim().toLowerCase();
   const hasExpectedFormat = regex.test(trimmed);
   if (!hasExpectedFormat) return false;

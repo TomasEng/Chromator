@@ -1,11 +1,10 @@
 import { type Rgb } from '../types/Rgb';
 import { colourFormatRegex } from '../data/colourFormatRegex';
-import { ColourCodeFormat } from '../enums/ColourCodeFormat';
 import { type Rgba } from '../types/Rgba';
 import { hexPairToDecimal, numberFromPercentageOrUnitInterval, shortHexToDecimal } from './string-to-number';
 
 export const rgb255StringToRgb = (value: string): Rgb => {
-  const regex = colourFormatRegex[ColourCodeFormat.Rgb255String];
+  const regex = colourFormatRegex.rgbDecimal;
   const { red, green, blue } = regex.exec(value)!.groups!;
   return {
     red: parseFloat(red),
@@ -15,7 +14,7 @@ export const rgb255StringToRgb = (value: string): Rgb => {
 };
 
 export const rgba255StringToRgba = (value: string): Rgba => {
-  const regex = colourFormatRegex[ColourCodeFormat.Rgba255String];
+  const regex = colourFormatRegex.rgbaDecimal;
   const { red, green, blue, alpha } = regex.exec(value)!.groups!;
   return {
     red: parseFloat(red),

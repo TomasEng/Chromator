@@ -1,10 +1,11 @@
 import {
-  findFormat,
+  evaluateFormat,
   floor,
   round
 } from './utils';
-import { ColourCodeFormat } from './enums/ColourCodeFormat';
 import { validColourCodes } from './test-data/validColourCodes';
+import { colourFormatRegex } from './data/colourFormatRegex';
+import { type StringColourFormat } from './types/StringColourFormat';
 
 describe('utils', () => {
   describe('round', () => {
@@ -38,11 +39,12 @@ describe('utils', () => {
     });
   });
 
-  describe('findFormat', () => {
-    it.each(Object.values(ColourCodeFormat))('Returns the correct format for %s', (format) => {
-      const values = validColourCodes[format];
+  describe('evaluateFormat', () => {
+    const formats: StringColourFormat[] = Object.keys(colourFormatRegex) as StringColourFormat[];
+    it.each(formats)('Returns the correct format for %s', (format) => {
+      const values: string[] = validColourCodes[format];
       values.forEach((value) => {
-        expect(findFormat(value)).toBe(format);
+        expect(evaluateFormat(value)).toBe(format);
       });
     });
   });

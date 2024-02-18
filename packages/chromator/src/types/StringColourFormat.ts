@@ -1,19 +1,15 @@
-import { type ColourCodeFormat } from '../enums/ColourCodeFormat';
-
-export type StringColourFormat = Extract<
-ColourCodeFormat,
-| ColourCodeFormat.HslString
-| ColourCodeFormat.HslaString
-| ColourCodeFormat.NamedColour
-| ColourCodeFormat.NamedTransparent
-| ColourCodeFormat.Rgb255String
-| ColourCodeFormat.RgbHexLongWithHash
-| ColourCodeFormat.RgbHexLongWithoutHash
-| ColourCodeFormat.RgbHexShortWithHash
-| ColourCodeFormat.RgbHexShortWithoutHash
-| ColourCodeFormat.Rgba255String
-| ColourCodeFormat.RgbaHexLongWithHash
-| ColourCodeFormat.RgbaHexLongWithoutHash
-| ColourCodeFormat.RgbaHexShortWithHash
-| ColourCodeFormat.RgbaHexShortWithoutHash
->;
+export type StringColourFormat =
+  | 'hsl'
+  | 'hsla'
+  | 'namedColour'
+  | 'namedTransparent'
+  | 'rgbDecimal'
+  | 'rgbHexLongWithHash'
+  | 'rgbHexLongWithoutHash'
+  | 'rgbHexShortWithHash'
+  | 'rgbHexShortWithoutHash'
+  | 'rgbaDecimal'
+  | 'rgbaHexLongWithHash'
+  | 'rgbaHexLongWithoutHash'
+  | 'rgbaHexShortWithHash'
+  | 'rgbaHexShortWithoutHash';

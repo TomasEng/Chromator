@@ -1,19 +1,18 @@
-import { ColourCodeFormat } from '../enums/ColourCodeFormat';
 import { type StringColourFormat } from '../types/StringColourFormat';
 
 export const colourFormatRegex: { [key in StringColourFormat]: RegExp } = {
-  [ColourCodeFormat.HslString]: /^hsl\s*\(\s*(?<hue>\d*\.?\d*)\s*,\s*(?<saturation>\d*\.?\d*%?)\s*,\s*(?<lightness>\d*\.?\d*%?)\s*\)$/,
-  [ColourCodeFormat.HslaString]: /^hsla\s*\(\s*(?<hue>\d*\.?\d*)\s*,\s*(?<saturation>\d*\.?\d*%?)\s*,\s*(?<lightness>\d*\.?\d*%?)\s*,\s*(?<alpha>\d*\.?\d*%?)\s*\)$/,
-  [ColourCodeFormat.NamedColour]: /[\w-]+/,
-  [ColourCodeFormat.NamedTransparent]: /transparent/,
-  [ColourCodeFormat.Rgb255String]: /^rgb\s*\(\s*(?<red>\d*\.?\d*)\s*,\s*(?<green>\d*\.?\d*)\s*,\s*(?<blue>\d*\.?\d*)\s*\)$/,
-  [ColourCodeFormat.RgbHexLongWithHash]: /^#[0-9a-fA-F]{6}$/,
-  [ColourCodeFormat.RgbHexLongWithoutHash]: /^[0-9a-fA-F]{6}$/,
-  [ColourCodeFormat.RgbHexShortWithHash]: /^#[0-9a-fA-F]{3}$/,
-  [ColourCodeFormat.RgbHexShortWithoutHash]: /^[0-9a-fA-F]{3}$/,
-  [ColourCodeFormat.Rgba255String]: /^rgba\s*\(\s*(?<red>\d*\.?\d*)\s*,\s*(?<green>\d*\.?\d*)\s*,\s*(?<blue>\d*\.?\d*)\s*,\s*(?<alpha>\d*\.?\d*%?)\s*\)$/,
-  [ColourCodeFormat.RgbaHexLongWithHash]: /^#[0-9a-fA-F]{8}$/,
-  [ColourCodeFormat.RgbaHexLongWithoutHash]: /^[0-9a-fA-F]{8}$/,
-  [ColourCodeFormat.RgbaHexShortWithHash]: /^#[0-9a-fA-F]{4}$/,
-  [ColourCodeFormat.RgbaHexShortWithoutHash]: /^[0-9a-fA-F]{4}$/
+  hsl: /^hsl\s*\(\s*(?<hue>\d*\.?\d*)\s*,\s*(?<saturation>\d*\.?\d*%?)\s*,\s*(?<lightness>\d*\.?\d*%?)\s*\)$/i,
+  hsla: /^hsla\s*\(\s*(?<hue>\d*\.?\d*)\s*,\s*(?<saturation>\d*\.?\d*%?)\s*,\s*(?<lightness>\d*\.?\d*%?)\s*,\s*(?<alpha>\d*\.?\d*%?)\s*\)$/i,
+  namedColour: /[\w-]+/i,
+  namedTransparent: /transparent/i,
+  rgbDecimal: /^rgb\s*\(\s*(?<red>\d*\.?\d*)\s*,\s*(?<green>\d*\.?\d*)\s*,\s*(?<blue>\d*\.?\d*)\s*\)$/i,
+  rgbHexLongWithHash: /^#[0-9a-fA-F]{6}$/i,
+  rgbHexLongWithoutHash: /^[0-9a-fA-F]{6}$/i,
+  rgbHexShortWithHash: /^#[0-9a-f]{3}$/i,
+  rgbHexShortWithoutHash: /^[0-9a-f]{3}$/i,
+  rgbaDecimal: /^rgba\s*\(\s*(?<red>\d*\.?\d*)\s*,\s*(?<green>\d*\.?\d*)\s*,\s*(?<blue>\d*\.?\d*)\s*,\s*(?<alpha>\d*\.?\d*%?)\s*\)$/i,
+  rgbaHexLongWithHash: /^#[0-9a-f]{8}$/i,
+  rgbaHexLongWithoutHash: /^[0-9a-f]{8}$/i,
+  rgbaHexShortWithHash: /^#[0-9a-fA-F]{4}$/i,
+  rgbaHexShortWithoutHash: /^[0-9a-fA-F]{4}$/i
 };

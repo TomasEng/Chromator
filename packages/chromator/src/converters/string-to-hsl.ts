@@ -1,6 +1,5 @@
 import { type Hsl } from '../types/Hsl';
 import { colourFormatRegex } from '../data/colourFormatRegex';
-import { ColourCodeFormat } from '../enums/ColourCodeFormat';
 import { numberFromPercentageOrUnitInterval } from './string-to-number';
 import { type Hsla } from '../types/Hsla';
 import { rgbaToHsla, rgbToHsl } from './colour-object-converters';
@@ -18,7 +17,7 @@ import {
 } from './string-to-rgb';
 
 export const hslStringToHsl = (value: string): Hsl => {
-  const regex = colourFormatRegex[ColourCodeFormat.HslString];
+  const regex = colourFormatRegex.hsl;
   const { hue, saturation, lightness } = regex.exec(value)!.groups!;
   return {
     hue: parseFloat(hue),
@@ -28,7 +27,7 @@ export const hslStringToHsl = (value: string): Hsl => {
 };
 
 export const hslaStringToHsla = (value: string): Hsla => {
-  const regex = colourFormatRegex[ColourCodeFormat.HslaString];
+  const regex = colourFormatRegex.hsla;
   const { hue, saturation, lightness, alpha } = regex.exec(value)!.groups!;
   return {
     hue: parseFloat(hue),
