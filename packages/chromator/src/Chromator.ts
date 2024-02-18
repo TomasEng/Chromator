@@ -23,42 +23,81 @@ export class Chromator {
     this.alpha = alpha;
   }
 
+  /**
+   * Returns the HSL representation of the colour.
+   */
   public getHsl (): Hsl {
     return this.hsl;
   }
 
+  /**
+   * Returns the alpha value of the colour on a scale from 0 (completely transparent) to 1 (no transparency).
+   */
   public getAlpha (): number {
     return this.alpha;
   }
 
+  /**
+   * Returns the HSLA representation of the colour.
+   */
   public getHsla (): Hsla {
     return { ...this.hsl, alpha: this.alpha };
   }
 
+  /**
+   * Returns the RGB representation of the colour.
+   */
   public getRgb (): Rgb {
     return hslToRgb(this.hsl);
   }
 
+  /**
+   * Returns the RGBA representation of the colour.
+   */
   public getRgba (): Rgba {
     return { ...this.getRgb(), alpha: this.alpha };
   }
 
+  /**
+   * Returns the HSV representation of the colour.
+   */
   public getHsv (): Hsv {
     return hslToHsv(this.hsl);
   }
 
+  /**
+   * Returns the HSVA representation of the colour.
+   */
   public getHsva (): Hsva {
     return hslaToHsva(this.getHsla());
   }
 
+  /**
+   * Returns the RGB CSS code of the colour.
+   * @example
+   * const red = new Chromator('red');
+   * red.getRgbCode(); // 'rgb(255, 0, 0)'
+   */
   public getRgbCode (): string {
     return rgbaObjectToRgbDecimalString(this.getRgba());
   }
 
+  /**
+   * Returns the hexadecimal CSS code of the colour.
+   * @example
+   * const red = new Chromator('green');
+   * red.getHexCode(); // '#00FF00'
+   */
   public getHexCode (): string {
     return rgbaObjectToRgbHexString(this.getRgba());
   }
 
+  /**
+   * Returns the HSL CSS code of the colour.
+   * @example
+   * const red = new Chromator('blue');
+   * red.getHslCode(); // 'hsl(240, 100%, 50%)'
+   */
   public getHslCode (): string {
     return hslaObjectToHslString(this.getHsla());
   }

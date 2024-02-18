@@ -5,6 +5,9 @@
     "lint:chromator": "npx eslint \"packages/chromator/src/**\"",
     "lint:chromator:fix": "npx eslint \"packages/chromator/src/**\" --fix"
   },
+  "workspaces": [
+    "packages/*"
+  ],
   "devDependencies": {
     "@stylistic/eslint-plugin-ts": "^1.6.2",
     "@types/jest": "^29.5.5",
