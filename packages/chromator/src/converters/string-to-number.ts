@@ -1,4 +1,4 @@
-import { isValidUnitIntervalValue } from '../validators/stringFormatValidators.ts';
+import { isValidUnitIntervalValue } from '../validators/stringFormatValidators';
 
 export const hexPairToDecimal = (value: string): number => parseInt(value, 16);
 

@@ -3,7 +3,7 @@ import {
   numberFromPercentage,
   numberFromPercentageOrUnitInterval,
   shortHexToDecimal
-} from './string-to-number.ts';
+} from './string-to-number';
 
 describe('String to number converters', () => {
   describe('hexPairToDecimal', () => {

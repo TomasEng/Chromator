@@ -1,4 +1,4 @@
-import { hslaStringToHsla, hslStringToHsl } from './string-to-hsl.ts';
+import { hslaStringToHsla, hslStringToHsl } from './string-to-hsl';
 
 describe('String to HSL(A) converters', () => {
   describe('hslStringToHsl', () => {

@@ -1,8 +1,8 @@
-import { Rgb } from '../types/Rgb.ts';
-import { colourFormatRegex } from '../data/colourFormatRegex.ts';
-import { ColourCodeFormat } from '../enums/ColourCodeFormat.ts';
-import { Rgba } from '../types/Rgba.ts';
-import { hexPairToDecimal, numberFromPercentageOrUnitInterval, shortHexToDecimal } from './string-to-number.ts';
+import { type Rgb } from '../types/Rgb';
+import { colourFormatRegex } from '../data/colourFormatRegex';
+import { ColourCodeFormat } from '../enums/ColourCodeFormat';
+import { type Rgba } from '../types/Rgba';
+import { hexPairToDecimal, numberFromPercentageOrUnitInterval, shortHexToDecimal } from './string-to-number';
 
 export const rgb255StringToRgb = (value: string): Rgb => {
   const regex = colourFormatRegex[ColourCodeFormat.Rgb255String];

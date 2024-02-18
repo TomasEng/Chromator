@@ -1,7 +1,7 @@
-import { colourCodeToHsla } from './colourCodeToHsla.ts';
-import { testColours } from '../test-data/namedColourList.ts';
-import { Rgba } from '../types/Rgba.ts';
-import { Hsva } from '../types/Hsva.ts';
+import { colourCodeToHsla } from './colourCodeToHsla';
+import { testColours } from '../test-data/namedColourList';
+import { type Rgba } from '../types/Rgba';
+import { type Hsva } from '../types/Hsva';
 
 describe('colourCodeToHsla', () => {
   it('Converts a HSL object to an HSLA object', () => {

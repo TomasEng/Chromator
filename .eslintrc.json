@@ -10,6 +10,9 @@
         "project": "./tsconfig.json",
         "sourceType": "module"
     },
+    "plugins": [
+        "import"
+    ],
     "rules": {
         "semi": "off",
         "@typescript-eslint/semi": ["error", "always"],
@@ -23,6 +26,12 @@
                 "delimiter": "semi",
                 "requireLast": false
             }
-        }]
+        }],
+        "import/extensions": [
+            "error",
+            {
+                "ts": "never"
+            }
+        ]
     }
 }

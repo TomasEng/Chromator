@@ -1,9 +1,9 @@
-import { Hsl } from '../types/Hsl.ts';
-import { colourFormatRegex } from '../data/colourFormatRegex.ts';
-import { ColourCodeFormat } from '../enums/ColourCodeFormat.ts';
-import { numberFromPercentageOrUnitInterval } from './string-to-number.ts';
-import { Hsla } from '../types/Hsla.ts';
-import { rgbaToHsla, rgbToHsl } from './colour-object-converters.ts';
+import { type Hsl } from '../types/Hsl';
+import { colourFormatRegex } from '../data/colourFormatRegex';
+import { ColourCodeFormat } from '../enums/ColourCodeFormat';
+import { numberFromPercentageOrUnitInterval } from './string-to-number';
+import { type Hsla } from '../types/Hsla';
+import { rgbaToHsla, rgbToHsl } from './colour-object-converters';
 import {
   hexWithHashToRgb,
   hexWithHashToRgba,
@@ -15,7 +15,7 @@ import {
   shortHexWithHashToRgba,
   shortHexWithoutHashToRgb,
   shortHexWithoutHashToRgba
-} from './string-to-rgb.ts';
+} from './string-to-rgb';
 
 export const hslStringToHsl = (value: string): Hsl => {
   const regex = colourFormatRegex[ColourCodeFormat.HslString];

@@ -1,15 +1,15 @@
-import { ColourCode } from '../types/ColourCode.ts';
-import { Hsla } from '../types/Hsla.ts';
-import { ColourCodeFormat } from '../enums/ColourCodeFormat.ts';
-import { Hsl } from '../types/Hsl.ts';
-import { hsvaToHsla, hsvToHsl, rgbaToHsla, rgbToHsl } from './colour-object-converters.ts';
-import { Rgb } from '../types/Rgb.ts';
-import { Rgba } from '../types/Rgba.ts';
-import { Hsv } from '../types/Hsv.ts';
-import { Hsva } from '../types/Hsva.ts';
-import { namedColours } from '../data/namedColours.ts';
-import { NamedColour } from '../types/NamedColour.ts';
-import { findFormat } from '../utils.ts';
+import { type ColourCode } from '../types/ColourCode';
+import { type Hsla } from '../types/Hsla';
+import { ColourCodeFormat } from '../enums/ColourCodeFormat';
+import { type Hsl } from '../types/Hsl';
+import { hsvaToHsla, hsvToHsl, rgbaToHsla, rgbToHsl } from './colour-object-converters';
+import { type Rgb } from '../types/Rgb';
+import { type Rgba } from '../types/Rgba';
+import { type Hsv } from '../types/Hsv';
+import { type Hsva } from '../types/Hsva';
+import { namedColours } from '../data/namedColours';
+import { type NamedColour } from '../types/NamedColour';
+import { findFormat } from '../utils';
 import {
   hexWithHashToHsl,
   hexWithHashToHsla,
@@ -23,7 +23,7 @@ import {
   shortHexWithHashToHsla,
   shortHexWithoutHashToHsl,
   shortHexWithoutHashToHsla
-} from './string-to-hsl.ts';
+} from './string-to-hsl';
 
 export const colourCodeToHsla = (code: ColourCode): Hsla => {
   const format = findFormat(code);

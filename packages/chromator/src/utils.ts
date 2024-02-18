@@ -16,5 +16,3 @@ export const findFormat = (value: ColourCode): ColourCodeFormat | undefined => {
   }
   return undefined;
 };
-
-
