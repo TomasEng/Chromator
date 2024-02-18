@@ -40,4 +40,25 @@ describe('Chromator', () => {
     const chromator = new Chromator('rgb(255, 0, 0)');
     expect(chromator.getHsva()).toEqual({ hue: 0, saturation: 1, value: 1, alpha: 1 });
   });
+
+  test('getRgbCode', () => {
+    const orchid = new Chromator('orchid');
+    expect(orchid.getRgbCode()).toBe('rgb(218, 112, 214)');
+    const transparentOrchid = new Chromator('rgba(218, 112, 214, 0.5)');
+    expect(transparentOrchid.getRgbCode()).toBe('rgba(218, 112, 214, 0.5)');
+  });
+
+  test('getHexCode', () => {
+    const orchid = new Chromator('orchid');
+    expect(orchid.getHexCode()).toBe('#DA70D6');
+    const transparentOrchid = new Chromator('rgba(218, 112, 214, 0.5)');
+    expect(transparentOrchid.getHexCode()).toBe('#DA70D680');
+  });
+
+  test('getHslCode', () => {
+    const orchid = new Chromator('orchid');
+    expect(orchid.getHslCode()).toBe('hsl(302, 59%, 65%)');
+    const transparentOrchid = new Chromator('rgba(218, 112, 214, 0.5)');
+    expect(transparentOrchid.getHslCode()).toBe('hsla(302, 59%, 65%, 0.5)');
+  });
 });

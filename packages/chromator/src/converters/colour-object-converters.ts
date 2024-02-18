@@ -36,6 +36,12 @@ export const hslToRgb = (hsl: Hsl): Rgb => {
   return rgb1ToRgb255(rgb1);
 };
 
+export const hslaToRgba = (hsla: Hsla): Rgba => {
+  const { alpha, ...hsl } = hsla;
+  const rgb = hslToRgb(hsl);
+  return { ...rgb, alpha };
+};
+
 const findRgb1FromHue = (hue: number, chroma: number, x: number): Rgb => {
   switch (findHueRegion(hue)) {
     case HueRegion.RedYellow:

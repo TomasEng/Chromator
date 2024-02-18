@@ -7,6 +7,11 @@ import { hslaToHsva, hslToHsv, hslToRgb } from './converters/colour-object-conve
 import { type Rgba } from './types/Rgba';
 import { type Hsv } from './types/Hsv';
 import { type Hsva } from './types/Hsva';
+import {
+  hslaObjectToHslString,
+  rgbaObjectToRgbDecimalString,
+  rgbaObjectToRgbHexString
+} from './converters/hsla-to-string';
 
 export class Chromator {
   private readonly hsl: Hsl; // HSL is used as the base since all conversion functions from the HSL space are mathematically surjective.
@@ -44,5 +49,17 @@ export class Chromator {
 
   public getHsva (): Hsva {
     return hslaToHsva(this.getHsla());
+  }
+
+  public getRgbCode (): string {
+    return rgbaObjectToRgbDecimalString(this.getRgba());
+  }
+
+  public getHexCode (): string {
+    return rgbaObjectToRgbHexString(this.getRgba());
+  }
+
+  public getHslCode (): string {
+    return hslaObjectToHslString(this.getHsla());
   }
 }
