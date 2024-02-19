@@ -6,6 +6,19 @@ describe('Chromator', () => {
     expect(chromator).toBeDefined();
   });
 
+  describe('copy', () => {
+    it('Creates a copy of the Chromator', () => {
+      const chromator = new Chromator('rgb(255, 0, 0)');
+      const copy = chromator.copy();
+      expect(copy).toBeDefined();
+      expect(copy).not.toBe(chromator);
+      expect(copy.getHsl()).not.toBe(chromator.getHsl());
+      expect(copy.getHsl()).toEqual(chromator.getHsl());
+      expect(copy.getHsla()).not.toBe(chromator.getHsla());
+      expect(copy.getHsla()).toEqual(chromator.getHsla());
+    });
+  });
+
   test('getHsl', () => {
     const chromator = new Chromator('rgb(255, 0, 0)');
     expect(chromator.getHsl()).toEqual({ hue: 0, saturation: 1, lightness: 0.5 });
@@ -60,5 +73,33 @@ describe('Chromator', () => {
     expect(orchid.getHslCode()).toBe('hsl(302, 59%, 65%)');
     const transparentOrchid = new Chromator('rgba(218, 112, 214, 0.5)');
     expect(transparentOrchid.getHslCode()).toBe('hsla(302, 59%, 65%, 0.5)');
+  });
+
+  describe('lighten', () => {
+    it('Lightens the colour by the given amount', () => {
+      const chromator = new Chromator('rgb(255, 0, 0)');
+      chromator.lighten(0.5);
+      expect(chromator.getHsl()).toEqual({ hue: 0, saturation: 1, lightness: 0.75 });
+    });
+
+    it('Makes the colour white if the amount is 1', () => {
+      const chromator = new Chromator('rgb(255, 0, 0)');
+      chromator.lighten(1);
+      expect(chromator.getRgb()).toEqual({ red: 255, green: 255, blue: 255 });
+    });
+  });
+
+  describe('darken', () => {
+    it('Darkens the colour by the given amount', () => {
+      const chromator = new Chromator('rgb(255, 0, 0)');
+      chromator.darken(0.5);
+      expect(chromator.getHsl()).toEqual({ hue: 0, saturation: 1, lightness: 0.25 });
+    });
+
+    it('Makes the colour black if the amount is 1', () => {
+      const chromator = new Chromator('rgb(255, 0, 0)');
+      chromator.darken(1);
+      expect(chromator.getRgb()).toEqual({ red: 0, green: 0, blue: 0 });
+    });
   });
 });
