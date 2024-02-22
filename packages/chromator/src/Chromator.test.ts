@@ -102,4 +102,68 @@ describe('Chromator', () => {
       expect(chromator.getRgb()).toEqual({ red: 0, green: 0, blue: 0 });
     });
   });
+
+  describe('invertLightness', () => {
+    it('Inverts the lightness of the colour', () => {
+      const chromator = new Chromator({ hue: 302, saturation: 0.59, lightness: 0.65 });
+      chromator.invertLightness();
+      expect(chromator.getHsl()).toEqual({ hue: 302, saturation: 0.59, lightness: 0.35 });
+    });
+
+    it('Returns the initial colour if inverted twice', () => {
+      const initialHsl = { hue: 302, saturation: 0.59, lightness: 0.65 };
+      const chromator = new Chromator(initialHsl);
+      chromator.invertLightness().invertLightness();
+      expect(chromator.getHsl()).not.toBe(initialHsl);
+      expect(chromator.getHsl()).toEqual(initialHsl);
+    });
+  });
+
+  describe('addHue', () => {
+    it('Adds the given amount to the hue', () => {
+      const initialHsl = { hue: 10, saturation: 1, lightness: 0.5 };
+      const chromator = new Chromator(initialHsl);
+      chromator.addHue(20);
+      expect(chromator.getHsl()).toEqual({ hue: 30, saturation: 1, lightness: 0.5 });
+    });
+
+    it('Wraps the hue around if it goes over 360', () => {
+      const initialHsl = { hue: 350, saturation: 1, lightness: 0.5 };
+      const chromator = new Chromator(initialHsl);
+      chromator.addHue(20);
+      expect(chromator.getHsl()).toEqual({ hue: 10, saturation: 1, lightness: 0.5 });
+    });
+  });
+
+  describe('subtractHue', () => {
+    it('Subtracts the given amount from the hue', () => {
+      const initialHsl = { hue: 30, saturation: 1, lightness: 0.5 };
+      const chromator = new Chromator(initialHsl);
+      chromator.subtractHue(20);
+      expect(chromator.getHsl()).toEqual({ hue: 10, saturation: 1, lightness: 0.5 });
+    });
+
+    it('Wraps the hue around if it goes under 0', () => {
+      const initialHsl = { hue: 10, saturation: 1, lightness: 0.5 };
+      const chromator = new Chromator(initialHsl);
+      chromator.subtractHue(20);
+      expect(chromator.getHsl()).toEqual({ hue: 350, saturation: 1, lightness: 0.5 });
+    });
+  });
+
+  describe('complementarise', () => {
+    it('Transforms the colour to its complimentary colour', () => {
+      const chromator = new Chromator({ hue: 302, saturation: 0.59, lightness: 0.65 });
+      chromator.complementarise();
+      expect(chromator.getHsl()).toEqual({ hue: 122, saturation: 0.59, lightness: 0.65 });
+    });
+  });
+
+  describe('invert', () => {
+    it('Inverts the colour', () => {
+      const chromator = new Chromator({ hue: 302, saturation: 0.59, lightness: 0.65 });
+      chromator.invert();
+      expect(chromator.getHsl()).toEqual({ hue: 122, saturation: 0.59, lightness: 0.35 });
+    });
+  });
 });

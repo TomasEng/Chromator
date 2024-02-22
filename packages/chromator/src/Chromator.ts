@@ -12,6 +12,7 @@ import {
   rgbaObjectToRgbDecimalString,
   rgbaObjectToRgbHexString
 } from './converters/hsla-to-string';
+import { modulo } from './utils';
 
 export class Chromator {
   private readonly hsl: Hsl; // HSL is used as the base since all conversion functions from the HSL space are mathematically surjective.
@@ -127,6 +128,53 @@ export class Chromator {
   public darken(amount: number): this {
     const currentLightness = this.hsl.lightness;
     this.hsl.lightness = currentLightness * (1 - amount);
+    return this;
+  }
+
+  /**
+   * Inverts the lightness of the colour.
+   * @example
+   * const hsl = { hue: 302, saturation: 0.59, lightness: 0.65 };
+   * const colour = new Chromator({ hue: 302, saturation: 0.59, lightness: 0.65 });
+   * colour.invertLightness();
+   * const invertedHsl = colour.getHsl(); // { hue: 302, saturation: 0.59, lightness: 0.35 }
+   */
+  public invertLightness(): this {
+    this.hsl.lightness = 1 - this.hsl.lightness;
+    return this;
+  }
+
+  /**
+   * Adds the given amount to the hue.
+   * @param amount The amount in degrees to add to the hue.
+   */
+  public addHue(amount: number): this {
+    this.hsl.hue = modulo(this.hsl.hue + amount, 360);
+    return this;
+  }
+
+  /**
+   * Subtracts the given amount from the hue.
+   * @param amount The amount in degrees to subtract from the hue.
+   */
+  public subtractHue(amount: number): this {
+    this.hsl.hue = modulo(this.hsl.hue - amount, 360);
+    return this;
+  }
+
+  /**
+   * Transforms the colour to its complementary colour.
+   */
+  public complementarise(): Chromator {
+    this.addHue(180);
+    return this;
+  }
+
+  /**
+   * Inverts the colour.
+   */
+  public invert(): Chromator {
+    this.complementarise().invertLightness();
     return this;
   }
 }
