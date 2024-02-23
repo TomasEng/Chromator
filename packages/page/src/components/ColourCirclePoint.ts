@@ -1,6 +1,7 @@
 import { Chromator } from 'chromator';
 import { PolarCoords } from '../types/PolarCoords';
 import { polarDegreeCoordsToScreenCoords } from '../utils/numberUtils';
+import { ScreenCoords } from '../types/ScreenCoords';
 
 const template = document.createElement('template');
 template.innerHTML = `
@@ -17,9 +18,10 @@ template.innerHTML = `
       position: relative;
       top: calc(var(--top) * 100% - var(--size) / 2);
       left: calc(var(--left) * 100% - var(--size) / 2);
+      cursor: pointer;
     }
   </style>
-  <div class="point"></div>
+  <div class="point" draggable="true"></div>
 `;
 
 export class ColourCirclePoint extends HTMLElement {
@@ -27,7 +29,7 @@ export class ColourCirclePoint extends HTMLElement {
 
   constructor() {
     super();
-    this.attachShadow({ mode: 'open' });
+    this.attachShadow({mode: 'open'});
     this.shadowRoot!.appendChild(template.content.cloneNode(true));
   }
 
@@ -41,11 +43,26 @@ export class ColourCirclePoint extends HTMLElement {
 
   set colour(c: Chromator) {
     this.point.style.background = c.getHexCode();
-    const { hue, saturation } = c.getHsl();
-    const polarCoords: PolarCoords = { angle: hue, radius: saturation };
+    const {hue, saturation} = c.getHsl();
+    const polarCoords: PolarCoords = {angle: hue, radius: saturation};
     const screenCoords = polarDegreeCoordsToScreenCoords(polarCoords);
     this.point.style.setProperty('--left', `${screenCoords.left}`);
     this.point.style.setProperty('--top', `${screenCoords.top}`);
+  }
+
+  connectedCallback() {
+    this.point.addEventListener('drag', (event: DragEvent) => {
+      this.dispatchEvent(new CustomEvent<ScreenCoords>('point-drag', {
+        detail: {
+          left: event.x,
+          top: event.y
+        }
+      }));
+    });
+
+    this.point.addEventListener('dragstart', (event: DragEvent) => {
+      event.dataTransfer!.setDragImage(new Image(), 0, 0);
+    });
   }
 }
 

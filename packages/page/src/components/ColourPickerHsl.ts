@@ -1,10 +1,44 @@
 import { Chromator } from 'chromator';
+import './SliderInput';
+import { SliderInput } from './SliderInput';
+import './ShadowBox';
 
 const template = document.createElement('template');
 template.innerHTML = `
-  <input type="range" id="hue" min="0" max="360" value="0" step="1"/>
-  <input type="range" id="saturation" min="0" max="1" step="0.01"/>
-  <input type="range" id="lightness" min="0" max="1" step="0.01"/>
+   <style>
+      :host {
+        --hue: 0;
+      }
+      
+      shadow-box {
+        display: flex;
+        flex-direction: column;
+        gap: 1em;
+      }
+  </style>
+  <shadow-box>
+    <slider-input
+      id="hue"
+      label="Hue"
+      min="0"
+      max="360"
+      step="1"
+      value="0"
+      background="linear-gradient(to right, hsl(0, 100%, 50%), hsl(60, 100%, 50%), hsl(120, 100%, 50%), hsl(180, 100%, 50%), hsl(240, 100%, 50%), hsl(300, 100%, 50%), hsl(360, 100%, 50%))"
+     ></slider-input>
+    <slider-input
+      id="saturation"
+      label="Saturation"
+      value="0"
+      background="linear-gradient(to right, hsl(var(--hue), 0%, 50%), hsl(var(--hue), 100%, 50%))"
+    ></slider-input>
+    <slider-input
+      id="lightness"
+      label="Lightness"
+      value="0.5"
+      background="linear-gradient(to right, #000, hsl(var(--hue), 100%, 50%), #fff)"
+    ></slider-input>
+  </shadow-box>
 `;
 
 export class ColourPickerHsl extends HTMLElement {
@@ -12,21 +46,21 @@ export class ColourPickerHsl extends HTMLElement {
 
   constructor() {
     super();
-    this._colour = new Chromator('#000');
+    this._colour = new Chromator({ hue: 0, saturation: 0, lightness: 0.5 });
     this.attachShadow({ mode: 'open' });
     this.shadowRoot!.appendChild(template.content.cloneNode(true));
   }
 
-  get hueRange(): HTMLInputElement {
-    return this.shadowRoot!.getElementById('hue') as HTMLInputElement;
+  get hueRange(): SliderInput {
+    return this.shadowRoot!.getElementById('hue') as SliderInput;
   }
 
-  get saturationRange(): HTMLInputElement {
-    return this.shadowRoot!.getElementById('saturation') as HTMLInputElement;
+  get saturationRange(): SliderInput {
+    return this.shadowRoot!.getElementById('saturation') as SliderInput;
   }
 
-  get lightnessRange(): HTMLInputElement {
-    return this.shadowRoot!.getElementById('lightness') as HTMLInputElement;
+  get lightnessRange(): SliderInput {
+    return this.shadowRoot!.getElementById('lightness') as SliderInput;
   }
 
   get colour(): Chromator {
@@ -35,9 +69,10 @@ export class ColourPickerHsl extends HTMLElement {
 
   set colour(c: Chromator) {
     this._colour = c;
-    this.hueRange.value = String(c.getHsl().hue);
-    this.saturationRange.value = String(c.getHsl().saturation);
-    this.lightnessRange.value = String(c.getHsl().lightness);
+    this.hueRange.value = c.getHsl().hue;
+    this.saturationRange.value = c.getHsl().saturation;
+    this.lightnessRange.value = c.getHsl().lightness;
+    this.style.setProperty('--hue', c.getHsl().hue.toString());
   }
 
   connectedCallback() {
@@ -47,25 +82,25 @@ export class ColourPickerHsl extends HTMLElement {
       this.colour = new Chromator(initialValue);
     }
 
-    this.hueRange.addEventListener('input', () => {
+    this.hueRange.addEventListener('slider-change', () => {
       this.dispatchEvent(new CustomEvent<Chromator>('hsl-change', {
-        detail: new Chromator({ ...this.colour.getHsl(), hue: Number(this.hueRange.value) })
+        detail: new Chromator({ ...this.colour.getHsl(), hue: this.hueRange.value })
       }));
     });
 
-    this.saturationRange.addEventListener('input', () => {
+    this.saturationRange.addEventListener('slider-change', () => {
       this.dispatchEvent(new CustomEvent<Chromator>('hsl-change', {
-        detail: new Chromator({ ...this.colour.getHsl(), saturation: Number(this.saturationRange.value) })
+        detail: new Chromator({ ...this.colour.getHsl(), saturation: this.saturationRange.value })
       }));
     });
 
-    this.lightnessRange.addEventListener('input', () => {
+    this.lightnessRange.addEventListener('slider-change', () => {
       this.dispatchEvent(new CustomEvent<Chromator>('hsl-change', {
-        detail: new Chromator({ ...this.colour.getHsl(), lightness: Number(this.lightnessRange.value) })
+        detail: new Chromator({ ...this.colour.getHsl(), lightness: this.lightnessRange.value })
       }));
     });
 
-    this.addEventListener('colour-change', (event: CustomEvent<Chromator>) => {
+    this.addEventListener('hsl-change', (event: CustomEvent<Chromator>) => {
       this.colour = event.detail;
     });
   }

@@ -2,6 +2,8 @@ import { HsPoint } from '../types/HsPoint';
 import './ColourCirclePoint';
 import { ColourCirclePoint } from './ColourCirclePoint';
 import { Chromator } from 'chromator';
+import { ScreenCoords } from '../types/ScreenCoords';
+import { screenCoordsToPolarDegreeCoords } from '../utils/numberUtils';
 
 const template = document.createElement('template');
 template.innerHTML = `
@@ -34,7 +36,7 @@ template.innerHTML = `
 `;
 
 export class ColourCircle extends HTMLElement {
-  private _lightness: number;
+  private _lightness: number = 0.5;
   private _point: HsPoint;
 
   constructor() {
@@ -58,8 +60,7 @@ export class ColourCircle extends HTMLElement {
 
   set point(value: HsPoint) {
     this._point = value;
-    const c = new Chromator({ ...value, lightness: this.lightness });
-    this.pointElement.colour = c;
+    this.pointElement.colour = new Chromator({...value, lightness: this.lightness});
   }
 
   get circle() {
@@ -75,7 +76,42 @@ export class ColourCircle extends HTMLElement {
     if (size) {
       this.circle.style.width = size;
     }
-  }
+
+    this.addEventListener('dragover', (event: DragEvent) => {
+        event.preventDefault();
+    });
+
+    this.addEventListener('click', (event: MouseEvent) => {
+      const positionWithinCircle: ScreenCoords = this.getPositionWithinCircle({
+        top: event.clientY,
+        left: event.clientX
+      });
+      const polarCoords = screenCoordsToPolarDegreeCoords(positionWithinCircle);
+      if (polarCoords.radius <= 1) {
+        this.point = { hue: polarCoords.angle, saturation: polarCoords.radius };
+        this.dispatchEvent(new CustomEvent<HsPoint>('point-change', {
+          detail: this.point
+        }));
+      }
+    });
+
+    this.pointElement.addEventListener('point-drag', (event: CustomEvent<ScreenCoords>) => {
+      const positionWithinCircle = this.getPositionWithinCircle(event.detail);
+      const polarCoords = screenCoordsToPolarDegreeCoords(positionWithinCircle);
+      this.point = { hue: polarCoords.angle, saturation: Math.min(polarCoords.radius, 1) };
+      this.dispatchEvent(new CustomEvent<HsPoint>('point-change', {
+        detail: this.point
+      }));
+    });
+  };
+
+  private getPositionWithinCircle(clientCoords: ScreenCoords): ScreenCoords {
+    const circleRect = this.circle.getBoundingClientRect();
+    return {
+      top: (clientCoords.top - circleRect.top) / circleRect.height,
+      left: (clientCoords.left - circleRect.left) / circleRect.width
+    };
+  };
 }
 
 window.customElements.define('colour-circle', ColourCircle);

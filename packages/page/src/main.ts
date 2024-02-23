@@ -19,7 +19,7 @@ class MainComponent extends HTMLElement {
 
   constructor() {
     super();
-    this._colour = new Chromator('#000');
+    this._colour = new Chromator({ hue: 0, saturation: 0, lightness: 0.5 });
     this.attachShadow({ mode: 'open' });
     this.shadowRoot!.appendChild(template.content.cloneNode(true));
   }
@@ -51,6 +51,9 @@ class MainComponent extends HTMLElement {
   connectedCallback() {
     this.colourPicker.addEventListener('colour-change', (event: CustomEvent<Chromator>) => {
       this.colour = event.detail;
+    });
+    this.colourCircle.addEventListener('point-change', (event: CustomEvent<Hsl>) => {
+      this.colour = new Chromator({...event.detail, lightness: this.colour.getHsl().lightness});
     });
   }
 }
