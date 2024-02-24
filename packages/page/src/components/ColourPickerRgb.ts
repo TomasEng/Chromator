@@ -6,6 +6,11 @@ import './ShadowBox';
 const template = document.createElement('template');
 template.innerHTML = `
    <style>
+      :host {
+        --red: 64;
+        --green: 191;
+        --blue: 191;
+      }
       shadow-box {
         display: flex;
         flex-direction: column;
@@ -20,7 +25,7 @@ template.innerHTML = `
       max="255"
       step="1"
       value="0"
-      background="linear-gradient(to right, #000, #f00)"
+      background="linear-gradient(to right, rgb(0, var(--green), var(--blue)), rgb(255, var(--green), var(--blue)))"
      ></slider-input>
     <slider-input
       id="green"
@@ -29,7 +34,7 @@ template.innerHTML = `
       max="255"
       step="1"
       value="0"
-      background="linear-gradient(to right, #000, #0f0)"
+      background="linear-gradient(to right, rgb(var(--red), 0, var(--blue)), rgb(var(--red), 255, var(--blue)))"
     ></slider-input>
     <slider-input
       id="blue"
@@ -38,7 +43,7 @@ template.innerHTML = `
       max="255"
       step="1"
       value="0"
-      background="linear-gradient(to right, #000, #00f)"
+      background="linear-gradient(to right, rgb(var(--red), var(--green), 0), rgb(var(--red), var(--green), 255))"
     ></slider-input>
   </shadow-box>
 `;
@@ -75,6 +80,9 @@ export class ColourPickerRgb extends HTMLElement {
     this.redRange.value = rgb.red;
     this.greenRange.value = rgb.green;
     this.blueRange.value = rgb.blue;
+    this.style.setProperty('--red', rgb.red.toString());
+    this.style.setProperty('--green', rgb.green.toString());
+    this.style.setProperty('--blue', rgb.blue.toString());
   }
 
   connectedCallback() {

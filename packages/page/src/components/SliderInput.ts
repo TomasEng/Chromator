@@ -6,6 +6,22 @@ template.innerHTML = `
       flex-direction: column;
     }
     
+    .label-wrapper {
+      display: flex;
+      gap: 1em;
+      align-items: center;
+      margin-bottom: .5rem;
+    }
+    
+    .label-wrapper > * {
+      padding: 0;
+      margin: 0;
+    }
+    
+    label {
+      font-weight: bold;
+    }
+    
     input {
       --height: 1rem;
       -webkit-appearance: none;
@@ -26,7 +42,10 @@ template.innerHTML = `
       box-shadow: 0 0 0 2px #fff, 0 0 0 4px #000;
     }
   </style>
-  <label for="slider" id="label"></label>
+  <div class="label-wrapper">
+    <label for="slider" id="label"></label>
+    <p id="value"></p>
+  </div>
   <input type="range" id="slider" min="0" max="1" step="0.01"/>
 `;
 
@@ -50,13 +69,20 @@ export class SliderInput extends HTMLElement {
     return this.shadowRoot!.getElementById('label') as HTMLLabelElement;
   }
 
+  get valueElement(): HTMLParagraphElement {
+    return this.shadowRoot!.getElementById('value') as HTMLParagraphElement;
+  }
+
   get value(): number {
     return this._value;
   }
 
   set value(v: number) {
     this._value = v;
-    this.slider.value = String(v);
+    const rounded = Math.round(v / this.step) * this.step;
+    const stringValue = Intl.NumberFormat().format(rounded);
+    this.slider.value = String(rounded);
+    this.valueElement.textContent = stringValue;
   }
 
   get max(): number {

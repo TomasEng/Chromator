@@ -7,7 +7,9 @@ const template = document.createElement('template');
 template.innerHTML = `
    <style>
       :host {
-        --hue: 0;
+        --hue: 180;
+        --saturation: 1;
+        --lightness: 0.5;
       }
       
       shadow-box {
@@ -24,19 +26,30 @@ template.innerHTML = `
       max="360"
       step="1"
       value="0"
-      background="linear-gradient(to right, hsl(0, 100%, 50%), hsl(60, 100%, 50%), hsl(120, 100%, 50%), hsl(180, 100%, 50%), hsl(240, 100%, 50%), hsl(300, 100%, 50%), hsl(360, 100%, 50%))"
+      background="
+        linear-gradient(
+          to right,
+          hsl(0, var(--saturation), var(--lightness)),
+          hsl(60, var(--saturation), var(--lightness)),
+          hsl(120, var(--saturation), var(--lightness)),
+          hsl(180, var(--saturation), var(--lightness)),
+          hsl(240, var(--saturation), var(--lightness)),
+          hsl(300, var(--saturation), var(--lightness)),
+          hsl(360, var(--saturation), var(--lightness))
+        )
+      "
      ></slider-input>
     <slider-input
       id="saturation"
       label="Saturation"
       value="0"
-      background="linear-gradient(to right, hsl(var(--hue), 0%, 50%), hsl(var(--hue), 100%, 50%))"
+      background="linear-gradient(to right, hsl(var(--hue), 0%, var(--lightness)), hsl(var(--hue), 100%, var(--lightness)))"
     ></slider-input>
     <slider-input
       id="lightness"
       label="Lightness"
       value="0.5"
-      background="linear-gradient(to right, #000, hsl(var(--hue), 100%, 50%), #fff)"
+      background="linear-gradient(to right, #000, hsl(var(--hue), var(--saturation), 50%), #fff)"
     ></slider-input>
   </shadow-box>
 `;
@@ -73,6 +86,8 @@ export class ColourPickerHsl extends HTMLElement {
     this.saturationRange.value = c.getHsl().saturation;
     this.lightnessRange.value = c.getHsl().lightness;
     this.style.setProperty('--hue', c.getHsl().hue.toString());
+    this.style.setProperty('--saturation', (c.getHsl().saturation * 100).toString() + '%');
+    this.style.setProperty('--lightness', (c.getHsl().lightness * 100).toString() + '%');
   }
 
   connectedCallback() {

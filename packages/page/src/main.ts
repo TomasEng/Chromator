@@ -7,10 +7,28 @@ import { ColourCircle } from './components/ColourCircle';
 
 const template = document.createElement('template');
 template.innerHTML = `
-  <div>
+  <style>
+    .root {
+      width: 600px;
+      margin: auto;
+      font-family: Calibri, Arial, sans-serif;
+      font-size: 1rem;
+    }
+  
+    .colour-pickers {
+      display: flex;
+      gap: 1em;
+      flex-direction: column;
+      width: 100%;
+    }
+  </style>
+  <div class="root">
     <h1>Colour picker</h1>
-    <colour-picker id="colour-picker"></colour-picker>
-    <colour-circle id="colour-circle" size="500px"></colour-circle>
+    <div class="colour-pickers">
+      <colour-picker id="colour-picker"></colour-picker>
+      <colour-circle id="colour-circle" size="100%"></colour-circle>
+    </div>
+    <p>&copy; Tomas Engebretsen | <a href="https://github.com/TomasEng/Chromator">See repository on Github</a></p>
   </div>
 `;
 
@@ -46,7 +64,7 @@ class MainComponent extends HTMLElement {
   }
 
   connectedCallback() {
-    this.colour = new Chromator({ hue: 0, saturation: 1, lightness: 0.5 });
+    this.colour = new Chromator('#39C6BC');
     this.colourPicker.addEventListener('colour-change', (event: CustomEvent<Chromator>) => {
       this.colour = event.detail;
     });
