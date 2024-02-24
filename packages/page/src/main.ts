@@ -15,11 +15,10 @@ template.innerHTML = `
 `;
 
 class MainComponent extends HTMLElement {
-  private _colour: Chromator;
+  private _colour: Chromator = new Chromator({ hue: 0, saturation: 1, lightness: 0.5 });
 
   constructor() {
     super();
-    this._colour = new Chromator({ hue: 0, saturation: 0, lightness: 0.5 });
     this.attachShadow({ mode: 'open' });
     this.shadowRoot!.appendChild(template.content.cloneNode(true));
   }
@@ -30,10 +29,8 @@ class MainComponent extends HTMLElement {
 
   set colour(c: Chromator) {
     this._colour = c;
-    this.colourPicker.colour = this._colour;
-    const { hue, saturation, lightness } = this._colour.getHsl();
-    this.colourCircle.lightness = lightness;
-    this.colourCircle.point = { hue, saturation };
+    this.colourPicker.colour = c;
+    this.colourCircle.colour = c;
   }
 
   get colourPicker(): ColourPicker {
@@ -49,6 +46,7 @@ class MainComponent extends HTMLElement {
   }
 
   connectedCallback() {
+    this.colour = new Chromator({ hue: 0, saturation: 1, lightness: 0.5 });
     this.colourPicker.addEventListener('colour-change', (event: CustomEvent<Chromator>) => {
       this.colour = event.detail;
     });

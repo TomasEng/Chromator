@@ -36,8 +36,7 @@ template.innerHTML = `
 `;
 
 export class ColourCircle extends HTMLElement {
-  private _lightness: number = 0.5;
-  private _point: HsPoint;
+  private _colour: Chromator;
 
   constructor() {
     super();
@@ -45,22 +44,34 @@ export class ColourCircle extends HTMLElement {
     this.shadowRoot!.appendChild(template.content.cloneNode(true));
   }
 
+  get colour(): Chromator {
+    return this._colour;
+  }
+
+  set colour(c: Chromator) {
+    this._colour = c;
+    this.pointElement.colour = c;
+    const { hue, saturation, lightness } = c.getHsl();
+    this.circle.style.setProperty('--lightness', `${lightness * 100}%`);
+    this.pointElement.colour = c;
+  }
+
   get lightness(): number {
-    return this._lightness;
+    return this.colour.getHsl().lightness;
   }
 
   set lightness(value: number) {
-    this._lightness = value;
-    this.circle.style.setProperty('--lightness', `${value * 100}%`);
+    this.colour = new Chromator({...this.colour.getHsl(), lightness: value});
   }
 
   get point(): HsPoint {
-    return this._point;
+    const { hue, saturation } = this.colour.getHsl();
+    return { hue, saturation };
   }
 
   set point(value: HsPoint) {
-    this._point = value;
-    this.pointElement.colour = new Chromator({...value, lightness: this.lightness});
+    const { lightness } = this.colour.getHsl();
+    this.colour = new Chromator({...value, lightness});
   }
 
   get circle() {
