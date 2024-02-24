@@ -8,6 +8,9 @@ If using NPM, run the following command:
 npm install chromator
 ```
 
+## Demo
+Se [the colour picker demo](https://tomaseng.github.io/Chromator/) for an example on how this package may be used.
+
 ## Usage
 
 ### Instantiation
