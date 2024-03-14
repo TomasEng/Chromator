@@ -165,7 +165,7 @@ export class Chromator {
   /**
    * Transforms the colour to its complementary colour.
    */
-  public complementarise(): Chromator {
+  public complementarise(): this {
     this.addHue(180);
     return this;
   }
@@ -173,7 +173,7 @@ export class Chromator {
   /**
    * Inverts the colour.
    */
-  public invert(): Chromator {
+  public invert(): this {
     this.complementarise().invertLightness();
     return this;
   }

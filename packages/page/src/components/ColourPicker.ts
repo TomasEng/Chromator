@@ -3,6 +3,7 @@ import './ColourPickerHsl';
 import { ColourPickerHsl } from './ColourPickerHsl';
 import './ColourPickerRgb';
 import { ColourPickerRgb } from './ColourPickerRgb';
+import './LayoutRow';
 
 const template = document.createElement('template');
 template.innerHTML = `
@@ -25,12 +26,6 @@ template.innerHTML = `
       padding: 0;
       margin: 0;
     }
-  
-    .sliders {
-      display: flex;
-      gap: 1em;
-      width: 100%;
-    }
     
     .slider {
       flex: 1;
@@ -41,10 +36,10 @@ template.innerHTML = `
     <input type="color" id="input"/>
     <p id="hexcode"></p>
   </shadow-box>
-  <div class="sliders">
+  <layout-row>
     <colour-picker-hsl id="hsl" class="slider"></colour-picker-hsl>
     <colour-picker-rgb id="rgb" class="slider"></colour-picker-rgb>
-  </div>
+  </layout-row>
 `;
 
 export class ColourPicker extends HTMLElement {

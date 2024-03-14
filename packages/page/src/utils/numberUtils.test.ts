@@ -1,4 +1,4 @@
-import { PolarCoords } from '../types/PolarCoords';
+import type { PolarCoords } from '../types/PolarCoords';
 import {
   cartesianToPolarDegrees,
   polarDegreesToCartesian,
@@ -31,7 +31,7 @@ describe('numberUtils', () => {
       [{ x: -1, y: -1 }, { left: 0, top: 1 }],
       [{ x: -1, y: -0.5 }, { left: 0, top: 0.75 }],
       [{ x: -1, y: 0.5 }, { left: 0, top: 0.25 }],
-      [{ x: -1, y: 1 }, { left: 0, top: 0 }],
+      [{ x: -1, y: 1 }, { left: 0, top: 0 }]
     ])('Converts %s to %s', (input, expectedOutput) => {
       expect(standardCoordsToScreenCoords(input)).toEqual(expectedOutput);
     });
@@ -61,7 +61,7 @@ describe('numberUtils', () => {
       [{ left: 0, top: 1 }, { x: -1, y: -1 }],
       [{ left: 0, top: 0.75 }, { x: -1, y: -0.5 }],
       [{ left: 0, top: 0.25 }, { x: -1, y: 0.5 }],
-      [{ left: 0, top: 0 }, { x: -1, y: 1 }],
+      [{ left: 0, top: 0 }, { x: -1, y: 1 }]
     ])('Converts %s to %s', (input, expectedOutput) => {
       expect(screenCoordsToStandardCoords(input)).toEqual(expectedOutput);
     });
