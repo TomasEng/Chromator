@@ -1,8 +1,9 @@
 import {Chromator} from 'chromator';
-import './ColourBox';
+import './ColourRow';
 import {ColourBox} from "./ColourBox";
 import './LayoutColumn';
 import {oppositeColours} from "../utils/colourUtils";
+import {ColourRow} from "./ColourRow";
 
 const template = document.createElement('template');
 template.innerHTML = `
@@ -11,15 +12,20 @@ template.innerHTML = `
       <label for="opposites">Number of opposites:</label>
       <input type="number" id="opposites" value="3" min="1" max="144"/>
     </div>
-    <layout-column id="boxes">
-      <colour-box id="maincolour"></colour-box>
-    </layout-column>
+    <div>
+      <label for="shades">Number of shades:</label>
+      <input type="number" id="shades" value="8" min="1" max="144"/>
+    </div>
+    <layout-row id="boxes">
+      <colour-row id="maincolour"></colour-row>
+    </layout-row>
   </layout-column>
 `;
 
 export class ColourProperties extends HTMLElement {
     private _colour: Chromator = new Chromator({hue: 0, saturation: 1, lightness: 0.5});
     private _numberOfOpposites = 3;
+    private _numberOfShades = 8;
 
     constructor() {
         super();
@@ -27,12 +33,16 @@ export class ColourProperties extends HTMLElement {
         this.shadowRoot!.appendChild(template.content.cloneNode(true));
     }
 
-    get mainColourBox(): ColourBox {
-        return this.shadowRoot!.querySelector('#maincolour') as ColourBox;
+    get mainColourRow(): ColourRow {
+        return this.shadowRoot!.querySelector('#maincolour') as ColourRow;
     }
 
     get oppositesInput(): HTMLInputElement {
-        return this.shadowRoot!.querySelector('input') as HTMLInputElement;
+        return this.shadowRoot!.querySelector('#opposites') as HTMLInputElement;
+    }
+
+    get shadesInput(): HTMLInputElement {
+        return this.shadowRoot!.querySelector('#shades') as HTMLInputElement;
     }
 
     get boxes(): HTMLElement {
@@ -45,7 +55,7 @@ export class ColourProperties extends HTMLElement {
 
     set colour(c: Chromator) {
         this._colour = c;
-        this.mainColourBox.colour = c;
+        this.mainColourRow.colour = c;
         this.setOpposites();
     }
 
@@ -58,17 +68,28 @@ export class ColourProperties extends HTMLElement {
         this.setOpposites();
     }
 
-    private otherColourBoxes: ColourBox[] = [];
+    get numberOfShades(): number {
+        return this._numberOfShades;
+    }
+
+    set numberOfShades(value: number) {
+        this._numberOfShades = value;
+        this.mainColourRow.numberOfShades = value;
+        this.otherColourRows.forEach(row => row.numberOfShades = value);
+    }
+
+    private otherColourRows: ColourRow[] = [];
 
     private setOpposites(): void {
         const opposites = oppositeColours(this.numberOfOpposites, this.colour);
         opposites.splice(0, 1);
-        this.otherColourBoxes.forEach(box => box.remove());
+        this.otherColourRows.forEach(box => box.remove());
         opposites.forEach(colour => {
-            const box = document.createElement('colour-box') as ColourBox;
-            box.colour = colour;
-            this.boxes.appendChild(box);
-            this.otherColourBoxes.push(box);
+            const row = document.createElement('colour-row') as ColourRow;
+            row.colour = colour;
+            row.numberOfShades = this.numberOfShades;
+            this.boxes.appendChild(row);
+            this.otherColourRows.push(row);
         });
     }
 
@@ -83,6 +104,10 @@ export class ColourProperties extends HTMLElement {
         this.oppositesInput.addEventListener('input', () => {
             this.numberOfOpposites = parseInt(this.oppositesInput.value);
             this.dispatchEvent(new CustomEvent('oppositeschange', {detail: this.numberOfOpposites}));
+        });
+
+        this.shadesInput.addEventListener('input', () => {
+            this.numberOfShades = parseInt(this.shadesInput.value);
         });
     }
 }
