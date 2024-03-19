@@ -1,25 +1,27 @@
 import {Chromator} from 'chromator';
 import './ColourRow';
-import {ColourBox} from "./ColourBox";
 import './LayoutColumn';
 import {oppositeColours} from "../utils/colourUtils";
 import {ColourRow} from "./ColourRow";
+import './ShadowBox';
 
 const template = document.createElement('template');
 template.innerHTML = `
-  <layout-column>
-    <div>
-      <label for="opposites">Number of opposites:</label>
-      <input type="number" id="opposites" value="3" min="1" max="144"/>
-    </div>
-    <div>
-      <label for="shades">Number of shades:</label>
-      <input type="number" id="shades" value="8" min="1" max="144"/>
-    </div>
-    <layout-row id="boxes">
-      <colour-row id="maincolour"></colour-row>
-    </layout-row>
-  </layout-column>
+  <shadow-box>
+    <layout-column>
+        <div>
+          <label for="opposites">Number of opposites:</label>
+          <input type="number" id="opposites" value="3" min="1" max="144"/>
+        </div>
+        <div>
+          <label for="shades">Number of shades:</label>
+          <input type="number" id="shades" value="8" min="1" max="144"/>
+        </div>
+        <layout-row id="boxes">
+          <colour-row id="maincolour"></colour-row>
+        </layout-row>
+    </layout-column>
+  </shadow-box>
 `;
 
 export class ColourProperties extends HTMLElement {

@@ -4,14 +4,16 @@ const template = document.createElement('template');
 template.innerHTML = `
   <style>
     :host {
-      display: block;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       width: 4rem;
       aspect-ratio: 1;
       border-radius: 0.5em;
-      box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+      box-shadow: rgba(60, 64, 67, 0.3) 0 1px 2px 0, rgba(60, 64, 67, 0.15) 0 1px 3px 1px;
     }
   </style>
-  <slot></slot>
+  <span id="hex"></span>
 `;
 
 export class ColourBox extends HTMLElement {
@@ -29,7 +31,14 @@ export class ColourBox extends HTMLElement {
 
   set colour(c: Chromator) {
     this._colour = c;
-    this.style.backgroundColor = c.getHexCode();
+    const hex = c.getHexCode();
+    this.style.backgroundColor = hex;
+    this.style.color = c.getHsl().lightness > 0.5 ? 'black' : 'white';
+    this.hexElement.textContent = hex;
+  }
+
+  get hexElement(): HTMLElement {
+    return this.shadowRoot!.querySelector('#hex')!;
   }
 
   connectedCallback(): void {
