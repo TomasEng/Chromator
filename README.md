@@ -48,11 +48,11 @@ console.log(red.getHslCode()); // hsl(0, 100%, 50%)
 console.log(red.getRgb()); // {red: 255, green: 0, blue: 0}
 console.log(red.getHsl()); // {hue: 0, saturation: 1, lightness: 0.5}
 console.log(red.getHsv()); // {hue: 0, saturation: 1, value: 1}
-console.log(red.getXyz()); // {x: 0.41246, y: 0.21267, z: 0.01933}
+console.log(red.getCieXyz()); // {x: 0.41246, y: 0.21267, z: 0.01933}
 console.log(red.getRgba()); // {red: 255, green: 0, blue: 0, alpha: 1}
 console.log(red.getHsla()); // {hue: 0, saturation: 1, lightness: 0.5, alpha: 1}
 console.log(red.getHsva()); // {hue: 0, saturation: 1, value: 1, alpha: 1}
-console.log(red.getXyza()); // {x: 0.41246, y: 0.21267, z: 0.01933, alpha: 1}
+console.log(red.getCieXyza()); // {x: 0.41246, y: 0.21267, z: 0.01933, alpha: 1}
 ```
 
 ### Lightness manipulation
