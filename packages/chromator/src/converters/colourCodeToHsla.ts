@@ -1,6 +1,14 @@
 import { type ColourCode } from '../types/ColourCode';
 import { type Hsla } from '../types/Hsla';
-import { hsvaToHsla, hsvToHsl, rgbaToHsla, rgbToHsl } from './colour-object-converters';
+import {
+  cieXyzaToHsla,
+  cieXyzToHsl,
+  cieXyzToRgb,
+  hsvaToHsla,
+  hsvToHsl,
+  rgbaToHsla,
+  rgbToHsl
+} from './colour-object-converters';
 import { namedColours } from '../data/namedColours';
 import { type NamedColour } from '../types/NamedColour';
 import { evaluateFormat } from '../utils';
@@ -18,7 +26,7 @@ import {
   shortHexWithoutHashToHsl,
   shortHexWithoutHashToHsla
 } from './string-to-hsl';
-import { isHsl, isHsla, isHsv, isHsva, isRgb, isRgba } from '../validators/objectValidators';
+import { isHsl, isHsla, isHsv, isHsva, isRgb, isRgba, isXyz, isXyza } from '../validators/objectValidators';
 
 export const colourCodeToHsla = (code: ColourCode): Hsla => {
   if (typeof code === 'string') return stringToHsla(code);
@@ -28,6 +36,8 @@ export const colourCodeToHsla = (code: ColourCode): Hsla => {
   if (isRgba(code)) return rgbaToHsla(code);
   if (isHsv(code)) return { ...hsvToHsl(code), alpha: 1 };
   if (isHsva(code)) return hsvaToHsla(code);
+  if (isXyz(code)) return { ...cieXyzToHsl(code), alpha: 1 };
+  if (isXyza(code)) return cieXyzaToHsla(code);
   throw new Error('The passed object is not a valid colour code.');
 };
 

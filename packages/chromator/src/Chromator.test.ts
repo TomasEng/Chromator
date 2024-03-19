@@ -54,6 +54,25 @@ describe('Chromator', () => {
     expect(chromator.getHsva()).toEqual({ hue: 0, saturation: 1, value: 1, alpha: 1 });
   });
 
+  test('getCieXyz', () => {
+    const orchid = new Chromator('rgb(218, 112, 214)');
+    expect(orchid.getCieXyz()).toEqual({
+      x: expect.closeTo(0.468446, 6),
+      y: expect.closeTo(0.313515, 6),
+      z: expect.closeTo(0.671893, 6)
+    });
+  });
+
+  test('getCieXyza', () => {
+    const transparentOrchid = new Chromator('rgba(218, 112, 214, 0.5)');
+    expect(transparentOrchid.getCieXyza()).toEqual({
+      x: expect.closeTo(0.468446, 6),
+      y: expect.closeTo(0.313515, 6),
+      z: expect.closeTo(0.671893, 6),
+      alpha: 0.5
+    });
+  });
+
   test('getRgbCode', () => {
     const orchid = new Chromator('orchid');
     expect(orchid.getRgbCode()).toBe('rgb(218, 112, 214)');
@@ -164,6 +183,13 @@ describe('Chromator', () => {
       const chromator = new Chromator({ hue: 302, saturation: 0.59, lightness: 0.65 });
       chromator.invert();
       expect(chromator.getHsl()).toEqual({ hue: 122, saturation: 0.59, lightness: 0.35 });
+    });
+  });
+
+  describe('getRelativeLuminance', () => {
+    it('Returns the relative luminance of the colour', () => {
+      const chromator = new Chromator('rgb(218, 112, 214)');
+      expect(chromator.getRelativeLuminance()).toBeCloseTo(0.313515, 6);
     });
   });
 });

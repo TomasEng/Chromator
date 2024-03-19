@@ -1,4 +1,5 @@
 import {
+  ensureWithinUnitInterval,
   evaluateFormat,
   floor,
   round
@@ -46,6 +47,20 @@ describe('utils', () => {
       values.forEach((value) => {
         expect(evaluateFormat(value)).toBe(format);
       });
+    });
+  });
+
+  describe('ensureWithinUnitInterval', () => {
+    it('Returns 0 if the value is less than 0', () => {
+      expect(ensureWithinUnitInterval(-0.1)).toBe(0);
+    });
+
+    it('Returns 1 if the value is greater than 1', () => {
+      expect(ensureWithinUnitInterval(1.1)).toBe(1);
+    });
+
+    it('Returns the value if it is within the unit interval', () => {
+      expect(ensureWithinUnitInterval(0.5)).toBe(0.5);
     });
   });
 });

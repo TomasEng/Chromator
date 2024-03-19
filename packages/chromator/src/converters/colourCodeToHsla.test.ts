@@ -2,6 +2,7 @@ import { colourCodeToHsla } from './colourCodeToHsla';
 import { testColours } from '../test-data/namedColourList';
 import { type Rgba } from '../types/Rgba';
 import { type Hsva } from '../types/Hsva';
+import { type Xyza } from '../types/Xyza.ts';
 
 describe('colourCodeToHsla', () => {
   it('Converts a HSL object to an HSLA object', () => {
@@ -58,6 +59,28 @@ describe('colourCodeToHsla', () => {
     const { orchid } = testColours;
     const alpha = 0.2;
     const transparentOrchid: Hsva = { ...orchid.hsv, alpha };
+    expect(colourCodeToHsla(transparentOrchid)).toEqual({
+      hue: expect.closeTo(orchid.hsl.hue, 2),
+      saturation: expect.closeTo(orchid.hsl.saturation, 4),
+      lightness: expect.closeTo(orchid.hsl.lightness, 4),
+      alpha
+    });
+  });
+
+  it('Converts a CIE XYZ object to an HSLA object', () => {
+    const { orchid } = testColours;
+    expect(colourCodeToHsla(orchid.cieXyz)).toEqual({
+      hue: expect.closeTo(orchid.hsl.hue, 2),
+      saturation: expect.closeTo(orchid.hsl.saturation, 4),
+      lightness: expect.closeTo(orchid.hsl.lightness, 4),
+      alpha: 1
+    });
+  });
+
+  it('Converts a CIE XYZA object to an HSLA object', () => {
+    const { orchid } = testColours;
+    const alpha = 0.2;
+    const transparentOrchid: Xyza = { ...orchid.cieXyz, alpha };
     expect(colourCodeToHsla(transparentOrchid)).toEqual({
       hue: expect.closeTo(orchid.hsl.hue, 2),
       saturation: expect.closeTo(orchid.hsl.saturation, 4),

@@ -30,11 +30,12 @@ const cyan = new Chromator('#0FF');
 const transparentMagenta = new Chromator('rgba(255, 0, 255, 0.5)');
 ```
 
-It also accepts objects in RGB(A), HSL(A) and HSV(A) formats:
+It also accepts objects in RGB(A), HSL(A), HSV(A) and XYZ(A) formats:
 ```typescript
 const red = new Chromator({red: 255, green: 0, blue: 0});
 const green = new Chromator({hue: 120, saturation: 1, lightness: 0.5});
 const blue = new Chromator({hue: 240, saturation: 1, value: 1, alpha: 1});
+const yellow = new Chromator({ x: 0.77003, y: 0.92783, z: 0.13853 });
 ```
 
 ### Conversion
@@ -47,9 +48,11 @@ console.log(red.getHslCode()); // hsl(0, 100%, 50%)
 console.log(red.getRgb()); // {red: 255, green: 0, blue: 0}
 console.log(red.getHsl()); // {hue: 0, saturation: 1, lightness: 0.5}
 console.log(red.getHsv()); // {hue: 0, saturation: 1, value: 1}
+console.log(red.getXyz()); // {x: 0.41246, y: 0.21267, z: 0.01933}
 console.log(red.getRgba()); // {red: 255, green: 0, blue: 0, alpha: 1}
 console.log(red.getHsla()); // {hue: 0, saturation: 1, lightness: 0.5, alpha: 1}
 console.log(red.getHsva()); // {hue: 0, saturation: 1, value: 1, alpha: 1}
+console.log(red.getXyza()); // {x: 0.41246, y: 0.21267, z: 0.01933, alpha: 1}
 ```
 
 ### Lightness manipulation
@@ -86,4 +89,13 @@ The `Chromator.invert` method is a combination of `Chromator.invertLightness` an
 ```typescript
 const colour = new Chromator('#FFCCCC');
 console.log(colour.invert().getHexCode()); // #003333
+```
+
+### Relative luminance
+The `Chromator.getRelativeLuminance` method returns the relative luminance of the colour, which is a measure of the brightness of the colour.
+It differs from the lightness in that it takes into account the human perception of brightness, and is used in the calculation of contrast ratios.
+The value corresponds to the `Y` value in the CIE XYZ colour space.
+```typescript
+const colour = new Chromator('#FF0000');
+console.log(colour.getRelativeLuminance()); // 0.21267
 ```

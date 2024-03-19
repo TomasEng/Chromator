@@ -17,3 +17,9 @@ export const evaluateFormat = (value: string): StringColourFormat | undefined =>
   }
   return undefined;
 };
+
+export const ensureWithinUnitInterval = (value: number): number => {
+  if (value < 0) return 0;
+  if (value > 1) return 1;
+  return value;
+};
