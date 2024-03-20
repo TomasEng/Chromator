@@ -12,14 +12,13 @@ export const oppositeColours = (num: number, baseColour: Chromator): Chromator[]
 };
 
 export const shades = (num: number, baseColour: Chromator): Chromator[] => {
-  const step = 1 / num;
+  const step = 1 / (num + 1);
   const baseHsl = baseColour.getHsl();
-  const baseLightness = baseHsl.lightness;
   const colours = [];
-  for (let i = 0; i < num; i++) {
-    const lightness = (baseLightness + (i * step)) % 1;
+  for (let i = 1; i <= num; i++) {
+    const lightness = i * step;
     const colour = new Chromator({ ...baseHsl, lightness });
     colours.push(colour);
   }
-  return colours.sort((a, b) => a.getHsl().lightness - b.getHsl().lightness);
+  return colours;
 };

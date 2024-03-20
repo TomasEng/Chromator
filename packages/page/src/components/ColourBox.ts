@@ -1,4 +1,5 @@
 import { Chromator } from 'chromator';
+import { round } from 'chromator/dist/utils';
 
 const template = document.createElement('template');
 template.innerHTML = `
@@ -32,8 +33,19 @@ export class ColourBox extends HTMLElement {
   set colour(c: Chromator) {
     this._colour = c;
     const hex = c.getHexCode();
+    const { hue, saturation, lightness } = c.getHsl();
+    const relativeLuminance = c.getRelativeLuminance();
+    const hueRounded = round(hue, 0);
+    const saturationRounded = round(saturation, 2);
+    const lightnessRounded = round(lightness, 2);
+    const relativeLuminanceRounded = round(relativeLuminance, 2);
+    const hueStr = Intl.NumberFormat().format(hueRounded);
+    const saturationStr = Intl.NumberFormat().format(saturationRounded);
+    const lightnessStr = Intl.NumberFormat().format(lightnessRounded);
+    const relativeLuminanceStr = Intl.NumberFormat().format(relativeLuminanceRounded);
     this.style.backgroundColor = hex;
-    this.style.color = c.getHsl().lightness > 0.5 ? 'black' : 'white';
+    this.style.color = relativeLuminance > 1 / 3 ? 'black' : 'white';
+    this.title = `Hue: ${hueStr}°; Saturation: ${saturationStr}; Lightness: ${lightnessStr}; Relative luminance: ${relativeLuminanceStr}`;
     this.hexElement.textContent = hex;
   }
 

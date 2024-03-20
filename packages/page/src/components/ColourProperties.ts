@@ -85,14 +85,22 @@ export class ColourProperties extends HTMLElement {
     private setOpposites(): void {
         const opposites = oppositeColours(this.numberOfOpposites, this.colour);
         opposites.splice(0, 1);
-        this.otherColourRows.forEach(box => box.remove());
-        opposites.forEach(colour => {
-            const row = document.createElement('colour-row') as ColourRow;
-            row.colour = colour;
-            row.numberOfShades = this.numberOfShades;
-            this.boxes.appendChild(row);
-            this.otherColourRows.push(row);
-        });
+        if (this.otherColourRows.length !== opposites.length) {
+            this.otherColourRows.forEach(box => box.remove());
+            opposites.forEach(colour => {
+                const row = document.createElement('colour-row') as ColourRow;
+                row.colour = colour;
+                row.numberOfShades = this.numberOfShades;
+                this.boxes.appendChild(row);
+                this.otherColourRows.push(row);
+            });
+        } else {
+            opposites.forEach((colour, index) => {
+                const row = this.otherColourRows[index];
+                row.colour = colour;
+                row.numberOfShades = this.numberOfShades;
+            });
+        }
     }
 
     connectedCallback(): void {

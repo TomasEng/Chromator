@@ -16,7 +16,7 @@ template.innerHTML = `
     }
   
     .root {
-      width: 600px;
+      width: fit-content;
       margin: auto;
       font-family: Calibri, Arial, sans-serif;
       font-size: 1rem;

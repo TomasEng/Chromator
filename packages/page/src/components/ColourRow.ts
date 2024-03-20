@@ -45,13 +45,19 @@ export class ColourRow extends HTMLElement {
 
   private setBoxes(): void {
     const colours = shades(this.numberOfShades, this.colour);
-    this.boxes.forEach(box => { box.remove(); });
-    colours.forEach(colour => {
-      const box = document.createElement('colour-box') as ColourBox;
-      box.colour = colour;
-      this.wrapper.appendChild(box);
-      this.boxes.push(box);
-    });
+    if (this.boxes.length !== colours.length) {
+      this.boxes.forEach(box => { box.remove(); });
+      colours.forEach(colour => {
+        const box = document.createElement('colour-box') as ColourBox;
+        box.colour = colour;
+        this.wrapper.appendChild(box);
+        this.boxes.push(box);
+      });
+    } else {
+      this.boxes.forEach((box, index) => {
+        box.colour = colours[index];
+      });
+    }
   }
 
   connectedCallback(): void {

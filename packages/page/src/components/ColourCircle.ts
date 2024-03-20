@@ -13,7 +13,6 @@ template.innerHTML = `
       --lightness: 50%;
       aspect-ratio: 1;
       border-radius: 50%;
-      width: 400px;
       background: radial-gradient(hsl(0, 0%, var(--lightness)), transparent 71%), conic-gradient(
         hsl(90, 100%, var(--lightness)) 0deg,
         hsl(60, 100%, var(--lightness)) 30deg,
