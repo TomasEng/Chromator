@@ -107,3 +107,4 @@ const colour = new Chromator(hsl);
 colour.setRelativeLuminance(0.5);
 const newHsl = colour.getHsl(); // { hue: 302, saturation: 0.59, lightness: 0.78 }
 ```
+
