@@ -1,4 +1,5 @@
 import { Chromator } from './Chromator';
+import { type NamedColour } from './types/NamedColour.ts';
 
 describe('Chromator', () => {
   it('Creates a Chromator from a string', () => {
@@ -190,6 +191,32 @@ describe('Chromator', () => {
     it('Returns the relative luminance of the colour', () => {
       const chromator = new Chromator('rgb(218, 112, 214)');
       expect(chromator.getRelativeLuminance()).toBeCloseTo(0.313515, 6);
+    });
+  });
+
+  describe('setRelativeLuminance', () => {
+    const testColours: NamedColour[] = ['orchid', 'black', 'white'];
+    describe.each(testColours)('When the given colour is %s', (colourName) => {
+      it.each([0, 0.01, 0.1, 0.25, 0.33, 0.5, 0.67, 0.75, 0.9, 0.99, 1])('Sets the relative luminance to %f', (luminance) => {
+        const colour = new Chromator(colourName);
+        const initialColour = colour.copy();
+        colour.setRelativeLuminance(luminance);
+        expect(colour.getRelativeLuminance()).toBeCloseTo(luminance, 4);
+        const initialHsl = initialColour.getHsl();
+        const newHsl = colour.getHsl();
+        expect(newHsl.hue).toBe(initialHsl.hue);
+        expect(newHsl.saturation).toBe(initialHsl.saturation);
+      });
+    });
+
+    it('Throws an error when the luminance is less than 0', () => {
+      const chromator = new Chromator('rgb(218, 112, 214)');
+      expect(() => chromator.setRelativeLuminance(-0.1)).toThrow();
+    });
+
+    it('Throws an error when the luminance is greater than 1', () => {
+      const chromator = new Chromator('rgb(218, 112, 214)');
+      expect(() => chromator.setRelativeLuminance(1.1)).toThrow();
     });
   });
 });

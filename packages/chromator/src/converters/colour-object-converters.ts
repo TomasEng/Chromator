@@ -187,7 +187,7 @@ export const hslaToHsva = (hsla: Hsla): Hsva => {
   return { ...hsv, alpha };
 };
 
-export const cieHslaToXyza = (hsla: Hsla): Xyza => {
+export const hslaToCieXyza = (hsla: Hsla): Xyza => {
   const { hue, saturation, lightness, alpha } = hsla;
   const hsl = { hue, saturation, lightness };
   const xyz = hslToCieXyz(hsl);
@@ -206,6 +206,17 @@ export const rgbToCieXyz = (rgb: Rgb): Xyz => {
   const y = red * 0.2126729 + green * 0.7151522 + blue * 0.072175;
   const z = red * 0.0193339 + green * 0.119192 + blue * 0.9503041;
   return { x, y, z };
+};
+
+export const relativeLuminanceFromHsl = (hsl: Hsl): number => {
+  const rgb = hslToRgb(hsl);
+  return relativeLuminanceFromRgb(rgb);
+};
+
+const relativeLuminanceFromRgb = (rgb: Rgb): number => {
+  const rgb1 = rgb255ToRgb1(rgb);
+  const { red, green, blue } = gammaExpandedRgb(rgb1);
+  return red * 0.2126729 + green * 0.7151522 + blue * 0.072175;
 };
 
 const gammaExpandedRgb = (srgb: Rgb): Rgb => {
@@ -233,9 +244,9 @@ export const cieXyzToHsl = (xyz: Xyz): Hsl => {
 
 export const cieXyzToRgb = (xyz: Xyz): Rgb => {
   const { x, y, z } = xyz;
-  const red = x * 3.2404542 + y * -1.5371385 + z * -0.4985314;
-  const green = x * -0.969266 + y * 1.8760108 + z * 0.041556;
-  const blue = x * 0.0556434 + y * -0.2040259 + z * 1.0572252;
+  const red = x * xyzToRgbRedX + y * xyzToRgbRedY + z * xyzToRgbRedZ;
+  const green = x * xyzToRgbGreenX + y * xyzToRgbGreenY + z * xyzToRgbGreenZ;
+  const blue = x * xyzToRgbBlueX + y * xyzToRgbBlueY + z * xyzToRgbBlueZ;
   const compressedRgb = gammaCompressedRgb({ red, green, blue });
   const normalizedRgb = ensureRgbWithinUnitScale(compressedRgb);
   return rgb1ToRgb255(normalizedRgb);
@@ -261,3 +272,13 @@ const gammaCompressedRgb = (linearRgb: Rgb): Rgb => {
 
 const gammaCompress = (value: number): number =>
   value <= 0.0031308 ? value * 12.92 : 1.055 * Math.pow(value, 1 / 2.4) - 0.055;
+
+const xyzToRgbRedX = 3.2404542;
+const xyzToRgbRedY = -1.5371385;
+const xyzToRgbRedZ = -0.4985314;
+const xyzToRgbGreenX = -0.969266;
+const xyzToRgbGreenY = 1.8760108;
+const xyzToRgbGreenZ = 0.041556;
+const xyzToRgbBlueX = 0.0556434;
+const xyzToRgbBlueY = -0.2040259;
+const xyzToRgbBlueZ = 1.0572252;

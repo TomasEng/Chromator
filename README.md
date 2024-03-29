@@ -65,7 +65,7 @@ console.log(red.darken(0.5).getHexCode()); // #800000
 There is also a method called `Chromator.invertLightness` that inverts the lightness of the colour:
 ```typescript
 const hsl = { hue: 302, saturation: 0.59, lightness: 0.65 };
-const colour = new Chromator({ hue: 302, saturation: 0.59, lightness: 0.65 });
+const colour = new Chromator(hsl);
 colour.invertLightness();
 const invertedHsl = colour.getHsl(); // { hue: 302, saturation: 0.59, lightness: 0.35 }
 ```
@@ -98,4 +98,12 @@ The value corresponds to the `Y` value in the CIE XYZ colour space.
 ```typescript
 const colour = new Chromator('#FF0000');
 console.log(colour.getRelativeLuminance()); // 0.21267
+```
+It is also possible to set a desired relative luminance value using the `Chromator.setRelativeLuminance` method.
+This changes the lightness of the colour in order to obtain the desired luminance while keeping the hue and saturation constant.
+```typescript
+const hsl = { hue: 302, saturation: 0.59, lightness: 0.65 };
+const colour = new Chromator(hsl);
+colour.setRelativeLuminance(0.5);
+const newHsl = colour.getHsl(); // { hue: 302, saturation: 0.59, lightness: 0.78 }
 ```

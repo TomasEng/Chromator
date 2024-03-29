@@ -3,7 +3,14 @@ import { type Hsl } from './types/Hsl';
 import { colourCodeToHsla } from './converters/colourCodeToHsla';
 import { type Rgb } from './types/Rgb';
 import { type Hsla } from './types/Hsla';
-import { hslaToHsva, hslToCieXyz, hslToHsv, hslToRgb, rgbToCieXyz } from './converters/colour-object-converters';
+import {
+  hslaToCieXyza,
+  hslaToHsva,
+  hslToCieXyz,
+  hslToHsv,
+  hslToRgb,
+  relativeLuminanceFromHsl
+} from './converters/colour-object-converters';
 import { type Rgba } from './types/Rgba';
 import { type Hsv } from './types/Hsv';
 import { type Hsva } from './types/Hsva';
@@ -12,7 +19,7 @@ import {
   rgbaObjectToRgbDecimalString,
   rgbaObjectToRgbHexString
 } from './converters/hsla-to-string';
-import { modulo } from './utils';
+import { findInputToAlwaysIncreasingFunc, modulo } from './utils';
 import { type Xyz } from './types/Xyz';
 import { type Xyza } from './types/Xyza';
 
@@ -108,10 +115,7 @@ export class Chromator {
      * Returns the CIE XYZA representation of the colour.
      */
   public getCieXyza(): Xyza {
-    return {
-      ...this.getCieXyz(),
-      alpha: this.alpha
-    };
+    return hslaToCieXyza(this.getHsla());
   }
 
   /**
@@ -218,5 +222,28 @@ export class Chromator {
   public getRelativeLuminance(): number {
     const cieXyz = this.getCieXyz();
     return cieXyz.y;
+  }
+
+  /**
+     * Transforms the lightness of the colour in order to obtain the given relative luminance.
+     * Does not change the hue or saturation.
+     */
+  public setRelativeLuminance(luminance: number): this {
+    if (luminance < 0 || luminance > 1) {
+      throw new Error('Relative luminance must be between 0 and 1. Received ' + luminance + '.');
+    }
+    const lumFunc = (lightness: number): number => {
+      const hsl: Hsl = {
+        ...this.hsl,
+        lightness
+      };
+      return relativeLuminanceFromHsl(hsl);
+    };
+    this.hsl.lightness = findInputToAlwaysIncreasingFunc(
+      lumFunc,
+      luminance,
+      0.00001
+    );
+    return this;
   }
 }
