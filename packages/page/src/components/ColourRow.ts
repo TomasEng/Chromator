@@ -3,6 +3,7 @@ import { shades } from '../utils/colourUtils';
 import { type ColourBox } from './ColourBox';
 import './ColourBox';
 import './LayoutColumn';
+import { type ShadesProfile } from '../types/ShadesProfile';
 
 const template = document.createElement('template');
 template.innerHTML = `
@@ -11,7 +12,8 @@ template.innerHTML = `
 
 export class ColourRow extends HTMLElement {
   private _colour: Chromator = new Chromator({ hue: 0, saturation: 1, lightness: 0.5 });
-  private _numberOfShades = 8;
+  private _numberOfShades = 6;
+  private _shadesProfile: ShadesProfile = 'luminance';
 
   constructor() {
     super();
@@ -41,10 +43,19 @@ export class ColourRow extends HTMLElement {
     this.setBoxes();
   }
 
+  get shadesProfile(): ShadesProfile {
+    return this._shadesProfile;
+  }
+
+  set shadesProfile(value: ShadesProfile) {
+    this._shadesProfile = value;
+    this.setBoxes();
+  }
+
   private readonly boxes: ColourBox[] = [];
 
   private setBoxes(): void {
-    const colours = shades(this.numberOfShades, this.colour);
+    const colours = shades(this.numberOfShades, this.colour, this.shadesProfile);
     if (this.boxes.length !== colours.length) {
       this.boxes.forEach(box => { box.remove(); });
       colours.forEach(colour => {

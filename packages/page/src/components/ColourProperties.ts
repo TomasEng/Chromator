@@ -4,6 +4,7 @@ import './LayoutColumn';
 import {oppositeColours} from "../utils/colourUtils";
 import {ColourRow} from "./ColourRow";
 import './ShadowBox';
+import {ShadesProfile} from "../types/ShadesProfile";
 
 const template = document.createElement('template');
 template.innerHTML = `
@@ -15,8 +16,16 @@ template.innerHTML = `
         </div>
         <div>
           <label for="shades">Number of shades:</label>
-          <input type="number" id="shades" value="8" min="1" max="144"/>
+          <input type="number" id="shades" value="6" min="1" max="144"/>
         </div>
+        <fieldset>
+            <legend>Shade linearity profile</legend>
+            <input type="radio" id="lightness" name="shade" value="lightness" checked>
+            <label for="lightness">Lightness</label>
+            <br/>
+            <input type="radio" id="luminance" name="shade" value="luminance">
+            <label for="luminance">Relative luminance</label>
+        </fieldset>
         <layout-row id="boxes">
           <colour-row id="maincolour"></colour-row>
         </layout-row>
@@ -27,7 +36,8 @@ template.innerHTML = `
 export class ColourProperties extends HTMLElement {
     private _colour: Chromator = new Chromator({hue: 0, saturation: 1, lightness: 0.5});
     private _numberOfOpposites = 3;
-    private _numberOfShades = 8;
+    private _numberOfShades = 6;
+    private _shadesProfile: ShadesProfile = 'luminance';
 
     constructor() {
         super();
@@ -45,6 +55,14 @@ export class ColourProperties extends HTMLElement {
 
     get shadesInput(): HTMLInputElement {
         return this.shadowRoot!.querySelector('#shades') as HTMLInputElement;
+    }
+
+    get lightnessRadio(): HTMLInputElement {
+        return this.shadowRoot!.querySelector('#lightness') as HTMLInputElement;
+    }
+
+    get luminanceRadio(): HTMLInputElement {
+        return this.shadowRoot!.querySelector('#luminance') as HTMLInputElement;
     }
 
     get boxes(): HTMLElement {
@@ -80,6 +98,17 @@ export class ColourProperties extends HTMLElement {
         this.otherColourRows.forEach(row => row.numberOfShades = value);
     }
 
+    get shadesProfile(): ShadesProfile {
+        return this._shadesProfile;
+    }
+
+    set shadesProfile(value: ShadesProfile) {
+        this._shadesProfile = value;
+        this.setShadeProfileInput();
+        this.mainColourRow.shadesProfile = value;
+        this.otherColourRows.forEach(row => row.shadesProfile = value);
+    }
+
     private otherColourRows: ColourRow[] = [];
 
     private setOpposites(): void {
@@ -91,6 +120,7 @@ export class ColourProperties extends HTMLElement {
                 const row = document.createElement('colour-row') as ColourRow;
                 row.colour = colour;
                 row.numberOfShades = this.numberOfShades;
+                row.shadesProfile = this.shadesProfile;
                 this.boxes.appendChild(row);
                 this.otherColourRows.push(row);
             });
@@ -103,6 +133,17 @@ export class ColourProperties extends HTMLElement {
         }
     }
 
+    setShadeProfileInput(): void {
+        switch (this.shadesProfile) {
+            case 'lightness':
+                this.lightnessRadio.checked = true;
+                break;
+            case 'luminance':
+                this.luminanceRadio.checked = true;
+                break;
+        }
+    }
+
     connectedCallback(): void {
         const initialValue = this.getAttribute('value');
         if (initialValue != null) {
@@ -110,6 +151,7 @@ export class ColourProperties extends HTMLElement {
         }
 
         this.setOpposites();
+        this.setShadeProfileInput();
 
         this.oppositesInput.addEventListener('input', () => {
             this.numberOfOpposites = parseInt(this.oppositesInput.value);
@@ -118,6 +160,18 @@ export class ColourProperties extends HTMLElement {
 
         this.shadesInput.addEventListener('input', () => {
             this.numberOfShades = parseInt(this.shadesInput.value);
+        });
+
+        this.lightnessRadio.addEventListener('change', () => {
+            if (this.lightnessRadio.checked) {
+                this.shadesProfile = 'lightness';
+            }
+        });
+
+        this.luminanceRadio.addEventListener('change', () => {
+            if (this.luminanceRadio.checked) {
+                this.shadesProfile = 'luminance';
+            }
         });
     }
 }
