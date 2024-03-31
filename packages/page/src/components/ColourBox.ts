@@ -44,7 +44,7 @@ export class ColourBox extends HTMLElement {
     const lightnessStr = Intl.NumberFormat().format(lightnessRounded);
     const relativeLuminanceStr = Intl.NumberFormat().format(relativeLuminanceRounded);
     this.style.backgroundColor = hex;
-    this.style.color = relativeLuminance > 1 / 3 ? 'black' : 'white';
+    this.style.color = relativeLuminance > 0.18 ? 'black' : 'white';
     this.title = `Hue: ${hueStr}°; Saturation: ${saturationStr}; Lightness: ${lightnessStr}; Relative luminance: ${relativeLuminanceStr}`;
     this.hexElement.textContent = hex;
   }
