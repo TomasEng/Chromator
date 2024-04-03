@@ -5,12 +5,9 @@ import { type Rgb } from './types/Rgb';
 import { type Hsla } from './types/Hsla';
 import {
   hslaToCieXyza,
-  hslaToHsva,
   hslToCieXyz,
-  hslToHsv,
-  hslToRgb,
   relativeLuminanceFromHsl
-} from './converters/colour-object-converters';
+} from './converters/hsl-xyz';
 import { type Rgba } from './types/Rgba';
 import { type Hsv } from './types/Hsv';
 import { type Hsva } from './types/Hsva';
@@ -22,6 +19,8 @@ import {
 import { findInputToAlwaysIncreasingFunc, modulo } from './utils';
 import { type Xyz } from './types/Xyz';
 import { type Xyza } from './types/Xyza';
+import { hslaToRgba, hslToRgb } from './converters/hsl-rgb';
+import { hslaToHsva, hslToHsv } from './converters/hsl-hsv';
 
 export class Chromator {
   private readonly hsl: Hsl; // HSL is used as the base since all conversion functions from the HSL space are mathematically surjective.
@@ -84,10 +83,7 @@ export class Chromator {
      * Returns the RGBA representation of the colour.
      */
   public getRgba(): Rgba {
-    return {
-      ...this.getRgb(),
-      alpha: this.alpha
-    };
+    return hslaToRgba(this.getHsla());
   }
 
   /**

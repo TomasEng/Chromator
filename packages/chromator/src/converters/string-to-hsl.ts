@@ -2,7 +2,7 @@ import { type Hsl } from '../types/Hsl';
 import { colourFormatRegex } from '../data/colourFormatRegex';
 import { numberFromPercentageOrUnitInterval } from './string-to-number';
 import { type Hsla } from '../types/Hsla';
-import { rgbaToHsla, rgbToHsl } from './colour-object-converters';
+import { rgbaToHsla, rgbToHsl } from './hsl-rgb';
 import {
   hexWithHashToRgb,
   hexWithHashToRgba,

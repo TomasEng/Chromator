@@ -2,13 +2,8 @@ import { type ColourCode } from '../types/ColourCode';
 import { type Hsla } from '../types/Hsla';
 import {
   cieXyzaToHsla,
-  cieXyzToHsl,
-  cieXyzToRgb,
-  hsvaToHsla,
-  hsvToHsl,
-  rgbaToHsla,
-  rgbToHsl
-} from './colour-object-converters';
+  cieXyzToHsl
+} from './hsl-xyz';
 import { namedColours } from '../data/namedColours';
 import { type NamedColour } from '../types/NamedColour';
 import { evaluateFormat } from '../utils';
@@ -27,6 +22,8 @@ import {
   shortHexWithoutHashToHsla
 } from './string-to-hsl';
 import { isHsl, isHsla, isHsv, isHsva, isRgb, isRgba, isXyz, isXyza } from '../validators/objectValidators';
+import { rgbaToHsla, rgbToHsl } from './hsl-rgb';
+import { hsvaToHsla, hsvToHsl } from './hsl-hsv';
 
 export const colourCodeToHsla = (code: ColourCode): Hsla => {
   if (typeof code === 'string') return stringToHsla(code);
