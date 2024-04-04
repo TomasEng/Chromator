@@ -9,18 +9,16 @@ export const hslToLab = (hsl: Hsl): Lab => {
 };
 
 const xyzToLab = ({ x, y, z }: Xyz): Lab => {
-  const xr = x / xn;
-  const yr = y / yn;
-  const zr = z / zn;
+  const xr = x / referenceWhite.x;
+  const yr = y / referenceWhite.y;
+  const zr = z / referenceWhite.z;
   const L = 116 * f(yr) - 16;
   const a = 500 * (f(xr) - f(yr));
   const b = 200 * (f(yr) - f(zr));
   return { L, a, b };
 };
 
-const xn = 0.95047;
-const yn = 1.00000;
-const zn = 1.08883;
+const referenceWhite: Xyz = { x: 0.95047, y: 1.00000, z: 1.08883 };
 
 const f = (t: number): number =>
   t > epsilon ? Math.cbrt(t) : ((kappa * t + 16) / 116);
@@ -34,9 +32,9 @@ export const labToHsl = (lab: Lab): Hsl => {
 };
 
 const labToXyz = (lab: Lab): Xyz => {
-  const x = xr(lab) * xn;
-  const y = yr(lab) * yn;
-  const z = zr(lab) * zn;
+  const x = xr(lab) * referenceWhite.x;
+  const y = yr(lab) * referenceWhite.y;
+  const z = zr(lab) * referenceWhite.z;
   return { x, y, z };
 };
 
