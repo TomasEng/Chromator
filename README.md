@@ -30,12 +30,13 @@ const cyan = new Chromator('#0FF');
 const transparentMagenta = new Chromator('rgba(255, 0, 255, 0.5)');
 ```
 
-It also accepts objects in RGB(A), HSL(A), HSV(A) and XYZ(A) formats:
+It also accepts objects in RGB(A), HSL(A), HSV(A), XYZ(A) and LAB(A) formats:
 ```typescript
 const red = new Chromator({red: 255, green: 0, blue: 0});
 const green = new Chromator({hue: 120, saturation: 1, lightness: 0.5});
 const blue = new Chromator({hue: 240, saturation: 1, value: 1, alpha: 1});
 const yellow = new Chromator({ x: 0.77003, y: 0.92783, z: 0.13853 });
+const cyan = new Chromator({ L: 91.1132, a: -48.0875, b: -14.1312 });
 ```
 
 ### Conversion
@@ -53,6 +54,8 @@ console.log(red.getRgba()); // {red: 255, green: 0, blue: 0, alpha: 1}
 console.log(red.getHsla()); // {hue: 0, saturation: 1, lightness: 0.5, alpha: 1}
 console.log(red.getHsva()); // {hue: 0, saturation: 1, value: 1, alpha: 1}
 console.log(red.getCieXyza()); // {x: 0.41246, y: 0.21267, z: 0.01933, alpha: 1}
+console.log(red.getLab()); // {L: 53.2408, a: 80.0925, b: 67.2032}
+console.log(red.getLaba()); // {L: 53.2408, a: 80.0925, b: 67.2032, alpha: 1}
 ```
 
 ### Lightness manipulation
@@ -107,3 +110,4 @@ const colour = new Chromator(hsl);
 colour.setRelativeLuminance(0.5);
 const newHsl = colour.getHsl(); // { hue: 302, saturation: 0.59, lightness: 0.78 }
 ```
+
