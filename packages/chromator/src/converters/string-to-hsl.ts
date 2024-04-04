@@ -1,6 +1,10 @@
 import { type Hsl } from '../types/Hsl';
 import { colourFormatRegex } from '../data/colourFormatRegex';
-import { numberFromPercentageOrUnitInterval } from './string-to-number';
+import {
+  numberFromPercentageOrUnitInterval,
+  numberFromScaledPercentage,
+  numberFromScaledPercentageOrScale
+} from './string-to-number';
 import { type Hsla } from '../types/Hsla';
 import { rgbaToHsla, rgbToHsl } from './hsl-rgb';
 import {
@@ -15,6 +19,8 @@ import {
   shortHexWithoutHashToRgb,
   shortHexWithoutHashToRgba
 } from './string-to-rgb';
+import { type Laba } from '../types/Laba';
+import { labaToHsla } from './hsl-lab';
 
 export const hslStringToHsl = (value: string): Hsl => {
   const regex = colourFormatRegex.hsl;
@@ -35,6 +41,19 @@ export const hslaStringToHsla = (value: string): Hsla => {
     lightness: numberFromPercentageOrUnitInterval(lightness),
     alpha: numberFromPercentageOrUnitInterval(alpha)
   };
+};
+
+export const labStringToHsla = (value: string): Hsla =>
+  labaToHsla(labStringToLaba(value));
+
+export const labStringToLaba = (value: string): Laba => {
+  const regex = colourFormatRegex.lab;
+  const { L, a, b, alpha } = regex.exec(value)!.groups!;
+  const LNumber = L === 'none' ? 0 : numberFromScaledPercentageOrScale(L, 100);
+  const aNumber = a === 'none' ? 0 : numberFromScaledPercentageOrScale(a, 125);
+  const bNumber = b === 'none' ? 0 : numberFromScaledPercentageOrScale(b, 125);
+  const alphaNumber = alpha === undefined ? 1 : numberFromPercentageOrUnitInterval(alpha);
+  return { L: LNumber, a: aNumber, b: bNumber, alpha: alphaNumber };
 };
 
 export const rgb255StringToHsl = (value: string): Hsl => {

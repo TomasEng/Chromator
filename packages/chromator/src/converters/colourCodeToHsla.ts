@@ -13,7 +13,7 @@ import {
   hexWithoutHashToHsl,
   hexWithoutHashToHsla,
   hslaStringToHsla,
-  hslStringToHsl,
+  hslStringToHsl, labStringToHsla,
   rgb255StringToHsl,
   rgba255StringToHsla,
   shortHexWithHashToHsl,
@@ -21,9 +21,21 @@ import {
   shortHexWithoutHashToHsl,
   shortHexWithoutHashToHsla
 } from './string-to-hsl';
-import { isHsl, isHsla, isHsv, isHsva, isRgb, isRgba, isXyz, isXyza } from '../validators/objectValidators';
+import {
+  isHsl,
+  isHsla,
+  isHsv,
+  isHsva,
+  isLab,
+  isLaba,
+  isRgb,
+  isRgba,
+  isXyz,
+  isXyza
+} from '../validators/objectValidators';
 import { rgbaToHsla, rgbToHsl } from './hsl-rgb';
 import { hsvaToHsla, hsvToHsl } from './hsl-hsv';
+import { labaToHsla, labToHsl } from './hsl-lab';
 
 export const colourCodeToHsla = (code: ColourCode): Hsla => {
   if (typeof code === 'string') return stringToHsla(code);
@@ -35,6 +47,8 @@ export const colourCodeToHsla = (code: ColourCode): Hsla => {
   if (isHsva(code)) return hsvaToHsla(code);
   if (isXyz(code)) return { ...cieXyzToHsl(code), alpha: 1 };
   if (isXyza(code)) return cieXyzaToHsla(code);
+  if (isLab(code)) return { ...labToHsl(code), alpha: 1 };
+  if (isLaba(code)) return labaToHsla(code);
   throw new Error('The passed object is not a valid colour code.');
 };
 
@@ -45,6 +59,8 @@ const stringToHsla = (value: string): Hsla => {
       return { ...hslStringToHsl(value), alpha: 1 };
     case 'hsla':
       return hslaStringToHsla(value);
+    case 'lab':
+      return labStringToHsla(value);
     case 'rgbDecimal':
       return { ...rgb255StringToHsl(value), alpha: 1 };
     case 'rgbaDecimal':

@@ -38,5 +38,19 @@ export const validColourCodes: { [format in StringColourFormat]: string[] } = {
     'hsla(240, 100%, 50%, 0.5)',
     'hsla(120, 100%, 50%, 0.25)',
     'HSLA(0, 0%, 0%, 0.5)'
+  ],
+  lab: [
+    'lab(0 0 0)',
+    'lab(100% 0 0)',
+    'lab(0% 125 125)',
+    'lab(100% 100% 50%)',
+    'lab(100 -125 -125)',
+    'lab(1 2 -3)',
+    'LAB(1 2 -3)',
+    'lab(1 2 -3 / 0)',
+    'lab(1 2 -3 / 0.5)',
+    'lab(1 2 -3 / 1)',
+    'lab(1 2 -3 / 50%)',
+    'lab(none none none)'
   ]
 };

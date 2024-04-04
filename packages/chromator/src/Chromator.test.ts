@@ -74,6 +74,25 @@ describe('Chromator', () => {
     });
   });
 
+  test('getLab', () => {
+    const orchid = new Chromator('rgb(218, 112, 214)');
+    expect(orchid.getLab()).toEqual({
+      L: expect.closeTo(62.8032, 3),
+      a: expect.closeTo(55.2824, 3),
+      b: expect.closeTo(-34.4046, 3)
+    });
+  });
+
+  test('getLaba', () => {
+    const transparentOrchid = new Chromator('rgba(218, 112, 214, 0.5)');
+    expect(transparentOrchid.getLaba()).toEqual({
+      L: expect.closeTo(62.8032, 3),
+      a: expect.closeTo(55.2824, 3),
+      b: expect.closeTo(-34.4046, 3),
+      alpha: 0.5
+    });
+  });
+
   test('getRgbCode', () => {
     const orchid = new Chromator('orchid');
     expect(orchid.getRgbCode()).toBe('rgb(218, 112, 214)');
@@ -93,6 +112,13 @@ describe('Chromator', () => {
     expect(orchid.getHslCode()).toBe('hsl(302, 59%, 65%)');
     const transparentOrchid = new Chromator('rgba(218, 112, 214, 0.5)');
     expect(transparentOrchid.getHslCode()).toBe('hsla(302, 59%, 65%, 0.5)');
+  });
+
+  test('getLabCode', () => {
+    const orchid = new Chromator('orchid');
+    expect(orchid.getLabCode()).toBe('lab(63 55 -34)');
+    const transparentOrchid = new Chromator('rgba(218, 112, 214, 0.5)');
+    expect(transparentOrchid.getLabCode()).toBe('lab(63 55 -34 / 0.5)');
   });
 
   describe('lighten', () => {

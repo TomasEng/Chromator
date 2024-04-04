@@ -12,15 +12,18 @@ import { type Rgba } from './types/Rgba';
 import { type Hsv } from './types/Hsv';
 import { type Hsva } from './types/Hsva';
 import {
-  hslaObjectToHslString,
+  hslaObjectToHslString, labaObjectToLabString,
   rgbaObjectToRgbDecimalString,
   rgbaObjectToRgbHexString
-} from './converters/hsla-to-string';
+} from './converters/object-to-string';
 import { findInputToAlwaysIncreasingFunc, modulo } from './utils';
 import { type Xyz } from './types/Xyz';
 import { type Xyza } from './types/Xyza';
 import { hslaToRgba, hslToRgb } from './converters/hsl-rgb';
 import { hslaToHsva, hslToHsv } from './converters/hsl-hsv';
+import { type Lab } from './types/Lab';
+import { hslaToLaba, hslToLab } from './converters/hsl-lab';
+import { type Laba } from './types/Laba';
 
 export class Chromator {
   private readonly hsl: Hsl; // HSL is used as the base since all conversion functions from the HSL space are mathematically surjective.
@@ -108,10 +111,24 @@ export class Chromator {
   }
 
   /**
-     * Returns the CIE XYZA representation of the colour.
+     * Returns the CIE XYZ representation of the colour including the alpha value.
      */
   public getCieXyza(): Xyza {
     return hslaToCieXyza(this.getHsla());
+  }
+
+  /**
+   * Returns the CIE L*a*b* representation of the colour.
+   */
+  public getLab(): Lab {
+    return hslToLab(this.hsl);
+  }
+
+  /**
+   * Returns the CIE L*a*b* representation of the colour including the alpha value.
+   */
+  public getLaba(): Laba {
+    return hslaToLaba(this.getHsla());
   }
 
   /**
@@ -142,6 +159,16 @@ export class Chromator {
      */
   public getHslCode(): string {
     return hslaObjectToHslString(this.getHsla());
+  }
+
+  /**
+     * Returns the CIE L*a*b* CSS code of the colour.
+     * @example
+     * const red = new Chromator('blue');
+     * red.getLabCode(); // 'lab(53 80 67)'
+     */
+  public getLabCode(): string {
+    return labaObjectToLabString(this.getLaba());
   }
 
   /**

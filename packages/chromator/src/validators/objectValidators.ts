@@ -7,6 +7,8 @@ import { type Hsv } from '../types/Hsv';
 import { type Hsva } from '../types/Hsva';
 import { type Xyz } from '../types/Xyz';
 import { type Xyza } from '../types/Xyza';
+import { type Lab } from '../types/Lab';
+import { type Laba } from '../types/Laba';
 
 export const isRgb = (value: ColourCode): value is Rgb =>
   (value as Rgb).red !== undefined &&
@@ -55,3 +57,15 @@ export const isXyza = (value: ColourCode): value is Xyza =>
     (value as Xyza).y !== undefined &&
     (value as Xyza).z !== undefined &&
     (value as Xyza).alpha !== undefined;
+
+export const isLab = (value: ColourCode): value is Lab =>
+  (value as Lab).L !== undefined &&
+    (value as Lab).a !== undefined &&
+    (value as Lab).b !== undefined &&
+    (value as Laba).alpha === undefined;
+
+export const isLaba = (value: ColourCode): value is Laba =>
+  (value as Laba).L !== undefined &&
+    (value as Laba).a !== undefined &&
+    (value as Laba).b !== undefined &&
+    (value as Laba).alpha !== undefined;

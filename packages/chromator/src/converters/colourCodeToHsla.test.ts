@@ -3,6 +3,7 @@ import { testColours } from '../test-data/namedColourList';
 import { type Rgba } from '../types/Rgba';
 import { type Hsva } from '../types/Hsva';
 import { type Xyza } from '../types/Xyza.ts';
+import { type Laba } from '../types/Laba.ts';
 
 describe('colourCodeToHsla', () => {
   it('Converts a HSL object to an HSLA object', () => {
@@ -81,6 +82,28 @@ describe('colourCodeToHsla', () => {
     const { orchid } = testColours;
     const alpha = 0.2;
     const transparentOrchid: Xyza = { ...orchid.cieXyz, alpha };
+    expect(colourCodeToHsla(transparentOrchid)).toEqual({
+      hue: expect.closeTo(orchid.hsl.hue, 2),
+      saturation: expect.closeTo(orchid.hsl.saturation, 4),
+      lightness: expect.closeTo(orchid.hsl.lightness, 4),
+      alpha
+    });
+  });
+
+  it('Converts an LAB object to an HSLA object', () => {
+    const { orchid } = testColours;
+    expect(colourCodeToHsla(orchid.lab)).toEqual({
+      hue: expect.closeTo(orchid.hsl.hue, 2),
+      saturation: expect.closeTo(orchid.hsl.saturation, 4),
+      lightness: expect.closeTo(orchid.hsl.lightness, 4),
+      alpha: 1
+    });
+  });
+
+  it('Converts an LABA object to an HSLA object', () => {
+    const { orchid } = testColours;
+    const alpha = 0.2;
+    const transparentOrchid: Laba = { ...orchid.lab, alpha };
     expect(colourCodeToHsla(transparentOrchid)).toEqual({
       hue: expect.closeTo(orchid.hsl.hue, 2),
       saturation: expect.closeTo(orchid.hsl.saturation, 4),
@@ -203,6 +226,15 @@ describe('colourCodeToHsla', () => {
       saturation: expect.closeTo(0.14, 2),
       lightness: expect.closeTo(0.53, 2),
       alpha: expect.closeTo(0.8, 2)
+    });
+  });
+
+  it('Converts an LAB string to an HSLA object', () => {
+    expect(colourCodeToHsla('lab(63 55 -34)')).toEqual({
+      hue: expect.closeTo(303, 0),
+      saturation: expect.closeTo(0.59, 2),
+      lightness: expect.closeTo(0.65, 2),
+      alpha: 1
     });
   });
 

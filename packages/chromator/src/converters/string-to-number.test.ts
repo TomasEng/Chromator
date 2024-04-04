@@ -1,7 +1,7 @@
 import {
   hexPairToDecimal,
   numberFromPercentage,
-  numberFromPercentageOrUnitInterval,
+  numberFromPercentageOrUnitInterval, numberFromScaledPercentage, numberFromScaledPercentageOrScale,
   shortHexToDecimal
 } from './string-to-number';
 
@@ -35,6 +35,16 @@ describe('String to number converters', () => {
     });
   });
 
+  describe('numberFromScaledPercentage', () => {
+    it('Returns the number corresponding to the given percentage string scaled by the given value', () => {
+      expect(numberFromScaledPercentage('0%', 125)).toBeCloseTo(0, 6);
+      expect(numberFromScaledPercentage('0.0%', 125)).toBeCloseTo(0, 6);
+      expect(numberFromScaledPercentage('1%', 125)).toBeCloseTo(1.25, 6);
+      expect(numberFromScaledPercentage('1.1%', 125)).toBeCloseTo(1.375, 6);
+      expect(numberFromScaledPercentage('100%', 125)).toBeCloseTo(125, 6);
+    });
+  });
+
   describe('numberFromPercentageOrUnitInterval', () => {
     it('Returns the number corresponding to the given percentage', () => {
       expect(numberFromPercentageOrUnitInterval('0%')).toBeCloseTo(0, 6);
@@ -50,6 +60,27 @@ describe('String to number converters', () => {
       expect(numberFromPercentageOrUnitInterval('1')).toBeCloseTo(1, 6);
       expect(numberFromPercentageOrUnitInterval('1.0')).toBeCloseTo(1, 6);
       expect(numberFromPercentageOrUnitInterval('0.1')).toBeCloseTo(0.1, 6);
+    });
+  });
+
+  describe('numberFromScaledPercentageOrScale', () => {
+    it('Returns the number corresponding to the given percentage when the given string is a percentage', () => {
+      expect(numberFromScaledPercentageOrScale('0%', 125)).toBeCloseTo(0, 6);
+      expect(numberFromScaledPercentageOrScale('0.0%', 125)).toBeCloseTo(0, 6);
+      expect(numberFromScaledPercentageOrScale('1%', 125)).toBeCloseTo(1.25, 6);
+      expect(numberFromScaledPercentageOrScale('1.1%', 125)).toBeCloseTo(1.375, 6);
+      expect(numberFromScaledPercentageOrScale('100%', 125)).toBeCloseTo(125, 6);
+      expect(numberFromScaledPercentageOrScale('200%', 125)).toBeCloseTo(250, 6);
+    });
+
+    it('Returns the given number when it is not a percentage', () => {
+      expect(numberFromScaledPercentageOrScale('0', 125)).toBe(0);
+      expect(numberFromScaledPercentageOrScale('0.0', 125)).toBe(0);
+      expect(numberFromScaledPercentageOrScale('1', 125)).toBe(1);
+      expect(numberFromScaledPercentageOrScale('1.0', 125)).toBe(1);
+      expect(numberFromScaledPercentageOrScale('0.1', 125)).toBe(0.1);
+      expect(numberFromScaledPercentageOrScale('125', 125)).toBe(125);
+      expect(numberFromScaledPercentageOrScale('200', 125)).toBe(200);
     });
   });
 });

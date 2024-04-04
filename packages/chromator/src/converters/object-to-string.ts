@@ -2,6 +2,7 @@ import { type Rgba } from '../types/Rgba';
 import { decimalToHexPair, numberToPercentage } from './number-to-string';
 import { type Hsla } from '../types/Hsla';
 import { round } from '../utils';
+import { type Laba } from '../types/Laba';
 
 export const hslaObjectToHslString = (hsla: Hsla): string => {
   const { hue, saturation, lightness, alpha } = hsla;
@@ -38,4 +39,17 @@ export const rgbaObjectToRgbHexString = (rgba: Rgba): string => {
   const blueHex = decimalToHexPair(blue);
   const alphaHex = alpha === 1 ? '' : decimalToHexPair(round(alpha * 255));
   return `#${redHex}${greenHex}${blueHex}${alphaHex}`;
+};
+
+export const labaObjectToLabString = (laba: Laba): string => {
+  const { L, a, b, alpha } = laba;
+  const LRounded = round(L, 0);
+  const aRounded = round(a, 0);
+  const bRounded = round(b, 0);
+  if (alpha === 1) {
+    return `lab(${LRounded} ${aRounded} ${bRounded})`;
+  } else {
+    const alphaRounded = round(alpha, 2);
+    return `lab(${LRounded} ${aRounded} ${bRounded} / ${alphaRounded})`;
+  }
 };

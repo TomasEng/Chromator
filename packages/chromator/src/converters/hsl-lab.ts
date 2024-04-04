@@ -2,6 +2,8 @@ import { type Hsl } from '../types/Hsl';
 import { type Lab } from '../types/Lab';
 import { cieXyzToHsl, hslToCieXyz } from './hsl-xyz';
 import { type Xyz } from '../types/Xyz';
+import { type Hsla } from '../types/Hsla';
+import { type Laba } from '../types/Laba';
 
 export const hslToLab = (hsl: Hsl): Lab => {
   const { x, y, z } = hslToCieXyz(hsl);
@@ -61,3 +63,15 @@ const zr = (lab: Lab): number => {
 const fx = (lab: Lab): number => lab.a / 500 + fy(lab);
 const fy = ({ L }: Lab): number => (L + 16) / 116;
 const fz = (lab: Lab): number => fy(lab) - lab.b / 200;
+
+export const hslaToLaba = (hsla: Hsla): Laba => {
+  const { alpha, ...hsl } = hsla;
+  const lab = hslToLab(hsl);
+  return { ...lab, alpha };
+};
+
+export const labaToHsla = (laba: Laba): Hsla => {
+  const { alpha, ...lab } = laba;
+  const hsl = labToHsl(lab);
+  return { ...hsl, alpha };
+};
