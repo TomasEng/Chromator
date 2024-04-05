@@ -1,4 +1,11 @@
-import { hslaStringToHsla, hslStringToHsl, labStringToHsla, labStringToLaba } from './string-to-hsl';
+import {
+  hslaStringToHsla,
+  hslStringToHsl,
+  labStringToHsla,
+  labStringToLaba,
+  lchStringToHsla,
+  lchStringToLcha
+} from './string-to-hsl';
 
 describe('String to HSL(A) converters', () => {
   describe('hslStringToHsl', () => {
@@ -67,6 +74,91 @@ describe('String to HSL(A) converters', () => {
         hue: expect.closeTo(303, 0),
         saturation: expect.closeTo(0.59, 2),
         lightness: expect.closeTo(0.65, 2),
+        alpha: 1
+      });
+    });
+  });
+
+  describe('lchStringToLcha', () => {
+    it('Converts a simple LCH string to an LCHA object', () => {
+      expect(lchStringToLcha('lch(63 55 34)')).toEqual({
+        L: 63,
+        chroma: 55,
+        hue: 34,
+        alpha: 1
+      });
+    });
+
+    it('Converts an LCH with percentages to an LCHA object', () => {
+      expect(lchStringToLcha('lch(63% 55% 34)')).toEqual({
+        L: 63,
+        chroma: 82.5,
+        hue: 34,
+        alpha: 1
+      });
+    });
+
+    it('Converts an LCH with alpha to an LCHA object', () => {
+      expect(lchStringToLcha('lch(63 55 34 / 0.5)')).toEqual({
+        L: 63,
+        chroma: 55,
+        hue: 34,
+        alpha: 0.5
+      });
+    });
+
+    it('Converts an LCH with "none" values to an LCHA object', () => {
+      expect(lchStringToLcha('lch(none none none)')).toEqual({
+        L: 0,
+        chroma: 0,
+        hue: 0,
+        alpha: 1
+      });
+    });
+
+    it('Converts an LCH with "deg" units to an LCHA object', () => {
+      expect(lchStringToLcha('lch(63 55 34deg)')).toEqual({
+        L: 63,
+        chroma: 55,
+        hue: 34,
+        alpha: 1
+      });
+    });
+
+    it('Converts an LCH with "rad" units to an LCHA object', () => {
+      expect(lchStringToLcha('lch(63 55 0.5rad)')).toEqual({
+        L: 63,
+        chroma: 55,
+        hue: expect.closeTo(28.6479, 4),
+        alpha: 1
+      });
+    });
+
+    it('Converts an LCH with "turn" units to an LCHA object', () => {
+      expect(lchStringToLcha('lch(63 55 0.5turn)')).toEqual({
+        L: 63,
+        chroma: 55,
+        hue: 180,
+        alpha: 1
+      });
+    });
+
+    it('Converts an LCH with "grad" units to an LCHA object', () => {
+      expect(lchStringToLcha('lch(63 55 100grad)')).toEqual({
+        L: 63,
+        chroma: 55,
+        hue: 90,
+        alpha: 1
+      });
+    });
+  });
+
+  describe('lchStringToHsla', () => {
+    it('Converts a simple LCH string to an HSLA object', () => {
+      expect(lchStringToHsla('lch(63 55 34)')).toEqual({
+        hue: expect.closeTo(6.84, 2),
+        saturation: expect.closeTo(0.8, 3),
+        lightness: expect.closeTo(0.663, 3),
         alpha: 1
       });
     });

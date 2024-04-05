@@ -13,7 +13,7 @@ import {
   hexWithoutHashToHsl,
   hexWithoutHashToHsla,
   hslaStringToHsla,
-  hslStringToHsl, labStringToHsla,
+  hslStringToHsl, labStringToHsla, lchStringToHsla,
   rgb255StringToHsl,
   rgba255StringToHsla,
   shortHexWithHashToHsl,
@@ -27,7 +27,7 @@ import {
   isHsv,
   isHsva,
   isLab,
-  isLaba,
+  isLaba, isLch, isLcha,
   isRgb,
   isRgba,
   isXyz,
@@ -36,6 +36,7 @@ import {
 import { rgbaToHsla, rgbToHsl } from './hsl-rgb';
 import { hsvaToHsla, hsvToHsl } from './hsl-hsv';
 import { labaToHsla, labToHsl } from './hsl-lab';
+import { lchaToHsla, lchToHsl } from './hsl-lch';
 
 export const colourCodeToHsla = (code: ColourCode): Hsla => {
   if (typeof code === 'string') return stringToHsla(code);
@@ -49,6 +50,8 @@ export const colourCodeToHsla = (code: ColourCode): Hsla => {
   if (isXyza(code)) return cieXyzaToHsla(code);
   if (isLab(code)) return { ...labToHsl(code), alpha: 1 };
   if (isLaba(code)) return labaToHsla(code);
+  if (isLch(code)) return { ...lchToHsl(code), alpha: 1 };
+  if (isLcha(code)) return lchaToHsla(code);
   throw new Error('The passed object is not a valid colour code.');
 };
 
@@ -61,6 +64,8 @@ const stringToHsla = (value: string): Hsla => {
       return hslaStringToHsla(value);
     case 'lab':
       return labStringToHsla(value);
+    case 'lch':
+      return lchStringToHsla(value);
     case 'rgbDecimal':
       return { ...rgb255StringToHsl(value), alpha: 1 };
     case 'rgbaDecimal':

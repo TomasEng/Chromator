@@ -30,32 +30,38 @@ const cyan = new Chromator('#0FF');
 const transparentMagenta = new Chromator('rgba(255, 0, 255, 0.5)');
 ```
 
-It also accepts objects in RGB(A), HSL(A), HSV(A), XYZ(A) and LAB(A) formats:
+It also accepts objects in RGB(A), HSL(A), HSV(A), XYZ(A), LAB(A) and LCH(A) formats:
 ```typescript
 const red = new Chromator({red: 255, green: 0, blue: 0});
 const green = new Chromator({hue: 120, saturation: 1, lightness: 0.5});
 const blue = new Chromator({hue: 240, saturation: 1, value: 1, alpha: 1});
 const yellow = new Chromator({ x: 0.77003, y: 0.92783, z: 0.13853 });
 const cyan = new Chromator({ L: 91.1132, a: -48.0875, b: -14.1312 });
+const magenta = new Chromator({ L: 60.3242, chroma: 115.5407, hue: 328.235 });
 ```
 
 ### Conversion
 The object may then be used to convert the colour to any other format:
 ```typescript
 const red = new Chromator('#ff0000');
+
 console.log(red.getRgbCode()); // rgb(255, 0, 0)
 console.log(red.getHexCode()); // #FF0000
 console.log(red.getHslCode()); // hsl(0, 100%, 50%)
+
 console.log(red.getRgb()); // {red: 255, green: 0, blue: 0}
 console.log(red.getHsl()); // {hue: 0, saturation: 1, lightness: 0.5}
 console.log(red.getHsv()); // {hue: 0, saturation: 1, value: 1}
 console.log(red.getCieXyz()); // {x: 0.41246, y: 0.21267, z: 0.01933}
+console.log(red.getLab()); // {L: 53.2408, a: 80.0925, b: 67.2032}
+console.log(red.getLch()); // {L: 53.2408, chroma: 104.5518, hue: 39.999}
+
 console.log(red.getRgba()); // {red: 255, green: 0, blue: 0, alpha: 1}
 console.log(red.getHsla()); // {hue: 0, saturation: 1, lightness: 0.5, alpha: 1}
 console.log(red.getHsva()); // {hue: 0, saturation: 1, value: 1, alpha: 1}
 console.log(red.getCieXyza()); // {x: 0.41246, y: 0.21267, z: 0.01933, alpha: 1}
-console.log(red.getLab()); // {L: 53.2408, a: 80.0925, b: 67.2032}
 console.log(red.getLaba()); // {L: 53.2408, a: 80.0925, b: 67.2032, alpha: 1}
+console.log(red.getLcha()); // {L: 53.2408, chroma: 104.5518, hue: 39.999, alpha: 1}
 ```
 
 ### Lightness manipulation

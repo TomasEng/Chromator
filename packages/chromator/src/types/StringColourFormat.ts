@@ -2,6 +2,7 @@ export type StringColourFormat =
   | 'hsl'
   | 'hsla'
   | 'lab'
+  | 'lch'
   | 'namedColour'
   | 'namedTransparent'
   | 'rgbDecimal'

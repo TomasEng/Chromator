@@ -3,6 +3,7 @@ import { decimalToHexPair, numberToPercentage } from './number-to-string';
 import { type Hsla } from '../types/Hsla';
 import { round } from '../utils';
 import { type Laba } from '../types/Laba';
+import { type Lcha } from '../types/Lcha';
 
 export const hslaObjectToHslString = (hsla: Hsla): string => {
   const { hue, saturation, lightness, alpha } = hsla;
@@ -51,5 +52,18 @@ export const labaObjectToLabString = (laba: Laba): string => {
   } else {
     const alphaRounded = round(alpha, 2);
     return `lab(${LRounded} ${aRounded} ${bRounded} / ${alphaRounded})`;
+  }
+};
+
+export const lchaObjectToLchString = (lcha: Lcha): string => {
+  const { L, chroma, hue, alpha } = lcha;
+  const LRounded = round(L, 0);
+  const chromaRounded = round(chroma, 0);
+  const hueRounded = round(hue, 0);
+  if (alpha === 1) {
+    return `lch(${LRounded} ${chromaRounded} ${hueRounded}deg)`;
+  } else {
+    const alphaRounded = round(alpha, 2);
+    return `lch(${LRounded} ${chromaRounded} ${hueRounded}deg / ${alphaRounded})`;
   }
 };

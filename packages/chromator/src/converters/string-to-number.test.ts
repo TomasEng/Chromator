@@ -1,5 +1,5 @@
 import {
-  hexPairToDecimal,
+  hexPairToDecimal, hueDegreesFromString,
   numberFromPercentage,
   numberFromPercentageOrUnitInterval, numberFromScaledPercentage, numberFromScaledPercentageOrScale,
   shortHexToDecimal
@@ -81,6 +81,82 @@ describe('String to number converters', () => {
       expect(numberFromScaledPercentageOrScale('0.1', 125)).toBe(0.1);
       expect(numberFromScaledPercentageOrScale('125', 125)).toBe(125);
       expect(numberFromScaledPercentageOrScale('200', 125)).toBe(200);
+    });
+  });
+
+  describe('hueDegreesFromString', () => {
+    it('Returns 0 when the given string is not a valid hue value', () => {
+      expect(hueDegreesFromString('')).toBe(0);
+      expect(hueDegreesFromString('a')).toBe(0);
+      expect(hueDegreesFromString('deg')).toBe(0);
+      expect(hueDegreesFromString('adeg')).toBe(0);
+    });
+
+    it('Returns 0 when the given string is "none"', () => {
+      expect(hueDegreesFromString('none')).toBe(0);
+    });
+
+    it('Returns the number in degrees when the given string is a number followed by "deg"', () => {
+      expect(hueDegreesFromString('0deg')).toBe(0);
+      expect(hueDegreesFromString('1deg')).toBe(1);
+      expect(hueDegreesFromString('.5deg')).toBe(0.5);
+      expect(hueDegreesFromString('0.5deg')).toBe(0.5);
+      expect(hueDegreesFromString('1.5deg')).toBe(1.5);
+      expect(hueDegreesFromString('180deg')).toBe(180);
+      expect(hueDegreesFromString('360deg')).toBe(0);
+      expect(hueDegreesFromString('361deg')).toBe(1);
+      expect(hueDegreesFromString('-1deg')).toBe(359);
+      expect(hueDegreesFromString('-360deg')).toBe(0);
+    });
+
+    it('Returns the number in degrees when the given string is a number followed by "turn"', () => {
+      expect(hueDegreesFromString('0turn')).toBe(0);
+      expect(hueDegreesFromString('1turn')).toBe(0);
+      expect(hueDegreesFromString('.5turn')).toBe(180);
+      expect(hueDegreesFromString('0.5turn')).toBe(180);
+      expect(hueDegreesFromString('1.5turn')).toBe(180);
+      expect(hueDegreesFromString('2turn')).toBe(0);
+      expect(hueDegreesFromString('-1turn')).toBe(0);
+      expect(hueDegreesFromString('-0.25turn')).toBe(270);
+      expect(hueDegreesFromString('-.25turn')).toBe(270);
+    });
+
+    it('Returns the number in degrees when the given string is a number followed by "grad"', () => {
+      expect(hueDegreesFromString('0grad')).toBe(0);
+      expect(hueDegreesFromString('1grad')).toBeCloseTo(0.9);
+      expect(hueDegreesFromString('.5grad')).toBeCloseTo(0.45);
+      expect(hueDegreesFromString('0.5grad')).toBeCloseTo(0.45);
+      expect(hueDegreesFromString('1.5grad')).toBeCloseTo(1.35);
+      expect(hueDegreesFromString('200grad')).toBeCloseTo(180);
+      expect(hueDegreesFromString('400grad')).toBe(0);
+      expect(hueDegreesFromString('401grad')).toBeCloseTo(0.9);
+      expect(hueDegreesFromString('-1grad')).toBeCloseTo(359.1);
+      expect(hueDegreesFromString('-400grad')).toBe(0);
+    });
+
+    it('Returns the number in degrees when the given string is a number followed by "rad"', () => {
+      expect(hueDegreesFromString('0rad')).toBe(0);
+      expect(hueDegreesFromString('1rad')).toBeCloseTo(57.2957795131);
+      expect(hueDegreesFromString('.5rad')).toBeCloseTo(28.6478897566);
+      expect(hueDegreesFromString('0.5rad')).toBeCloseTo(28.6478897566);
+      expect(hueDegreesFromString('1.5rad')).toBeCloseTo(85.9436692698);
+      expect(hueDegreesFromString('3.14159rad')).toBeCloseTo(180);
+      expect(hueDegreesFromString('6.28319rad')).toBeCloseTo(0);
+      expect(hueDegreesFromString('9.42478rad')).toBeCloseTo(180);
+      expect(hueDegreesFromString('-1rad')).toBeCloseTo(302.7042204869);
+    });
+
+    it('Defaults to degrees when no unit is given', () => {
+      expect(hueDegreesFromString('0')).toBe(0);
+      expect(hueDegreesFromString('1')).toBe(1);
+      expect(hueDegreesFromString('.5')).toBe(0.5);
+      expect(hueDegreesFromString('0.5')).toBe(0.5);
+      expect(hueDegreesFromString('1.5')).toBe(1.5);
+      expect(hueDegreesFromString('180')).toBe(180);
+      expect(hueDegreesFromString('360')).toBe(0);
+      expect(hueDegreesFromString('361')).toBe(1);
+      expect(hueDegreesFromString('-1')).toBe(359);
+      expect(hueDegreesFromString('-360')).toBe(0);
     });
   });
 });

@@ -4,6 +4,8 @@ import { type Rgba } from '../types/Rgba';
 import { type Hsva } from '../types/Hsva';
 import { type Xyza } from '../types/Xyza.ts';
 import { type Laba } from '../types/Laba.ts';
+import { type Lcha } from '../types/Lcha.ts';
+import { type ColourCode } from '../types/ColourCode.ts';
 
 describe('colourCodeToHsla', () => {
   it('Converts a HSL object to an HSLA object', () => {
@@ -104,6 +106,28 @@ describe('colourCodeToHsla', () => {
     const { orchid } = testColours;
     const alpha = 0.2;
     const transparentOrchid: Laba = { ...orchid.lab, alpha };
+    expect(colourCodeToHsla(transparentOrchid)).toEqual({
+      hue: expect.closeTo(orchid.hsl.hue, 2),
+      saturation: expect.closeTo(orchid.hsl.saturation, 4),
+      lightness: expect.closeTo(orchid.hsl.lightness, 4),
+      alpha
+    });
+  });
+
+  it('Converts an LHC object to an HSLA object', () => {
+    const { orchid } = testColours;
+    expect(colourCodeToHsla(orchid.lch)).toEqual({
+      hue: expect.closeTo(orchid.hsl.hue, 2),
+      saturation: expect.closeTo(orchid.hsl.saturation, 4),
+      lightness: expect.closeTo(orchid.hsl.lightness, 4),
+      alpha: 1
+    });
+  });
+
+  it('Converts an LCHA object to an HSLA object', () => {
+    const { orchid } = testColours;
+    const alpha = 0.2;
+    const transparentOrchid: Lcha = { ...orchid.lch, alpha };
     expect(colourCodeToHsla(transparentOrchid)).toEqual({
       hue: expect.closeTo(orchid.hsl.hue, 2),
       saturation: expect.closeTo(orchid.hsl.saturation, 4),
@@ -238,6 +262,15 @@ describe('colourCodeToHsla', () => {
     });
   });
 
+  it('Converts an LCH string to an HSLA object', () => {
+    expect(colourCodeToHsla('lch(63 50 180)')).toEqual({
+      hue: expect.closeTo(172, 0),
+      saturation: expect.closeTo(1, 2),
+      lightness: expect.closeTo(0.34, 2),
+      alpha: 1
+    });
+  });
+
   it('Converts a named colour to an HSLA object', () => {
     expect(colourCodeToHsla('orchid')).toEqual({
       hue: expect.closeTo(302, 0),
@@ -258,5 +291,9 @@ describe('colourCodeToHsla', () => {
 
   it('Throws an error if given an invalid colour code', () => {
     expect(() => colourCodeToHsla('invalid')).toThrow('Invalid colour code: invalid');
+  });
+
+  it('Throws an error if given an invalid object', () => {
+    expect(() => colourCodeToHsla({ something: 'invalid' } as unknown as ColourCode)).toThrow();
   });
 });

@@ -12,7 +12,7 @@ import { type Rgba } from './types/Rgba';
 import { type Hsv } from './types/Hsv';
 import { type Hsva } from './types/Hsva';
 import {
-  hslaObjectToHslString, labaObjectToLabString,
+  hslaObjectToHslString, labaObjectToLabString, lchaObjectToLchString,
   rgbaObjectToRgbDecimalString,
   rgbaObjectToRgbHexString
 } from './converters/object-to-string';
@@ -24,6 +24,9 @@ import { hslaToHsva, hslToHsv } from './converters/hsl-hsv';
 import { type Lab } from './types/Lab';
 import { hslaToLaba, hslToLab } from './converters/hsl-lab';
 import { type Laba } from './types/Laba';
+import { hslaToLcha, hslToLch } from './converters/hsl-lch';
+import { type Lch } from './types/Lch';
+import { type Lcha } from './types/Lcha';
 
 export class Chromator {
   private readonly hsl: Hsl; // HSL is used as the base since all conversion functions from the HSL space are mathematically surjective.
@@ -118,17 +121,31 @@ export class Chromator {
   }
 
   /**
-   * Returns the CIE L*a*b* representation of the colour.
-   */
+     * Returns the CIE L*a*b* representation of the colour.
+     */
   public getLab(): Lab {
     return hslToLab(this.hsl);
   }
 
   /**
-   * Returns the CIE L*a*b* representation of the colour including the alpha value.
-   */
+     * Returns the CIE L*a*b* representation of the colour including the alpha value.
+     */
   public getLaba(): Laba {
     return hslaToLaba(this.getHsla());
+  }
+
+  /**
+     * Returns the CIE LCH representation of the colour.
+     */
+  public getLch(): Lch {
+    return hslToLch(this.hsl);
+  }
+
+  /**
+     * Returns the CIE LCH representation of the colour including the alpha value.
+     */
+  public getLcha(): Lcha {
+    return hslaToLcha(this.getHsla());
   }
 
   /**
@@ -169,6 +186,16 @@ export class Chromator {
      */
   public getLabCode(): string {
     return labaObjectToLabString(this.getLaba());
+  }
+
+  /**
+     * Returns the CIE LCH CSS code of the colour.
+     * @example
+     * const blue = new Chromator('blue');
+     * blue.getLchCode(); // 'lch(32 134 306deg)'
+     */
+  public getLchCode(): string {
+    return lchaObjectToLchString(this.getLcha());
   }
 
   /**

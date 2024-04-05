@@ -8,5 +8,20 @@ import { type Xyz } from './Xyz';
 import { type Xyza } from './Xyza';
 import { type Lab } from './Lab';
 import { type Laba } from './Laba';
+import { type Lch } from './Lch';
+import { type Lcha } from './Lcha';
 
-export type ColourCode = Rgb | Rgba | Hsl | Hsla | Hsv | Hsva | Xyz | Xyza | Lab | Laba | string;
+export type ColourCode =
+    | Rgb
+    | Rgba
+    | Hsl
+    | Hsla
+    | Hsv
+    | Hsva
+    | Xyz
+    | Xyza
+    | Lab
+    | Laba
+    | Lch
+    | Lcha
+    | string;

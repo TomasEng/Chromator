@@ -9,6 +9,8 @@ import { type Xyz } from '../types/Xyz';
 import { type Xyza } from '../types/Xyza';
 import { type Lab } from '../types/Lab';
 import { type Laba } from '../types/Laba';
+import { type Lch } from '../types/Lch';
+import { type Lcha } from '../types/Lcha';
 
 export const isRgb = (value: ColourCode): value is Rgb =>
   (value as Rgb).red !== undefined &&
@@ -69,3 +71,15 @@ export const isLaba = (value: ColourCode): value is Laba =>
     (value as Laba).a !== undefined &&
     (value as Laba).b !== undefined &&
     (value as Laba).alpha !== undefined;
+
+export const isLch = (value: ColourCode): value is Lch =>
+  (value as Lch).L !== undefined &&
+    (value as Lch).chroma !== undefined &&
+    (value as Lch).hue !== undefined &&
+    (value as Lcha).alpha === undefined;
+
+export const isLcha = (value: ColourCode): value is Lcha =>
+  (value as Lcha).L !== undefined &&
+    (value as Lcha).chroma !== undefined &&
+    (value as Lcha).hue !== undefined &&
+    (value as Lcha).alpha !== undefined;
