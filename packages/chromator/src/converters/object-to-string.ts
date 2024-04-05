@@ -13,10 +13,10 @@ export const hslaObjectToHslString = (hsla: Hsla): string => {
   const saturationAsPercentage = numberToPercentage(saturationRounded);
   const lightnessAsPercentage = numberToPercentage(lightnessRounded);
   if (alpha === 1) {
-    return `hsl(${hueRounded}, ${saturationAsPercentage}, ${lightnessAsPercentage})`;
+    return `hsl(${hueRounded}deg, ${saturationAsPercentage}, ${lightnessAsPercentage})`;
   } else {
     const alphaRounded = round(alpha, 2);
-    return `hsla(${hueRounded}, ${saturationAsPercentage}, ${lightnessAsPercentage}, ${alphaRounded})`;
+    return `hsla(${hueRounded}deg, ${saturationAsPercentage}, ${lightnessAsPercentage}, ${alphaRounded})`;
   }
 };
 

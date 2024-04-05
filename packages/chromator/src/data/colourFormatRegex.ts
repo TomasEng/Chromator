@@ -1,8 +1,8 @@
 import { type StringColourFormat } from '../types/StringColourFormat';
 
 export const colourFormatRegex: { [key in StringColourFormat]: RegExp } = {
-  hsl: /^hsl\s*\(\s*(?<hue>\d*\.?\d*)\s*,\s*(?<saturation>\d*\.?\d*%?)\s*,\s*(?<lightness>\d*\.?\d*%?)\s*\)$/i,
-  hsla: /^hsla\s*\(\s*(?<hue>\d*\.?\d*)\s*,\s*(?<saturation>\d*\.?\d*%?)\s*,\s*(?<lightness>\d*\.?\d*%?)\s*,\s*(?<alpha>\d*\.?\d*%?)\s*\)$/i,
+  hsl: /^hsl\s*\(\s*(?<hue>(-?\d*\.?\d*(|deg|turn|rad|grad))|none)\s*,\s*(?<saturation>(\d*\.?\d*%?)|none)\s*,\s*(?<lightness>(\d*\.?\d*%?)|none)\s*\)$/i,
+  hsla: /^hsla\s*\(\s*(?<hue>(-?\d*\.?\d*(|deg|turn|rad|grad))|none)\s*,\s*(?<saturation>(\d*\.?\d*%?)|none)\s*,\s*(?<lightness>(\d*\.?\d*%?)|none)\s*,\s*(?<alpha>\d*\.?\d*%?)\s*\)$/i,
   lab: /^lab\s*\(\s*(?<L>(\d*\.?\d*%?)|none)\s+(?<a>(-?\d*\.?\d*%?)|none)\s+(?<b>(-?\d*\.?\d*%?)|none)\s*(\/\s*(?<alpha>\d*\.?\d*%?)\s*)?\)$/i,
   lch: /^lch\s*\(\s*(?<L>(\d*\.?\d*%?)|none)\s+(?<chroma>(\d*\.?\d*%?)|none)\s+(?<hue>(-?\d*\.?\d*(|deg|turn|grad|rad))|none)\s*(\/\s*(?<alpha>\d*\.?\d*%?)\s*)?\)$/i,
   namedColour: /[\w-]+/i,

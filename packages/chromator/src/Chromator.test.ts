@@ -128,9 +128,9 @@ describe('Chromator', () => {
 
   test('getHslCode', () => {
     const orchid = new Chromator('orchid');
-    expect(orchid.getHslCode()).toBe('hsl(302, 59%, 65%)');
+    expect(orchid.getHslCode()).toBe('hsl(302deg, 59%, 65%)');
     const transparentOrchid = new Chromator('rgba(218, 112, 214, 0.5)');
-    expect(transparentOrchid.getHslCode()).toBe('hsla(302, 59%, 65%, 0.5)');
+    expect(transparentOrchid.getHslCode()).toBe('hsla(302deg, 59%, 65%, 0.5)');
   });
 
   test('getLabCode', () => {

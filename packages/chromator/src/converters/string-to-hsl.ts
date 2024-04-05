@@ -3,7 +3,6 @@ import { colourFormatRegex } from '../data/colourFormatRegex';
 import {
   hueDegreesFromString,
   numberFromPercentageOrUnitInterval,
-  numberFromScaledPercentage,
   numberFromScaledPercentageOrScale
 } from './string-to-number';
 import { type Hsla } from '../types/Hsla';
@@ -29,9 +28,9 @@ export const hslStringToHsl = (value: string): Hsl => {
   const regex = colourFormatRegex.hsl;
   const { hue, saturation, lightness } = regex.exec(value)!.groups!;
   return {
-    hue: parseFloat(hue),
-    saturation: numberFromPercentageOrUnitInterval(saturation),
-    lightness: numberFromPercentageOrUnitInterval(lightness)
+    hue: hueDegreesFromString(hue),
+    saturation: saturation === 'none' ? 0 : numberFromPercentageOrUnitInterval(saturation),
+    lightness: lightness === 'none' ? 0 : numberFromPercentageOrUnitInterval(lightness)
   };
 };
 
@@ -39,9 +38,9 @@ export const hslaStringToHsla = (value: string): Hsla => {
   const regex = colourFormatRegex.hsla;
   const { hue, saturation, lightness, alpha } = regex.exec(value)!.groups!;
   return {
-    hue: parseFloat(hue),
-    saturation: numberFromPercentageOrUnitInterval(saturation),
-    lightness: numberFromPercentageOrUnitInterval(lightness),
+    hue: hueDegreesFromString(hue),
+    saturation: saturation === 'none' ? 0 : numberFromPercentageOrUnitInterval(saturation),
+    lightness: lightness === 'none' ? 0 : numberFromPercentageOrUnitInterval(lightness),
     alpha: numberFromPercentageOrUnitInterval(alpha)
   };
 };

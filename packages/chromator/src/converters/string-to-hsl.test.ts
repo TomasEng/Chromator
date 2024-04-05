@@ -9,9 +9,65 @@ import {
 
 describe('String to HSL(A) converters', () => {
   describe('hslStringToHsl', () => {
-    it('Converts a valid HSL string to an HSL object', () => {
+    it('Converts a simple HSL string to an HSL object', () => {
+      expect(hslStringToHsl('hsl(9, 1, 0.64)')).toEqual({
+        hue: 9,
+        saturation: 1,
+        lightness: 0.64
+      });
+    });
+
+    it('Converts an HSL string with percentages to an HSL object', () => {
       expect(hslStringToHsl('hsl(9, 100%, 64%)')).toEqual({
         hue: 9,
+        saturation: 1,
+        lightness: 0.64
+      });
+    });
+
+    it('Converts an HSL string with "none" values to an HSL object', () => {
+      expect(hslStringToHsl('hsl(none, none, none)')).toEqual({
+        hue: 0,
+        saturation: 0,
+        lightness: 0
+      });
+    });
+
+    it('Converts an HSL string with degree units to an HSL object', () => {
+      expect(hslStringToHsl('hsl(9deg, 1, 0.64)')).toEqual({
+        hue: 9,
+        saturation: 1,
+        lightness: 0.64
+      });
+    });
+
+    it('Converts an HSL string with turn units to an HSL object', () => {
+      expect(hslStringToHsl('hsl(.5turn, 1, 0.64)')).toEqual({
+        hue: 180,
+        saturation: 1,
+        lightness: 0.64
+      });
+    });
+
+    it('Converts an HSL string with rad units to an HSL object', () => {
+      expect(hslStringToHsl('hsl(0.5rad, 1, 0.64)')).toEqual({
+        hue: expect.closeTo(28.6479, 4),
+        saturation: 1,
+        lightness: 0.64
+      });
+    });
+
+    it('Converts an HSL string with grad units to an HSL object', () => {
+      expect(hslStringToHsl('hsl(100grad, 1, 0.64)')).toEqual({
+        hue: 90,
+        saturation: 1,
+        lightness: 0.64
+      });
+    });
+
+    it('Converts an HSL string with negative hue to an HSL object', () => {
+      expect(hslStringToHsl('hsl(-9deg, 1, 0.64)')).toEqual({
+        hue: 351,
         saturation: 1,
         lightness: 0.64
       });
@@ -19,9 +75,72 @@ describe('String to HSL(A) converters', () => {
   });
 
   describe('hslaStringToHsla', () => {
-    it('Converts a valid HSLA string to an HSLA object', () => {
-      expect(hslaStringToHsla('hsla(9, 100%, 64%, 0.5)')).toEqual({
+    it('Converts a simple HSLA string to an HSLA object', () => {
+      expect(hslaStringToHsla('hsla(9, 1, 0.64, 0.5)')).toEqual({
         hue: 9,
+        saturation: 1,
+        lightness: 0.64,
+        alpha: 0.5
+      });
+    });
+
+    it('Converts an HSLA string with percentages to an HSLA object', () => {
+      expect(hslaStringToHsla('hsla(9, 100%, 64%, 50%)')).toEqual({
+        hue: 9,
+        saturation: 1,
+        lightness: 0.64,
+        alpha: 0.5
+      });
+    });
+
+    it('Converts an HSLA string with "none" values to an HSLA object', () => {
+      expect(hslaStringToHsla('hsla(none, none, none, 0.5)')).toEqual({
+        hue: 0,
+        saturation: 0,
+        lightness: 0,
+        alpha: 0.5
+      });
+    });
+
+    it('Converts an HSLA string with degree units to an HSLA object', () => {
+      expect(hslaStringToHsla('hsla(9deg, 1, 0.64, 0.5)')).toEqual({
+        hue: 9,
+        saturation: 1,
+        lightness: 0.64,
+        alpha: 0.5
+      });
+    });
+
+    it('Converts an HSLA string with turn units to an HSLA object', () => {
+      expect(hslaStringToHsla('hsla(.5turn, 1, 0.64, 0.5)')).toEqual({
+        hue: 180,
+        saturation: 1,
+        lightness: 0.64,
+        alpha: 0.5
+      });
+    });
+
+    it('Converts an HSLA string with rad units to an HSLA object', () => {
+      expect(hslaStringToHsla('hsla(0.5rad, 1, 0.64, 0.5)')).toEqual({
+        hue: expect.closeTo(28.6479, 4),
+        saturation: 1,
+        lightness: 0.64,
+        alpha: 0.5
+      });
+    });
+
+    it('Converts an HSLA string with grad units to an HSLA object', () => {
+      expect(hslaStringToHsla('hsla(100grad, 1, 0.64, 0.5)')).toEqual({
+        hue: 90,
+        saturation: 1,
+        lightness: 0.64,
+        alpha: 0.5
+      });
+    });
+
+    it('Converts an HSLA string with negative hue to an HSLA object', () => {
+      expect(hslaStringToHsla('hsla(-9deg, 1, 0.64, 0.5)')).toEqual({
+        hue: 351,
         saturation: 1,
         lightness: 0.64,
         alpha: 0.5

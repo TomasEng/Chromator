@@ -24,7 +24,7 @@ Any colour code that is valid in CSS (except from `currentColour`) can be used t
 ```typescript
 const red = new Chromator('#ff0000');
 const green = new Chromator('rgb(0, 255, 0)');
-const yellow = new Chromator('hsl(60, 100%, 50%)');
+const yellow = new Chromator('hsl(60deg, 1, 0.5)');
 const transparent = new Chromator('transparent');
 const cyan = new Chromator('#0FF');
 const transparentMagenta = new Chromator('rgba(255, 0, 255, 0.5)');
@@ -47,7 +47,7 @@ const red = new Chromator('#ff0000');
 
 console.log(red.getRgbCode()); // rgb(255, 0, 0)
 console.log(red.getHexCode()); // #FF0000
-console.log(red.getHslCode()); // hsl(0, 100%, 50%)
+console.log(red.getHslCode()); // hsl(0deg, 100%, 50%)
 
 console.log(red.getRgb()); // {red: 255, green: 0, blue: 0}
 console.log(red.getHsl()); // {hue: 0, saturation: 1, lightness: 0.5}

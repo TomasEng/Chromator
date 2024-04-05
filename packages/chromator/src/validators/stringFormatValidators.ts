@@ -8,9 +8,9 @@ export const isValidHslString = (value: string): boolean => {
   if (!hasExpectedFormat) return false;
   const { hue, saturation, lightness } = regex.exec(trimmed)!.groups!;
   return (
-    isValidDegreeValue(hue) &&
-    isValidUnitIntervalOrPercentageValue(saturation) &&
-    isValidUnitIntervalOrPercentageValue(lightness)
+    (hue === 'none' || isValidDegreeValue(hue)) &&
+      (saturation === 'none' || isValidUnitIntervalOrPercentageValue(saturation)) &&
+      (lightness === 'none' || isValidUnitIntervalOrPercentageValue(lightness))
   );
 };
 
@@ -21,9 +21,9 @@ export const isValidHslaString = (value: string): boolean => {
   if (!hasExpectedFormat) return false;
   const { hue, saturation, lightness, alpha } = regex.exec(trimmed)!.groups!;
   return (
-    isValidDegreeValue(hue) &&
-    isValidUnitIntervalOrPercentageValue(saturation) &&
-    isValidUnitIntervalOrPercentageValue(lightness) &&
+    (hue === 'none' || isValidDegreeValue(hue)) &&
+      (saturation === 'none' || isValidUnitIntervalOrPercentageValue(saturation)) &&
+      (lightness === 'none' || isValidUnitIntervalOrPercentageValue(lightness)) &&
     isValidUnitIntervalOrPercentageValue(alpha)
   );
 };
@@ -66,7 +66,7 @@ export const isValidTransparentName = (value: string): boolean => {
 };
 
 export const isValidDegreeValue = (value: string): boolean =>
-  /^(((([12]?\d{1,2})|(3[012345]\d))(\.\d+)?)|360(\.0+)?|\.\d+)$/.test(value);
+  /^[-+]?(\d+|\d*(\.\d+))(|deg|turn|rad|grad)$/.test(value);
 
 export const isValidPercentageValue = (value: string): boolean =>
   /^((((\d{1,2}(\.\d+)?)|(100(\.0+)?)|(\.\d+))%)|0)$/.test(value);

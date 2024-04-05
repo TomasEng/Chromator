@@ -28,18 +28,27 @@ describe('stringFormatValidators', () => {
       expect(isValidDegreeValue('359.9')).toBe(true);
       expect(isValidDegreeValue('0.0')).toBe(true);
       expect(isValidDegreeValue('.1')).toBe(true);
+      expect(isValidDegreeValue('361')).toBe(true);
+      expect(isValidDegreeValue('-1')).toBe(true);
+      expect(isValidDegreeValue('+1')).toBe(true);
+      expect(isValidDegreeValue('1deg')).toBe(true);
+      expect(isValidDegreeValue('1turn')).toBe(true);
+      expect(isValidDegreeValue('1rad')).toBe(true);
+      expect(isValidDegreeValue('1grad')).toBe(true);
     });
 
     it('Returns false for invalid degree values', () => {
-      expect(isValidDegreeValue('361')).toBe(false);
-      expect(isValidDegreeValue('-1')).toBe(false);
-      expect(isValidDegreeValue('360.1')).toBe(false);
-      expect(isValidDegreeValue('400')).toBe(false);
       expect(isValidDegreeValue('22.51.')).toBe(false);
       expect(isValidDegreeValue('22.51.0')).toBe(false);
       expect(isValidDegreeValue('22.51.0.')).toBe(false);
       expect(isValidDegreeValue('')).toBe(false);
       expect(isValidDegreeValue('.')).toBe(false);
+      expect(isValidDegreeValue('a')).toBe(false);
+      expect(isValidDegreeValue('1a')).toBe(false);
+      expect(isValidDegreeValue('deg')).toBe(false);
+      expect(isValidDegreeValue('turn')).toBe(false);
+      expect(isValidDegreeValue('rad')).toBe(false);
+      expect(isValidDegreeValue('grad')).toBe(false);
     });
   });
 
