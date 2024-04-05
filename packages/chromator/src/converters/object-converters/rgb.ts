@@ -1,10 +1,10 @@
-import type { Rgb } from '../types/Rgb';
-import type { Hsl } from '../types/Hsl';
-import { modulo } from '../utils';
-import { HueRegion } from '../enums/HueRegion';
-import type { Hsla } from '../types/Hsla';
-import type { Rgba } from '../types/Rgba';
-import { rgb1ToRgb255, rgb255ToRgb1 } from './utils';
+import type { Rgb } from '../../types/Rgb';
+import type { Hsl } from '../../types/Hsl';
+import { modulo } from '../../utils';
+import { HueRegion } from '../../enums/HueRegion';
+import type { Hsla } from '../../types/Hsla';
+import type { Rgba } from '../../types/Rgba';
+import { rgb1ToRgb255, rgb255ToRgb1 } from '../utils';
 
 export const rgbToHsl = (rgb: Rgb): Hsl => {
   const rgb1 = rgb255ToRgb1(rgb);

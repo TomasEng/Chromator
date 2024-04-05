@@ -1,6 +1,6 @@
-import { type NamedColour } from '../types/NamedColour';
-import { testColours } from '../test-data/namedColourList';
-import { hslToRgb, rgbToHsl } from './hsl-rgb.ts';
+import { type NamedColour } from '../../types/NamedColour.ts';
+import { testColours } from '../../test-data/namedColourList.ts';
+import { hslToRgb, rgbToHsl } from './rgb.ts';
 
 describe('RGB converters', () => {
   describe('hslToRgb', () => {

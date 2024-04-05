@@ -1,7 +1,7 @@
-import { testColours } from '../test-data/namedColourList.ts';
-import { type NamedColour } from '../types/NamedColour.ts';
-import { hslToLab, labToHsl } from './hsl-lab.ts';
-import { round } from '../utils.ts';
+import { testColours } from '../../test-data/namedColourList.ts';
+import { type NamedColour } from '../../types/NamedColour.ts';
+import { hslToLab, labToHsl } from './lab.ts';
+import { round } from '../../utils.ts';
 
 describe('Lab object converters', () => {
   describe('hslToLab', () => {

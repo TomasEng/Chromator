@@ -1,6 +1,6 @@
-import { type NamedColour } from '../types/NamedColour';
-import { testColours } from '../test-data/namedColourList';
-import { hslToHsv, hsvToHsl } from './hsl-hsv.ts';
+import { type NamedColour } from '../../types/NamedColour.ts';
+import { testColours } from '../../test-data/namedColourList.ts';
+import { hslToHsv, hsvToHsl } from './hsv.ts';
 
 describe('HSV converters', () => {
   describe('hslToHsv', () => {

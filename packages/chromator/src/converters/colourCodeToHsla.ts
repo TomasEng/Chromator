@@ -3,7 +3,7 @@ import { type Hsla } from '../types/Hsla';
 import {
   cieXyzaToHsla,
   cieXyzToHsl
-} from './hsl-xyz';
+} from './object-converters/xyz';
 import { namedColours } from '../data/namedColours';
 import { type NamedColour } from '../types/NamedColour';
 import { evaluateFormat } from '../utils';
@@ -33,10 +33,10 @@ import {
   isXyz,
   isXyza
 } from '../validators/objectValidators';
-import { rgbaToHsla, rgbToHsl } from './hsl-rgb';
-import { hsvaToHsla, hsvToHsl } from './hsl-hsv';
-import { labaToHsla, labToHsl } from './hsl-lab';
-import { lchaToHsla, lchToHsl } from './hsl-lch';
+import { rgbaToHsla, rgbToHsl } from './object-converters/rgb';
+import { hsvaToHsla, hsvToHsl } from './object-converters/hsv';
+import { labaToHsla, labToHsl } from './object-converters/lab';
+import { lchaToHsla, lchToHsl } from './object-converters/lch';
 
 export const colourCodeToHsla = (code: ColourCode): Hsla => {
   if (typeof code === 'string') return stringToHsla(code);

@@ -1,7 +1,7 @@
-import type { Hsv } from '../types/Hsv';
-import type { Hsl } from '../types/Hsl';
-import type { Hsla } from '../types/Hsla';
-import type { Hsva } from '../types/Hsva';
+import type { Hsv } from '../../types/Hsv';
+import type { Hsl } from '../../types/Hsl';
+import type { Hsla } from '../../types/Hsla';
+import type { Hsva } from '../../types/Hsva';
 
 export const hsvToHsl = (hsv: Hsv): Hsl => {
   const { hue, saturation, value } = hsv;

@@ -1,9 +1,9 @@
-import { type Hsl } from '../types/Hsl';
-import { type Lab } from '../types/Lab';
-import { cieXyzToHsl, hslToCieXyz } from './hsl-xyz';
-import { type Xyz } from '../types/Xyz';
-import { type Hsla } from '../types/Hsla';
-import { type Laba } from '../types/Laba';
+import { type Hsl } from '../../types/Hsl';
+import { type Lab } from '../../types/Lab';
+import { cieXyzToHsl, hslToCieXyz } from './xyz';
+import { type Xyz } from '../../types/Xyz';
+import { type Hsla } from '../../types/Hsla';
+import { type Laba } from '../../types/Laba';
 
 export const hslToLab = (hsl: Hsl): Lab => {
   const { x, y, z } = hslToCieXyz(hsl);

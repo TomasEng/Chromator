@@ -7,7 +7,7 @@ import {
   hslaToCieXyza,
   hslToCieXyz,
   relativeLuminanceFromHsl
-} from './converters/hsl-xyz';
+} from './converters/object-converters/xyz';
 import { type Rgba } from './types/Rgba';
 import { type Hsv } from './types/Hsv';
 import { type Hsva } from './types/Hsva';
@@ -19,12 +19,12 @@ import {
 import { findInputToAlwaysIncreasingFunc, modulo } from './utils';
 import { type Xyz } from './types/Xyz';
 import { type Xyza } from './types/Xyza';
-import { hslaToRgba, hslToRgb } from './converters/hsl-rgb';
-import { hslaToHsva, hslToHsv } from './converters/hsl-hsv';
+import { hslaToRgba, hslToRgb } from './converters/object-converters/rgb';
+import { hslaToHsva, hslToHsv } from './converters/object-converters/hsv';
 import { type Lab } from './types/Lab';
-import { hslaToLaba, hslToLab } from './converters/hsl-lab';
+import { hslaToLaba, hslToLab } from './converters/object-converters/lab';
 import { type Laba } from './types/Laba';
-import { hslaToLcha, hslToLch } from './converters/hsl-lch';
+import { hslaToLcha, hslToLch } from './converters/object-converters/lch';
 import { type Lch } from './types/Lch';
 import { type Lcha } from './types/Lcha';
 

@@ -1,11 +1,11 @@
-import { type Hsl } from '../types/Hsl';
-import { type Rgb } from '../types/Rgb';
-import { ensureWithinUnitInterval } from '../utils';
-import { type Hsla } from '../types/Hsla';
-import { type Xyz } from '../types/Xyz';
-import { type Xyza } from '../types/Xyza';
-import { hslToRgb, rgbToHsl } from './hsl-rgb';
-import { rgb1ToRgb255, rgb255ToRgb1 } from './utils';
+import { type Hsl } from '../../types/Hsl';
+import { type Rgb } from '../../types/Rgb';
+import { ensureWithinUnitInterval } from '../../utils';
+import { type Hsla } from '../../types/Hsla';
+import { type Xyz } from '../../types/Xyz';
+import { type Xyza } from '../../types/Xyza';
+import { hslToRgb, rgbToHsl } from './rgb';
+import { rgb1ToRgb255, rgb255ToRgb1 } from '../utils';
 
 export const hslaToCieXyza = (hsla: Hsla): Xyza => {
   const { hue, saturation, lightness, alpha } = hsla;

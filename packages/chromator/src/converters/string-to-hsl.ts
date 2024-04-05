@@ -6,7 +6,7 @@ import {
   numberFromScaledPercentageOrScale
 } from './string-to-number';
 import { type Hsla } from '../types/Hsla';
-import { rgbaToHsla, rgbToHsl } from './hsl-rgb';
+import { rgbaToHsla, rgbToHsl } from './object-converters/rgb';
 import {
   hexWithHashToRgb,
   hexWithHashToRgba,
@@ -20,9 +20,9 @@ import {
   shortHexWithoutHashToRgba
 } from './string-to-rgb';
 import { type Laba } from '../types/Laba';
-import { labaToHsla } from './hsl-lab';
+import { labaToHsla } from './object-converters/lab';
 import { type Lcha } from '../types/Lcha';
-import { lchaToHsla } from './hsl-lch';
+import { lchaToHsla } from './object-converters/lch';
 
 export const hslStringToHsl = (value: string): Hsl => {
   const regex = colourFormatRegex.hsl;

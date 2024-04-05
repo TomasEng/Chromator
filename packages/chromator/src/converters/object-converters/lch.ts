@@ -1,10 +1,10 @@
-import { type Hsl } from '../types/Hsl';
-import { type Lab } from '../types/Lab';
-import { type Lch } from '../types/Lch';
-import { hslToLab, labToHsl } from './hsl-lab';
-import { modulo } from '../utils';
-import { type Lcha } from '../types/Lcha';
-import { type Hsla } from '../types/Hsla';
+import { type Hsl } from '../../types/Hsl';
+import { type Lab } from '../../types/Lab';
+import { type Lch } from '../../types/Lch';
+import { hslToLab, labToHsl } from './lab';
+import { modulo } from '../../utils';
+import { type Lcha } from '../../types/Lcha';
+import { type Hsla } from '../../types/Hsla';
 
 export const hslToLch = (hsl: Hsl): Lch => {
   const lab = hslToLab(hsl);

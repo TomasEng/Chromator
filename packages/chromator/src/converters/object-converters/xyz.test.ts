@@ -1,12 +1,12 @@
-import { type NamedColour } from '../types/NamedColour';
+import { type NamedColour } from '../../types/NamedColour.ts';
 import {
   cieXyzToHsl,
   cieXyzToRgb,
   hslToCieXyz,
   rgbToCieXyz
-} from './hsl-xyz.ts';
-import { testColours } from '../test-data/namedColourList';
-import { round } from '../utils.ts';
+} from './xyz.ts';
+import { testColours } from '../../test-data/namedColourList.ts';
+import { round } from '../../utils.ts';
 
 describe('CIE XYZ converters', () => {
   describe('rgbToCieXyz', () => {

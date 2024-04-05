@@ -1,7 +1,7 @@
-import { testColours } from '../test-data/namedColourList.ts';
-import { type NamedColour } from '../types/NamedColour.ts';
-import { hslToLch, lchToHsl } from './hsl-lch.ts';
-import { round } from '../utils.ts';
+import { testColours } from '../../test-data/namedColourList.ts';
+import { type NamedColour } from '../../types/NamedColour.ts';
+import { hslToLch, lchToHsl } from './lch.ts';
+import { round } from '../../utils.ts';
 
 describe('Lch object converters', () => {
   describe('hslToLch', () => {
