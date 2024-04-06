@@ -1,7 +1,7 @@
 import { testColours } from '../../test-data/namedColourList.ts';
 import { type NamedColour } from '../../types/NamedColour.ts';
 import { hslToLab, labToHsl } from './lab.ts';
-import { round } from '../../utils.ts';
+import { verifyHsl } from '../../test-data/utils.ts';
 
 describe('Lab object converters', () => {
   describe('hslToLab', () => {
@@ -25,21 +25,7 @@ describe('Lab object converters', () => {
         lab
       } = testColours[colour];
       const result = labToHsl(lab);
-      expect(result).toEqual({
-        hue: expect.anything(),
-        saturation: hsl.lightness === 1 ? expect.anything() : expect.closeTo(hsl.saturation, 4),
-        lightness: expect.closeTo(hsl.lightness, 4)
-      });
-      const { hue } = result;
-      expect(hue).toBeGreaterThanOrEqual(0);
-      expect(hue).toBeLessThanOrEqual(360);
-      const isGrey = hsl.saturation === 0;
-      if (!isGrey) {
-        const numDigitsAfterDecimal = 1;
-        const roundedHue = round(hue, numDigitsAfterDecimal);
-        const modulatedHue = roundedHue % 360;
-        expect(modulatedHue).toBeCloseTo(hsl.hue, numDigitsAfterDecimal);
-      }
+      verifyHsl(result, hsl);
     });
   });
 });

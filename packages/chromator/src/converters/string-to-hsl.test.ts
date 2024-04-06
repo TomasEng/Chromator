@@ -4,7 +4,7 @@ import {
   labStringToHsla,
   labStringToLaba,
   lchStringToHsla,
-  lchStringToLcha
+  lchStringToLcha, oklabStringToHsla, oklabStringToOklaba, oklchStringToHsla, oklchStringToOklcha
 } from './string-to-hsl';
 
 describe('String to HSL(A) converters', () => {
@@ -278,6 +278,140 @@ describe('String to HSL(A) converters', () => {
         hue: expect.closeTo(6.84, 2),
         saturation: expect.closeTo(0.8, 3),
         lightness: expect.closeTo(0.663, 3),
+        alpha: 1
+      });
+    });
+  });
+
+  describe('oklabStringToOklaba', () => {
+    it('Converts a simple Oklab string to an Oklaba object', () => {
+      expect(oklabStringToOklaba('oklab(0.9 0.1 -0.1)')).toEqual({
+        l: 0.9,
+        a: 0.1,
+        b: -0.1,
+        alpha: 1
+      });
+    });
+
+    it('Converts an Oklab string with percentages to an Oklaba object', () => {
+      expect(oklabStringToOklaba('oklab(90% 25% -25%)')).toEqual({
+        l: 0.9,
+        a: 0.1,
+        b: -0.1,
+        alpha: 1
+      });
+    });
+
+    it('Converts an Oklab string with alpha to an Oklaba object', () => {
+      expect(oklabStringToOklaba('oklab(0.9 0.1 -0.1 / 0.5)')).toEqual({
+        l: 0.9,
+        a: 0.1,
+        b: -0.1,
+        alpha: 0.5
+      });
+    });
+
+    it('Converts an Oklab string with "none" values to an Oklaba object', () => {
+      expect(oklabStringToOklaba('oklab(none none none)')).toEqual({
+        l: 0,
+        a: 0,
+        b: 0,
+        alpha: 1
+      });
+    });
+  });
+
+  describe('oklabStringToHsla', () => {
+    it('Converts an Oklab string to an HSLA object', () => {
+      expect(oklabStringToHsla('oklab(0.70 0.15 -0.09)')).toEqual({
+        hue: expect.closeTo(303, 0),
+        saturation: expect.closeTo(0.567, 3),
+        lightness: expect.closeTo(0.646, 3),
+        alpha: 1
+      });
+    });
+  });
+
+  describe('oklchStringToOklcha', () => {
+    it('Converts a simple Oklch string to an Oklcha object', () => {
+      expect(oklchStringToOklcha('oklch(0.7 0.3 90deg)')).toEqual({
+        l: 0.7,
+        chroma: 0.3,
+        hue: 90,
+        alpha: 1
+      });
+    });
+
+    it('Converts an Oklch string with percentages to an Oklcha object', () => {
+      expect(oklchStringToOklcha('oklch(70% 75% 90deg)')).toEqual({
+        l: 0.7,
+        chroma: expect.closeTo(0.3, 6),
+        hue: 90,
+        alpha: 1
+      });
+    });
+
+    it('Converts an Oklch string with unitless hue to an Oklcha object', () => {
+      expect(oklchStringToOklcha('oklch(0.7 0.3 90)')).toEqual({
+        l: 0.7,
+        chroma: 0.3,
+        hue: 90,
+        alpha: 1
+      });
+    });
+
+    it('Converts an Oklch string with turn units to an Oklcha object', () => {
+      expect(oklchStringToOklcha('oklch(0.7 0.3 .25turn)')).toEqual({
+        l: 0.7,
+        chroma: 0.3,
+        hue: 90,
+        alpha: 1
+      });
+    });
+
+    it('Converts an Oklch string with rad units to an Oklcha object', () => {
+      expect(oklchStringToOklcha('oklch(0.7 0.3 1.57rad)')).toEqual({
+        l: 0.7,
+        chroma: 0.3,
+        hue: expect.closeTo(90, 1),
+        alpha: 1
+      });
+    });
+
+    it('Converts an Oklch string with grad units to an Oklcha object', () => {
+      expect(oklchStringToOklcha('oklch(0.7 0.3 100grad)')).toEqual({
+        l: 0.7,
+        chroma: 0.3,
+        hue: 90,
+        alpha: 1
+      });
+    });
+
+    it('Converts an Oklch with alpha to an Oklcha object', () => {
+      expect(oklchStringToOklcha('oklch(0.7 0.3 90deg / 0.5)')).toEqual({
+        l: 0.7,
+        chroma: 0.3,
+        hue: 90,
+        alpha: 0.5
+      });
+    });
+
+    it('Converts an Oklch with "none" values to an Oklcha object', () => {
+      expect(oklchStringToOklcha('oklch(none none none)')).toEqual({
+        l: 0,
+        chroma: 0,
+        hue: 0,
+        alpha: 1
+      });
+    });
+  });
+
+  describe('oklchStringToHsla', () => {
+    it('Converts an Oklch string to an HSLA object', () => {
+      expect(oklchStringToHsla('oklch(0.7 0.3 90deg)')).toEqual({
+        hue: expect.closeTo(36, 0),
+        saturation: 1,
+        lightness: expect.closeTo(0.45, 2),
         alpha: 1
       });
     });

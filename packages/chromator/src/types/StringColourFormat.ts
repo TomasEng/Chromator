@@ -3,6 +3,8 @@ export type StringColourFormat =
   | 'hsla'
   | 'lab'
   | 'lch'
+  | 'oklab'
+  | 'oklch'
   | 'namedColour'
   | 'namedTransparent'
   | 'rgbDecimal'

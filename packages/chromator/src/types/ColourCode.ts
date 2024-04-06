@@ -10,6 +10,10 @@ import { type Lab } from './Lab';
 import { type Laba } from './Laba';
 import { type Lch } from './Lch';
 import { type Lcha } from './Lcha';
+import { type Oklab } from './Oklab';
+import { type Oklaba } from './Oklaba';
+import { type Oklch } from './Oklch';
+import { type Oklcha } from './Oklcha';
 
 export type ColourCode =
     | Rgb
@@ -24,4 +28,8 @@ export type ColourCode =
     | Laba
     | Lch
     | Lcha
+    | Oklab
+    | Oklaba
+    | Oklch
+    | Oklcha
     | string;

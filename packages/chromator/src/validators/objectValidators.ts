@@ -11,6 +11,10 @@ import { type Lab } from '../types/Lab';
 import { type Laba } from '../types/Laba';
 import { type Lch } from '../types/Lch';
 import { type Lcha } from '../types/Lcha';
+import { type Oklaba } from '../types/Oklaba';
+import { type Oklab } from '../types/Oklab';
+import { type Oklch } from '../types/Oklch';
+import { type Oklcha } from '../types/Oklcha';
 
 export const isRgb = (value: ColourCode): value is Rgb =>
   (value as Rgb).red !== undefined &&
@@ -83,3 +87,27 @@ export const isLcha = (value: ColourCode): value is Lcha =>
     (value as Lcha).chroma !== undefined &&
     (value as Lcha).hue !== undefined &&
     (value as Lcha).alpha !== undefined;
+
+export const isOklab = (value: ColourCode): value is Oklab =>
+  (value as Oklab).l !== undefined &&
+    (value as Oklab).a !== undefined &&
+    (value as Oklab).b !== undefined &&
+    (value as Oklaba).alpha === undefined;
+
+export const isOklaba = (value: ColourCode): value is Oklaba =>
+  (value as Oklaba).l !== undefined &&
+    (value as Oklaba).a !== undefined &&
+    (value as Oklaba).b !== undefined &&
+    (value as Oklaba).alpha !== undefined;
+
+export const isOklch = (value: ColourCode): value is Oklch =>
+  (value as Oklch).l !== undefined &&
+    (value as Oklch).chroma !== undefined &&
+    (value as Oklch).hue !== undefined &&
+    (value as Oklcha).alpha === undefined;
+
+export const isOklcha = (value: ColourCode): value is Oklcha =>
+  (value as Oklcha).l !== undefined &&
+    (value as Oklcha).chroma !== undefined &&
+    (value as Oklcha).hue !== undefined &&
+    (value as Oklcha).alpha !== undefined;

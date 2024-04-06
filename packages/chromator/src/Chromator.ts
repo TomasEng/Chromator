@@ -12,7 +12,11 @@ import { type Rgba } from './types/Rgba';
 import { type Hsv } from './types/Hsv';
 import { type Hsva } from './types/Hsva';
 import {
-  hslaObjectToHslString, labaObjectToLabString, lchaObjectToLchString,
+  hslaObjectToHslString,
+  labaObjectToLabString,
+  lchaObjectToLchString,
+  oklabaObjectToOklabString,
+  oklchaObjectToOklchString,
   rgbaObjectToRgbDecimalString,
   rgbaObjectToRgbHexString
 } from './converters/object-to-string';
@@ -27,6 +31,12 @@ import { type Laba } from './types/Laba';
 import { hslaToLcha, hslToLch } from './converters/object-converters/lch';
 import { type Lch } from './types/Lch';
 import { type Lcha } from './types/Lcha';
+import { type Oklab } from './types/Oklab';
+import { hslaToOklaba, hslToOklab } from './converters/object-converters/oklab';
+import { type Oklaba } from './types/Oklaba';
+import { type Oklch } from './types/Oklch';
+import { hslaToOklcha, hslToOklch } from './converters/object-converters/oklch';
+import { type Oklcha } from './types/Oklcha';
 
 export class Chromator {
   private readonly hsl: Hsl; // HSL is used as the base since all conversion functions from the HSL space are mathematically surjective.
@@ -149,6 +159,34 @@ export class Chromator {
   }
 
   /**
+     * Returns the Oklab representation of the colour.
+     */
+  public getOklab(): Oklab {
+    return hslToOklab(this.getHsl());
+  }
+
+  /**
+     * Returns the Oklab representation of the colour including the alpha value.
+     */
+  public getOklaba(): Oklaba {
+    return hslaToOklaba(this.getHsla());
+  }
+
+  /**
+     * Returns the Oklch representation of the colour.
+     */
+  public getOklch(): Oklch {
+    return hslToOklch(this.getHsla());
+  }
+
+  /**
+     * Returns the Oklch representation of the colour including the alpha value.
+     */
+  public getOklcha(): Oklcha {
+    return hslaToOklcha(this.getHsla());
+  }
+
+  /**
      * Returns the RGB CSS code of the colour.
      * @example
      * const red = new Chromator('red');
@@ -196,6 +234,26 @@ export class Chromator {
      */
   public getLchCode(): string {
     return lchaObjectToLchString(this.getLcha());
+  }
+
+  /**
+   * Returns the Oklab CSS code of the colour.
+   * @example
+   * const blue = new Chromator('blue');
+   * blue.getOklabCode(); // 'oklab(0.45 -0.03 -0.31)'
+   */
+  public getOklabCode(): string {
+    return oklabaObjectToOklabString(this.getOklaba());
+  }
+
+  /**
+   * Returns the Oklch CSS code of the colour.
+   * @example
+   * const blue = new Chromator('blue');
+   * blue.getOklchCode(); // 'oklch(0.45 0.31 264deg)'
+   */
+  public getOklchCode(): string {
+    return oklchaObjectToOklchString(this.getOklcha());
   }
 
   /**

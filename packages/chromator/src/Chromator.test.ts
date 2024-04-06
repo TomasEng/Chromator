@@ -112,6 +112,44 @@ describe('Chromator', () => {
     });
   });
 
+  test('getOklab', () => {
+    const orchid = new Chromator('orchid');
+    expect(orchid.getOklab()).toEqual({
+      l: expect.closeTo(0.7021, 4),
+      a: expect.closeTo(0.1549, 4),
+      b: expect.closeTo(-0.0942, 4)
+    });
+  });
+
+  test('getOklaba', () => {
+    const transparentOrchid = new Chromator('rgba(218, 112, 214, 0.5)');
+    expect(transparentOrchid.getOklaba()).toEqual({
+      l: expect.closeTo(0.7021, 4),
+      a: expect.closeTo(0.1549, 4),
+      b: expect.closeTo(-0.0942, 4),
+      alpha: 0.5
+    });
+  });
+
+  test('getOklch', () => {
+    const orchid = new Chromator('orchid');
+    expect(orchid.getOklch()).toEqual({
+      l: expect.closeTo(0.7021, 4),
+      chroma: expect.closeTo(0.1813, 4),
+      hue: expect.closeTo(328.7, 1)
+    });
+  });
+
+  test('getOklcha', () => {
+    const transparentOrchid = new Chromator('rgba(218, 112, 214, 0.5)');
+    expect(transparentOrchid.getOklcha()).toEqual({
+      l: expect.closeTo(0.7021, 4),
+      chroma: expect.closeTo(0.1813, 4),
+      hue: expect.closeTo(328.7, 1),
+      alpha: 0.5
+    });
+  });
+
   test('getRgbCode', () => {
     const orchid = new Chromator('orchid');
     expect(orchid.getRgbCode()).toBe('rgb(218, 112, 214)');
@@ -145,6 +183,20 @@ describe('Chromator', () => {
     expect(orchid.getLchCode()).toBe('lch(63 65 328deg)');
     const transparentOrchid = new Chromator('rgba(218, 112, 214, 0.5)');
     expect(transparentOrchid.getLchCode()).toBe('lch(63 65 328deg / 0.5)');
+  });
+
+  test('getOklabCode', () => {
+    const orchid = new Chromator('orchid');
+    expect(orchid.getOklabCode()).toBe('oklab(0.7 0.15 -0.09)');
+    const transparentOrchid = new Chromator('rgba(218, 112, 214, 0.5)');
+    expect(transparentOrchid.getOklabCode()).toBe('oklab(0.7 0.15 -0.09 / 0.5)');
+  });
+
+  test('getOklchCode', () => {
+    const orchid = new Chromator('orchid');
+    expect(orchid.getOklchCode()).toBe('oklch(0.7 0.18 329deg)');
+    const transparentOrchid = new Chromator('rgba(218, 112, 214, 0.5)');
+    expect(transparentOrchid.getOklchCode()).toBe('oklch(0.7 0.18 329deg / 0.5)');
   });
 
   describe('lighten', () => {

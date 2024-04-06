@@ -1,9 +1,8 @@
 import { type Hsl } from '../types/Hsl';
 import { colourFormatRegex } from '../data/colourFormatRegex';
 import {
-  hueDegreesFromString,
-  numberFromPercentageOrUnitInterval,
-  numberFromScaledPercentageOrScale
+  cssStringToNumber,
+  hueDegreesFromString
 } from './string-to-number';
 import { type Hsla } from '../types/Hsla';
 import { rgbaToHsla, rgbToHsl } from './object-converters/rgb';
@@ -23,14 +22,18 @@ import { type Laba } from '../types/Laba';
 import { labaToHsla } from './object-converters/lab';
 import { type Lcha } from '../types/Lcha';
 import { lchaToHsla } from './object-converters/lch';
+import { oklabaToHsla } from './object-converters/oklab';
+import { type Oklaba } from '../types/Oklaba';
+import { oklchaToHsla } from './object-converters/oklch';
+import { type Oklcha } from '../types/Oklcha';
 
 export const hslStringToHsl = (value: string): Hsl => {
   const regex = colourFormatRegex.hsl;
   const { hue, saturation, lightness } = regex.exec(value)!.groups!;
   return {
     hue: hueDegreesFromString(hue),
-    saturation: saturation === 'none' ? 0 : numberFromPercentageOrUnitInterval(saturation),
-    lightness: lightness === 'none' ? 0 : numberFromPercentageOrUnitInterval(lightness)
+    saturation: cssStringToNumber(saturation, { min: 0, max: 1 }),
+    lightness: cssStringToNumber(lightness, { min: 0, max: 1 })
   };
 };
 
@@ -39,9 +42,9 @@ export const hslaStringToHsla = (value: string): Hsla => {
   const { hue, saturation, lightness, alpha } = regex.exec(value)!.groups!;
   return {
     hue: hueDegreesFromString(hue),
-    saturation: saturation === 'none' ? 0 : numberFromPercentageOrUnitInterval(saturation),
-    lightness: lightness === 'none' ? 0 : numberFromPercentageOrUnitInterval(lightness),
-    alpha: numberFromPercentageOrUnitInterval(alpha)
+    saturation: cssStringToNumber(saturation, { min: 0, max: 1 }),
+    lightness: cssStringToNumber(lightness, { min: 0, max: 1 }),
+    alpha: cssStringToNumber(alpha, { min: 0, max: 1 })
   };
 };
 
@@ -51,10 +54,10 @@ export const labStringToHsla = (value: string): Hsla =>
 export const labStringToLaba = (value: string): Laba => {
   const regex = colourFormatRegex.lab;
   const { L, a, b, alpha } = regex.exec(value)!.groups!;
-  const LNumber = L === 'none' ? 0 : numberFromScaledPercentageOrScale(L, 100);
-  const aNumber = a === 'none' ? 0 : numberFromScaledPercentageOrScale(a, 125);
-  const bNumber = b === 'none' ? 0 : numberFromScaledPercentageOrScale(b, 125);
-  const alphaNumber = alpha === undefined ? 1 : numberFromPercentageOrUnitInterval(alpha);
+  const LNumber = cssStringToNumber(L, { percentageScale: 100, min: 0, max: 100 });
+  const aNumber = cssStringToNumber(a, { percentageScale: 125 });
+  const bNumber = cssStringToNumber(b, { percentageScale: 125 });
+  const alphaNumber = alpha === undefined ? 1 : cssStringToNumber(alpha);
   return { L: LNumber, a: aNumber, b: bNumber, alpha: alphaNumber };
 };
 
@@ -65,10 +68,38 @@ export const lchStringToLcha = (value: string): Lcha => {
   const regex = colourFormatRegex.lch;
   const { L, chroma, hue, alpha } = regex.exec(value)!.groups!;
   return {
-    L: L === 'none' ? 0 : numberFromScaledPercentageOrScale(L, 100),
-    chroma: chroma === 'none' ? 0 : numberFromScaledPercentageOrScale(chroma, 150),
+    L: cssStringToNumber(L, { percentageScale: 100, min: 0, max: 100 }),
+    chroma: cssStringToNumber(chroma, { percentageScale: 150, min: 0 }),
     hue: hueDegreesFromString(hue),
-    alpha: alpha === undefined ? 1 : numberFromPercentageOrUnitInterval(alpha)
+    alpha: alpha === undefined ? 1 : cssStringToNumber(alpha)
+  };
+};
+
+export const oklabStringToHsla = (value: string): Hsla =>
+  oklabaToHsla(oklabStringToOklaba(value));
+
+export const oklabStringToOklaba = (value: string): Oklaba => {
+  const regex = colourFormatRegex.oklab;
+  const { l, a, b, alpha } = regex.exec(value)!.groups!;
+  return {
+    l: cssStringToNumber(l, { min: 0, max: 1 }),
+    a: cssStringToNumber(a, { percentageScale: 0.4 }),
+    b: cssStringToNumber(b, { percentageScale: 0.4 }),
+    alpha: alpha === undefined ? 1 : cssStringToNumber(alpha, { min: 0, max: 1 })
+  };
+};
+
+export const oklchStringToHsla = (value: string): Hsla =>
+  oklchaToHsla(oklchStringToOklcha(value));
+
+export const oklchStringToOklcha = (value: string): Oklcha => {
+  const regex = colourFormatRegex.oklch;
+  const { l, chroma, hue, alpha } = regex.exec(value)!.groups!;
+  return {
+    l: cssStringToNumber(l, { min: 0, max: 1 }),
+    chroma: cssStringToNumber(chroma, { min: 0, percentageScale: 0.4 }),
+    hue: hueDegreesFromString(hue),
+    alpha: alpha === undefined ? 1 : cssStringToNumber(alpha, { min: 0, max: 1 })
   };
 };
 

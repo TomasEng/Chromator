@@ -6,6 +6,19 @@ export const hexPairToDecimal = (value: string): number => parseInt(value, 16);
 
 export const shortHexToDecimal = (value: string): number => hexPairToDecimal(value + value);
 
+interface CssNumberOptions {
+  percentageScale?: number;
+  min?: number;
+  max?: number;
+}
+
+export const cssStringToNumber = (value: string, options: CssNumberOptions = {}): number => {
+  if (value === '' || value.toLowerCase() === 'none') return 0;
+  const { percentageScale = 1, max = Infinity, min = -Infinity } = options;
+  const num = numberFromScaledPercentageOrScale(value, percentageScale);
+  return Math.max(min, Math.min(max, num));
+};
+
 export const numberFromPercentageOrUnitInterval = (value: string): number =>
   isValidUnitIntervalValue(value) ? parseFloat(value) : numberFromPercentage(value);
 

@@ -6,7 +6,7 @@ import {
   rgbToCieXyz
 } from './xyz.ts';
 import { testColours } from '../../test-data/namedColourList.ts';
-import { round } from '../../utils.ts';
+import { verifyHsl } from '../../test-data/utils.ts';
 
 describe('CIE XYZ converters', () => {
   describe('rgbToCieXyz', () => {
@@ -50,21 +50,7 @@ describe('CIE XYZ converters', () => {
       const codes = testColours[colour];
       const { hsl, cieXyz } = codes;
       const result = cieXyzToHsl(cieXyz);
-      expect(result).toEqual({
-        hue: expect.anything(),
-        saturation: hsl.lightness === 1 ? expect.anything() : expect.closeTo(hsl.saturation, 3),
-        lightness: expect.closeTo(hsl.lightness, 3)
-      });
-      const { hue } = result;
-      expect(hue).toBeGreaterThanOrEqual(0);
-      expect(hue).toBeLessThanOrEqual(360);
-      const isGrey = hsl.saturation === 0;
-      if (!isGrey) {
-        const numDigitsAfterDecimal = 1;
-        const roundedHue = round(hue, numDigitsAfterDecimal);
-        const modulatedHue = roundedHue % 360;
-        expect(modulatedHue).toBeCloseTo(hsl.hue, numDigitsAfterDecimal);
-      }
+      verifyHsl(result, hsl);
     });
   });
 });

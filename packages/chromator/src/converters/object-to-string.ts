@@ -4,6 +4,8 @@ import { type Hsla } from '../types/Hsla';
 import { round } from '../utils';
 import { type Laba } from '../types/Laba';
 import { type Lcha } from '../types/Lcha';
+import { type Oklaba } from '../types/Oklaba';
+import { type Oklcha } from '../types/Oklcha';
 
 export const hslaObjectToHslString = (hsla: Hsla): string => {
   const { hue, saturation, lightness, alpha } = hsla;
@@ -65,5 +67,31 @@ export const lchaObjectToLchString = (lcha: Lcha): string => {
   } else {
     const alphaRounded = round(alpha, 2);
     return `lch(${LRounded} ${chromaRounded} ${hueRounded}deg / ${alphaRounded})`;
+  }
+};
+
+export const oklabaObjectToOklabString = (oklaba: Oklaba): string => {
+  const { l, a, b, alpha } = oklaba;
+  const lRounded = round(l, 2);
+  const aRounded = round(a, 2);
+  const bRounded = round(b, 2);
+  if (alpha === 1) {
+    return `oklab(${lRounded} ${aRounded} ${bRounded})`;
+  } else {
+    const alphaRounded = round(alpha, 2);
+    return `oklab(${lRounded} ${aRounded} ${bRounded} / ${alphaRounded})`;
+  }
+};
+
+export const oklchaObjectToOklchString = (oklcha: Oklcha): string => {
+  const { l, chroma, hue, alpha } = oklcha;
+  const lRounded = round(l, 2);
+  const chromaRounded = round(chroma, 2);
+  const hueRounded = round(hue, 0);
+  if (alpha === 1) {
+    return `oklch(${lRounded} ${chromaRounded} ${hueRounded}deg)`;
+  } else {
+    const alphaRounded = round(alpha, 2);
+    return `oklch(${lRounded} ${chromaRounded} ${hueRounded}deg / ${alphaRounded})`;
   }
 };

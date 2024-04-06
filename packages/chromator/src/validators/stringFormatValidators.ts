@@ -75,7 +75,7 @@ export const isValid255ScaleValue = (value: string): boolean =>
   /^((((1?\d{1,2})|(2([01234]\d|5[01234])))(\.\d+)?)|255(\.0+)?|\.\d+)$/.test(value);
 
 export const isValidUnitIntervalValue = (value: string): boolean =>
-  /^(0|0\.\d+|\.\d+|1(\.0+)?)$/.test(value);
+  /^\+?(0|0\.\d+|\.\d+|1(\.0+)?)$/.test(value);
 
 export const isValidUnitIntervalOrPercentageValue = (value: string): boolean =>
   isValidUnitIntervalValue(value) || isValidPercentageValue(value);

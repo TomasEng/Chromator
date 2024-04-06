@@ -6,6 +6,8 @@ import { type Xyza } from '../types/Xyza.ts';
 import { type Laba } from '../types/Laba.ts';
 import { type Lcha } from '../types/Lcha.ts';
 import { type ColourCode } from '../types/ColourCode.ts';
+import { type Oklaba } from '../types/Oklaba.ts';
+import { type Oklcha } from '../types/Oklcha.ts';
 
 describe('colourCodeToHsla', () => {
   it('Converts a HSL object to an HSLA object', () => {
@@ -114,7 +116,7 @@ describe('colourCodeToHsla', () => {
     });
   });
 
-  it('Converts an LHC object to an HSLA object', () => {
+  it('Converts an LCH object to an HSLA object', () => {
     const { orchid } = testColours;
     expect(colourCodeToHsla(orchid.lch)).toEqual({
       hue: expect.closeTo(orchid.hsl.hue, 2),
@@ -128,6 +130,50 @@ describe('colourCodeToHsla', () => {
     const { orchid } = testColours;
     const alpha = 0.2;
     const transparentOrchid: Lcha = { ...orchid.lch, alpha };
+    expect(colourCodeToHsla(transparentOrchid)).toEqual({
+      hue: expect.closeTo(orchid.hsl.hue, 2),
+      saturation: expect.closeTo(orchid.hsl.saturation, 4),
+      lightness: expect.closeTo(orchid.hsl.lightness, 4),
+      alpha
+    });
+  });
+
+  it('Converts an Oklab object to an HSLA object', () => {
+    const { orchid } = testColours;
+    expect(colourCodeToHsla(orchid.oklab)).toEqual({
+      hue: expect.closeTo(orchid.hsl.hue, 2),
+      saturation: expect.closeTo(orchid.hsl.saturation, 4),
+      lightness: expect.closeTo(orchid.hsl.lightness, 4),
+      alpha: 1
+    });
+  });
+
+  it('Converts an Oklaba object to an HSLA object', () => {
+    const { orchid } = testColours;
+    const alpha = 0.2;
+    const transparentOrchid: Oklaba = { ...orchid.oklab, alpha };
+    expect(colourCodeToHsla(transparentOrchid)).toEqual({
+      hue: expect.closeTo(orchid.hsl.hue, 2),
+      saturation: expect.closeTo(orchid.hsl.saturation, 4),
+      lightness: expect.closeTo(orchid.hsl.lightness, 4),
+      alpha
+    });
+  });
+
+  it('Converts an Oklch object to an HSLA object', () => {
+    const { orchid } = testColours;
+    expect(colourCodeToHsla(orchid.oklch)).toEqual({
+      hue: expect.closeTo(orchid.hsl.hue, 2),
+      saturation: expect.closeTo(orchid.hsl.saturation, 4),
+      lightness: expect.closeTo(orchid.hsl.lightness, 4),
+      alpha: 1
+    });
+  });
+
+  it('Converts an Oklcha object to an HSLA object', () => {
+    const { orchid } = testColours;
+    const alpha = 0.2;
+    const transparentOrchid: Oklcha = { ...orchid.oklch, alpha };
     expect(colourCodeToHsla(transparentOrchid)).toEqual({
       hue: expect.closeTo(orchid.hsl.hue, 2),
       saturation: expect.closeTo(orchid.hsl.saturation, 4),
@@ -267,6 +313,24 @@ describe('colourCodeToHsla', () => {
       hue: expect.closeTo(172, 0),
       saturation: expect.closeTo(1, 2),
       lightness: expect.closeTo(0.34, 2),
+      alpha: 1
+    });
+  });
+
+  it('Converts an Oklab string to an HSLA object', () => {
+    expect(colourCodeToHsla('oklab(0.70 0.15 -0.09)')).toEqual({
+      hue: expect.closeTo(303, 0),
+      saturation: expect.closeTo(0.567, 3),
+      lightness: expect.closeTo(0.646, 3),
+      alpha: 1
+    });
+  });
+
+  it('Converts an Oklch string to an HSLA object', () => {
+    expect(colourCodeToHsla('oklch(0.7 0.3 90deg)')).toEqual({
+      hue: expect.closeTo(36, 0),
+      saturation: 1,
+      lightness: expect.closeTo(0.45, 2),
       alpha: 1
     });
   });

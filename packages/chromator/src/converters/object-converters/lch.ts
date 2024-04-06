@@ -2,9 +2,10 @@ import { type Hsl } from '../../types/Hsl';
 import { type Lab } from '../../types/Lab';
 import { type Lch } from '../../types/Lch';
 import { hslToLab, labToHsl } from './lab';
-import { modulo } from '../../utils';
 import { type Lcha } from '../../types/Lcha';
 import { type Hsla } from '../../types/Hsla';
+import { cartesianToPolarInDegrees } from '../cartesianToPolar';
+import { polarInDegreesToCartesian } from '../polarToCartesian';
 
 export const hslToLch = (hsl: Hsl): Lch => {
   const lab = hslToLab(hsl);
@@ -13,8 +14,7 @@ export const hslToLch = (hsl: Hsl): Lch => {
 
 const labToLch = (lab: Lab): Lch => {
   const { L, a, b } = lab;
-  const chroma = Math.sqrt(a ** 2 + b ** 2);
-  const hue = modulo(Math.atan2(b, a) * (180 / Math.PI), 360);
+  const { angle: hue, radius: chroma } = cartesianToPolarInDegrees({ x: a, y: b });
   return { L, chroma, hue };
 };
 
@@ -24,8 +24,7 @@ export const lchToHsl = (lch: Lch): Hsl => {
 };
 
 const lchToLab = ({ L, chroma, hue }: Lch): Lab => {
-  const a = chroma * Math.cos(hue * (Math.PI / 180));
-  const b = chroma * Math.sin(hue * (Math.PI / 180));
+  const { x: a, y: b } = polarInDegreesToCartesian({ radius: chroma, angle: hue });
   return { L, a, b };
 };
 

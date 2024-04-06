@@ -3,8 +3,10 @@ import { type StringColourFormat } from '../types/StringColourFormat';
 export const colourFormatRegex: { [key in StringColourFormat]: RegExp } = {
   hsl: /^hsl\s*\(\s*(?<hue>(-?\d*\.?\d*(|deg|turn|rad|grad))|none)\s*,\s*(?<saturation>(\d*\.?\d*%?)|none)\s*,\s*(?<lightness>(\d*\.?\d*%?)|none)\s*\)$/i,
   hsla: /^hsla\s*\(\s*(?<hue>(-?\d*\.?\d*(|deg|turn|rad|grad))|none)\s*,\s*(?<saturation>(\d*\.?\d*%?)|none)\s*,\s*(?<lightness>(\d*\.?\d*%?)|none)\s*,\s*(?<alpha>\d*\.?\d*%?)\s*\)$/i,
-  lab: /^lab\s*\(\s*(?<L>(\d*\.?\d*%?)|none)\s+(?<a>(-?\d*\.?\d*%?)|none)\s+(?<b>(-?\d*\.?\d*%?)|none)\s*(\/\s*(?<alpha>\d*\.?\d*%?)\s*)?\)$/i,
-  lch: /^lch\s*\(\s*(?<L>(\d*\.?\d*%?)|none)\s+(?<chroma>(\d*\.?\d*%?)|none)\s+(?<hue>(-?\d*\.?\d*(|deg|turn|grad|rad))|none)\s*(\/\s*(?<alpha>\d*\.?\d*%?)\s*)?\)$/i,
+  lab: /^lab\s*\(\s*(?<L>(\d*\.?\d*%?)|none)\s+(?<a>(-?\d*\.?\d*%?)|none)\s+(?<b>(-?\d*\.?\d*%?)|none)\s*(\/\s*(?<alpha>(\+?\d*\.?\d*%?)|none)\s*)?\)$/i,
+  lch: /^lch\s*\(\s*(?<L>(\d*\.?\d*%?)|none)\s+(?<chroma>(\d*\.?\d*%?)|none)\s+(?<hue>(-?\d*\.?\d*(|deg|turn|grad|rad))|none)\s*(\/\s*(?<alpha>(\+?\d*\.?\d*%?)|none)\s*)?\)$/i,
+  oklab: /^oklab\s*\(\s*(?<l>(\+?\d*\.?\d*%?)|none)\s+(?<a>([+-]?\d*\.?\d*%?)|none)\s+(?<b>([+-]?\d*\.?\d*%?)|none)\s*(\/\s*(?<alpha>(\+?\d*\.?\d*%?)|none)\s*)?\)$/i,
+  oklch: /^oklch\s*\(\s*(?<l>(\+?\d*\.?\d*%?)|none)\s+(?<chroma>(\+?\d*\.?\d*%?)|none)\s+(?<hue>([+-]?\d*\.?\d*(|deg|turn|grad|rad))|none)\s*(\/\s*(?<alpha>(\+?\d*\.?\d*%?)|none)\s*)?\)$/i,
   namedColour: /[\w-]+/i,
   namedTransparent: /transparent/i,
   rgbDecimal: /^rgb\s*\(\s*(?<red>\d*\.?\d*)\s*,\s*(?<green>\d*\.?\d*)\s*,\s*(?<blue>\d*\.?\d*)\s*\)$/i,
