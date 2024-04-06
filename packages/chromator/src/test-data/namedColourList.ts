@@ -31,8 +31,8 @@ export const testColours: TestData = {
     hsl: { hue: 0, saturation: 0, lightness: 0.752941 },
     hsv: { hue: 0, saturation: 0, value: 0.752941 },
     cieXyz: { x: 0.501007, y: 0.527115, z: 0.573939 },
-    lab: { L: 77.7044, a: 0, b: 0 },
-    lch: { L: 77.7044, chroma: 0, hue: 158.199 }
+    lab: { L: 77.7043, a: 0, b: 0 },
+    lch: { L: 77.7043, chroma: 0, hue: 0 }
   },
   grey: {
     rgb: { red: 128, green: 128, blue: 128 },
@@ -40,7 +40,7 @@ export const testColours: TestData = {
     hsv: { hue: 0, saturation: 0, value: 0.501961 },
     cieXyz: { x: 0.205169, y: 0.215861, z: 0.235035 },
     lab: { L: 53.585, a: 0, b: 0 },
-    lch: { L: 53.585, chroma: 0, hue: 158.199 }
+    lch: { L: 53.585, chroma: 0, hue: 0 }
   },
   white: {
     rgb: { red: 255, green: 255, blue: 255 },
@@ -48,7 +48,7 @@ export const testColours: TestData = {
     hsv: { hue: 0, saturation: 0, value: 1 },
     cieXyz: { x: 0.95047, y: 1, z: 1.08883 },
     lab: { L: 100, a: 0, b: 0 },
-    lch: { L: 100, chroma: 0, hue: 158.199 }
+    lch: { L: 100, chroma: 0, hue: 0 }
   },
   maroon: {
     rgb: { red: 128, green: 0, blue: 0 },
@@ -144,7 +144,7 @@ export const testColours: TestData = {
     hsv: { hue: 180, saturation: 1, value: 1 },
     cieXyz: { x: 0.538014, y: 0.787327, z: 1.069496 },
     lab: { L: 91.1132, a: -48.0875, b: -14.1312 },
-    lch: { L: 91.1132, chroma: 50.1209, hue: 196.376 }
+    lch: { L: 91.1132, chroma: 50.1208, hue: 196.376 }
   },
   aliceblue: {
     rgb: { red: 240, green: 248, blue: 255 },
@@ -152,7 +152,7 @@ export const testColours: TestData = {
     hsv: { hue: 208, saturation: 0.058824, value: 1 },
     cieXyz: { x: 0.87549, y: 0.928794, z: 1.079035 },
     lab: { L: 97.1786, a: -1.3486, b: -4.2629 },
-    lch: { L: 97.1786, chroma: 4.4711, hue: 252.444 }
+    lch: { L: 97.1786, chroma: 4.4711, hue: 252.445 }
   },
   antiquewhite: {
     rgb: { red: 250, green: 235, blue: 215 },
@@ -168,14 +168,14 @@ export const testColours: TestData = {
     hsv: { hue: 180, saturation: 1, value: 1 },
     cieXyz: { x: 0.538014, y: 0.787327, z: 1.069496 },
     lab: { L: 91.1132, a: -48.0875, b: -14.1312 },
-    lch: { L: 91.1132, chroma: 50.1209, hue: 196.376 }
+    lch: { L: 91.1132, chroma: 50.1208, hue: 196.376 }
   },
   aquamarine: {
     rgb: { red: 127, green: 255, blue: 212 },
     hsl: { hue: 159.844, saturation: 1, lightness: 0.74902 },
     hsv: { hue: 159.844, saturation: 0.501961, value: 1 },
     cieXyz: { x: 0.563908, y: 0.807806, z: 0.748952 },
-    lab: { L: 92.034, a: -45.5244, b: 9.7178 },
+    lab: { L: 92.034, a: -45.5243, b: 9.7178 },
     lch: { L: 92.034, chroma: 46.55, hue: 167.95 }
   },
   azure: {
@@ -191,7 +191,7 @@ export const testColours: TestData = {
     hsl: { hue: 60, saturation: 0.555556, lightness: 0.911765 },
     hsv: { hue: 60, saturation: 0.102041, value: 0.960784 },
     cieXyz: { x: 0.832254, y: 0.898851, z: 0.806614 },
-    lab: { L: 95.9491, a: -4.1929, b: 12.049 },
+    lab: { L: 95.9491, a: -4.1928, b: 12.049 },
     lch: { L: 95.9491, chroma: 12.7576, hue: 109.187 }
   },
   bisque: {
@@ -199,7 +199,7 @@ export const testColours: TestData = {
     hsl: { hue: 32.542, saturation: 1, lightness: 0.884314 },
     hsv: { hue: 32.542, saturation: 0.231373, value: 1 },
     cieXyz: { x: 0.789475, y: 0.807345, z: 0.636384 },
-    lab: { L: 92.0134, a: 4.431, b: 19.0118 },
+    lab: { L: 92.0134, a: 4.4311, b: 19.0118 },
     lch: { L: 92.0134, chroma: 19.5214, hue: 76.88 }
   },
   blanchedalmond: {
@@ -216,14 +216,14 @@ export const testColours: TestData = {
     hsv: { hue: 271.148, saturation: 0.809735, value: 0.886275 },
     cieXyz: { x: 0.250692, y: 0.126219, z: 0.730523 },
     lab: { L: 42.188, a: 69.845, b: -74.7631 },
-    lch: { L: 42.188, chroma: 102.3124, hue: 313.052 }
+    lch: { L: 42.188, chroma: 102.3125, hue: 313.052 }
   },
   brown: {
     rgb: { red: 165, green: 42, blue: 42 },
     hsl: { hue: 0, saturation: 0.594203, lightness: 0.405882 },
     hsv: { hue: 0, saturation: 0.745455, value: 0.647059 },
     cieXyz: { x: 0.167649, y: 0.09825, z: 0.032037 },
-    lab: { L: 37.5265, a: 49.6903, b: 30.5432 },
+    lab: { L: 37.5265, a: 49.6903, b: 30.5431 },
     lch: { L: 37.5265, chroma: 58.3268, hue: 31.578 }
   },
   burlywood: {
@@ -271,7 +271,7 @@ export const testColours: TestData = {
     hsl: { hue: 218.54, saturation: 0.791908, lightness: 0.660784 },
     hsv: { hue: 218.54, saturation: 0.578059, value: 0.929412 },
     cieXyz: { x: 0.312837, y: 0.30316, z: 0.843073 },
-    lab: { L: 61.926, a: 9.3328, b: -49.298 },
+    lab: { L: 61.926, a: 9.3329, b: -49.298 },
     lch: { L: 61.926, chroma: 50.1737, hue: 280.72 }
   },
   cornsilk: {
@@ -279,7 +279,7 @@ export const testColours: TestData = {
     hsl: { hue: 48, saturation: 1, lightness: 0.931373 },
     hsv: { hue: 48, saturation: 0.137255, value: 1 },
     cieXyz: { x: 0.877246, y: 0.935631, z: 0.811344 },
-    lab: { L: 97.4557, a: -2.2177, b: 14.2934 },
+    lab: { L: 97.4557, a: -2.2176, b: 14.2934 },
     lch: { L: 97.4557, chroma: 14.4644, hue: 98.819 }
   },
   crimson: {
@@ -320,7 +320,7 @@ export const testColours: TestData = {
     hsv: { hue: 0, saturation: 0, value: 0.662745 },
     cieXyz: { x: 0.377104, y: 0.396755, z: 0.431999 },
     lab: { L: 69.2378, a: 0, b: 0 },
-    lch: { L: 69.2378, chroma: 0, hue: 158.199 }
+    lch: { L: 69.2378, chroma: 0, hue: 0 }
   },
   darkgreen: {
     rgb: { red: 0, green: 100, blue: 0 },
@@ -336,7 +336,7 @@ export const testColours: TestData = {
     hsv: { hue: 0, saturation: 0, value: 0.662745 },
     cieXyz: { x: 0.377104, y: 0.396755, z: 0.431999 },
     lab: { L: 69.2378, a: 0, b: 0 },
-    lch: { L: 69.2378, chroma: 0, hue: 158.199 }
+    lch: { L: 69.2378, chroma: 0, hue: 0 }
   },
   darkkhaki: {
     rgb: { red: 189, green: 183, blue: 107 },
@@ -399,7 +399,7 @@ export const testColours: TestData = {
     hsl: { hue: 120, saturation: 0.251397, lightness: 0.64902 },
     hsv: { hue: 120, saturation: 0.239362, value: 0.737255 },
     cieXyz: { x: 0.342675, y: 0.437882, z: 0.326278 },
-    lab: { L: 72.0867, a: -23.8196, b: 18.0378 },
+    lab: { L: 72.0867, a: -23.8195, b: 18.0378 },
     lch: { L: 72.0867, chroma: 29.8786, hue: 142.865 }
   },
   darkslateblue: {
@@ -415,7 +415,7 @@ export const testColours: TestData = {
     hsl: { hue: 180, saturation: 0.253968, lightness: 0.247059 },
     hsv: { hue: 180, saturation: 0.405063, value: 0.309804 },
     cieXyz: { x: 0.05379, y: 0.067605, z: 0.084171 },
-    lab: { L: 31.2553, a: -11.7199, b: -3.7236 },
+    lab: { L: 31.2553, a: -11.7198, b: -3.7236 },
     lch: { L: 31.2553, chroma: 12.2972, hue: 197.626 }
   },
   darkslategrey: {
@@ -423,7 +423,7 @@ export const testColours: TestData = {
     hsl: { hue: 180, saturation: 0.253968, lightness: 0.247059 },
     hsv: { hue: 180, saturation: 0.405063, value: 0.309804 },
     cieXyz: { x: 0.05379, y: 0.067605, z: 0.084171 },
-    lab: { L: 31.2553, a: -11.7199, b: -3.7236 },
+    lab: { L: 31.2553, a: -11.7198, b: -3.7236 },
     lch: { L: 31.2553, chroma: 12.2972, hue: 197.626 }
   },
   darkturquoise: {
@@ -431,7 +431,7 @@ export const testColours: TestData = {
     hsl: { hue: 180.861, saturation: 1, lightness: 0.409804 },
     hsv: { hue: 180.861, saturation: 1, value: 0.819608 },
     cieXyz: { x: 0.335745, y: 0.487415, z: 0.679477 },
-    lab: { L: 75.2905, a: -40.0437, b: -13.513 },
+    lab: { L: 75.2905, a: -40.0436, b: -13.513 },
     lch: { L: 75.2905, chroma: 42.2622, hue: 198.647 }
   },
   darkviolet: {
@@ -448,7 +448,7 @@ export const testColours: TestData = {
     hsv: { hue: 327.574, saturation: 0.921569, value: 1 },
     cieXyz: { x: 0.467604, y: 0.238734, z: 0.297439 },
     lab: { L: 55.9609, a: 84.5388, b: -5.701 },
-    lch: { L: 55.9609, chroma: 84.7308, hue: 356.142 }
+    lch: { L: 55.9609, chroma: 84.7309, hue: 356.142 }
   },
   deepskyblue: {
     rgb: { red: 0, green: 191, blue: 255 },
@@ -464,7 +464,7 @@ export const testColours: TestData = {
     hsv: { hue: 0, saturation: 0, value: 0.411765 },
     cieXyz: { x: 0.134267, y: 0.141263, z: 0.153812 },
     lab: { L: 44.4136, a: 0, b: 0 },
-    lch: { L: 44.4136, chroma: 0, hue: 158.199 }
+    lch: { L: 44.4136, chroma: 0, hue: 0 }
   },
   dimgrey: {
     rgb: { red: 105, green: 105, blue: 105 },
@@ -472,7 +472,7 @@ export const testColours: TestData = {
     hsv: { hue: 0, saturation: 0, value: 0.411765 },
     cieXyz: { x: 0.134267, y: 0.141263, z: 0.153812 },
     lab: { L: 44.4136, a: 0, b: 0 },
-    lch: { L: 44.4136, chroma: 0, hue: 158.199 }
+    lch: { L: 44.4136, chroma: 0, hue: 0 }
   },
   dodgerblue: {
     rgb: { red: 30, green: 144, blue: 255 },
@@ -488,7 +488,7 @@ export const testColours: TestData = {
     hsv: { hue: 0, saturation: 0.808989, value: 0.698039 },
     cieXyz: { x: 0.192232, y: 0.107277, z: 0.025715 },
     lab: { L: 39.1179, a: 55.9167, b: 37.649 },
-    lch: { L: 39.1179, chroma: 67.4101, hue: 33.953 }
+    lch: { L: 39.1179, chroma: 67.4102, hue: 33.953 }
   },
   floralwhite: {
     rgb: { red: 255, green: 250, blue: 240 },
@@ -504,7 +504,7 @@ export const testColours: TestData = {
     hsv: { hue: 120, saturation: 0.755396, value: 0.545098 },
     cieXyz: { x: 0.101804, y: 0.189197, z: 0.046284 },
     lab: { L: 50.5931, a: -49.5854, b: 45.016 },
-    lch: { L: 50.5931, chroma: 66.9713, hue: 137.765 }
+    lch: { L: 50.5931, chroma: 66.9712, hue: 137.765 }
   },
   fuchsia: {
     rgb: { red: 255, green: 0, blue: 255 },
@@ -520,15 +520,15 @@ export const testColours: TestData = {
     hsv: { hue: 0, saturation: 0, value: 0.862745 },
     cieXyz: { x: 0.680245, y: 0.715694, z: 0.779269 },
     lab: { L: 87.7609, a: 0, b: 0 },
-    lch: { L: 87.7609, chroma: 0, hue: 158.199 }
+    lch: { L: 87.7609, chroma: 0, hue: 338.199 }
   },
   ghostwhite: {
     rgb: { red: 248, green: 248, blue: 255 },
     hsl: { hue: 240, saturation: 1, lightness: 0.986275 },
     hsv: { hue: 240, saturation: 0.027451, value: 1 },
     cieXyz: { x: 0.903256, y: 0.943111, z: 1.080336 },
-    lab: { L: 97.7573, a: 1.2471, b: -3.3453 },
-    lch: { L: 97.7573, chroma: 3.5702, hue: 290.444 }
+    lab: { L: 97.7573, a: 1.2471, b: -3.3454 },
+    lch: { L: 97.7573, chroma: 3.5702, hue: 290.445 }
   },
   gold: {
     rgb: { red: 255, green: 215, blue: 0 },
@@ -552,7 +552,7 @@ export const testColours: TestData = {
     hsv: { hue: 0, saturation: 0, value: 0.501961 },
     cieXyz: { x: 0.205169, y: 0.215861, z: 0.235035 },
     lab: { L: 53.585, a: 0, b: 0 },
-    lch: { L: 53.585, chroma: 0, hue: 158.199 }
+    lch: { L: 53.585, chroma: 0, hue: 0 }
   },
   greenyellow: {
     rgb: { red: 173, green: 255, blue: 47 },
@@ -568,14 +568,14 @@ export const testColours: TestData = {
     hsv: { hue: 120, saturation: 0.058824, value: 1 },
     cieXyz: { x: 0.874204, y: 0.963359, z: 0.964103 },
     lab: { L: 98.5655, a: -7.565, b: 5.4754 },
-    lch: { L: 98.5655, chroma: 9.3386, hue: 144.104 }
+    lch: { L: 98.5655, chroma: 9.3385, hue: 144.104 }
   },
   hotpink: {
     rgb: { red: 255, green: 105, blue: 180 },
     hsl: { hue: 330, saturation: 1, lightness: 0.705882 },
     hsv: { hue: 330, saturation: 0.588235, value: 1 },
     cieXyz: { x: 0.545322, y: 0.346639, z: 0.469901 },
-    lab: { L: 65.4861, a: 64.2385, b: -10.6463 },
+    lab: { L: 65.4861, a: 64.2385, b: -10.6464 },
     lch: { L: 65.4861, chroma: 65.1148, hue: 350.59 }
   },
   indianred: {
@@ -583,7 +583,7 @@ export const testColours: TestData = {
     hsl: { hue: 0, saturation: 0.530516, lightness: 0.582353 },
     hsv: { hue: 0, saturation: 0.55122, value: 0.803922 },
     cieXyz: { x: 0.309383, y: 0.214098, z: 0.126264 },
-    lab: { L: 53.3951, a: 44.8282, b: 22.1171 },
+    lab: { L: 53.3951, a: 44.8283, b: 22.1171 },
     lch: { L: 53.3951, chroma: 49.9874, hue: 26.261 }
   },
   indigo: {
@@ -624,7 +624,7 @@ export const testColours: TestData = {
     hsv: { hue: 340, saturation: 0.058824, value: 1 },
     cieXyz: { x: 0.888794, y: 0.901736, z: 0.990915 },
     lab: { L: 96.0687, a: 5.8874, b: -0.5937 },
-    lch: { L: 96.0687, chroma: 5.9172, hue: 354.242 }
+    lch: { L: 96.0687, chroma: 5.9173, hue: 354.242 }
   },
   lawngreen: {
     rgb: { red: 124, green: 252, blue: 0 },
@@ -639,7 +639,7 @@ export const testColours: TestData = {
     hsl: { hue: 54, saturation: 1, lightness: 0.901961 },
     hsv: { hue: 54, saturation: 0.196078, value: 1 },
     cieXyz: { x: 0.864446, y: 0.940402, z: 0.713435 },
-    lab: { L: 97.6482, a: -5.4268, b: 22.2338 },
+    lab: { L: 97.6482, a: -5.4267, b: 22.2338 },
     lch: { L: 97.6482, chroma: 22.8865, hue: 103.716 }
   },
   lightblue: {
@@ -663,7 +663,7 @@ export const testColours: TestData = {
     hsl: { hue: 180, saturation: 1, lightness: 0.939216 },
     hsv: { hue: 180, saturation: 0.121569, value: 1 },
     cieXyz: { x: 0.84546, y: 0.945854, z: 1.083908 },
-    lab: { L: 97.8674, a: -9.9445, b: -3.375 },
+    lab: { L: 97.8674, a: -9.9444, b: -3.375 },
     lch: { L: 97.8674, chroma: 10.5016, hue: 198.747 }
   },
   lightgoldenrodyellow: {
@@ -671,7 +671,7 @@ export const testColours: TestData = {
     hsl: { hue: 60, saturation: 0.8, lightness: 0.901961 },
     hsv: { hue: 60, saturation: 0.16, value: 0.980392 },
     cieXyz: { x: 0.852419, y: 0.933491, z: 0.744879 },
-    lab: { L: 97.3691, a: -6.4811, b: 19.2372 },
+    lab: { L: 97.3691, a: -6.481, b: 19.2372 },
     lch: { L: 97.3691, chroma: 20.2996, hue: 108.619 }
   },
   lightgray: {
@@ -680,7 +680,7 @@ export const testColours: TestData = {
     hsv: { hue: 0, saturation: 0, value: 0.827451 },
     cieXyz: { x: 0.619142, y: 0.651406, z: 0.70927 },
     lab: { L: 84.5561, a: 0, b: 0 },
-    lch: { L: 84.5561, chroma: 0, hue: 158.199 }
+    lch: { L: 84.5561, chroma: 0, hue: 338.199 }
   },
   lightgreen: {
     rgb: { red: 144, green: 238, blue: 144 },
@@ -688,7 +688,7 @@ export const testColours: TestData = {
     hsv: { hue: 120, saturation: 0.394958, value: 0.933333 },
     cieXyz: { x: 0.47108, y: 0.690892, z: 0.372335 },
     lab: { L: 86.5482, a: -46.3279, b: 36.949 },
-    lch: { L: 86.5482, chroma: 59.258, hue: 141.426 }
+    lch: { L: 86.5482, chroma: 59.2579, hue: 141.426 }
   },
   lightgrey: {
     rgb: { red: 211, green: 211, blue: 211 },
@@ -696,7 +696,7 @@ export const testColours: TestData = {
     hsv: { hue: 0, saturation: 0, value: 0.827451 },
     cieXyz: { x: 0.619142, y: 0.651406, z: 0.70927 },
     lab: { L: 84.5561, a: 0, b: 0 },
-    lch: { L: 84.5561, chroma: 0, hue: 158.199 }
+    lch: { L: 84.5561, chroma: 0, hue: 338.199 }
   },
   lightpink: {
     rgb: { red: 255, green: 182, blue: 193 },
@@ -704,7 +704,7 @@ export const testColours: TestData = {
     hsv: { hue: 350.959, saturation: 0.286275, value: 1 },
     cieXyz: { x: 0.675948, y: 0.585699, z: 0.581865 },
     lab: { L: 81.0546, a: 27.9626, b: 5.036 },
-    lch: { L: 81.0546, chroma: 28.4124, hue: 10.209 }
+    lch: { L: 81.0546, chroma: 28.4125, hue: 10.209 }
   },
   lightsalmon: {
     rgb: { red: 255, green: 160, blue: 122 },
@@ -815,7 +815,7 @@ export const testColours: TestData = {
     hsl: { hue: 146.723, saturation: 0.497908, lightness: 0.468627 },
     hsv: { hue: 146.723, saturation: 0.664804, value: 0.701961 },
     cieXyz: { x: 0.209624, y: 0.343909, z: 0.211529 },
-    lab: { L: 65.2716, a: -48.218, b: 24.2899 },
+    lab: { L: 65.2716, a: -48.218, b: 24.2898 },
     lch: { L: 65.2716, chroma: 53.9905, hue: 153.263 }
   },
   mediumslateblue: {
@@ -831,7 +831,7 @@ export const testColours: TestData = {
     hsl: { hue: 156.96, saturation: 1, lightness: 0.490196 },
     hsv: { hue: 156.96, saturation: 1, value: 0.980392 },
     cieXyz: { x: 0.40014, y: 0.706989, z: 0.421029 },
-    lab: { L: 87.3385, a: -70.6865, b: 32.4628 },
+    lab: { L: 87.3385, a: -70.6864, b: 32.4628 },
     lch: { L: 87.3385, chroma: 77.7844, hue: 155.333 }
   },
   mediumturquoise: {
@@ -839,8 +839,8 @@ export const testColours: TestData = {
     hsl: { hue: 177.81, saturation: 0.598253, lightness: 0.55098 },
     hsv: { hue: 177.81, saturation: 0.655502, value: 0.819608 },
     cieXyz: { x: 0.363671, y: 0.513342, z: 0.651069 },
-    lab: { L: 76.881, a: -37.3603, b: -8.3545 },
-    lch: { L: 76.881, chroma: 38.2831, hue: 192.605 }
+    lab: { L: 76.881, a: -37.3603, b: -8.3546 },
+    lch: { L: 76.881, chroma: 38.283, hue: 192.605 }
   },
   mediumvioletred: {
     rgb: { red: 199, green: 21, blue: 133 },
@@ -864,7 +864,7 @@ export const testColours: TestData = {
     hsv: { hue: 150, saturation: 0.039216, value: 1 },
     cieXyz: { x: 0.906683, y: 0.978341, z: 1.045311 },
     lab: { L: 99.1564, a: -4.163, b: 1.2464 },
-    lch: { L: 99.1564, chroma: 4.3456, hue: 163.332 }
+    lch: { L: 99.1564, chroma: 4.3455, hue: 163.332 }
   },
   mistyrose: {
     rgb: { red: 255, green: 228, blue: 225 },
@@ -895,7 +895,7 @@ export const testColours: TestData = {
     hsl: { hue: 39.13, saturation: 0.851852, lightness: 0.947059 },
     hsv: { hue: 39.13, saturation: 0.090909, value: 0.992157 },
     cieXyz: { x: 0.874418, y: 0.919015, z: 0.879798 },
-    lab: { L: 96.78, a: 0.171, b: 8.1661 },
+    lab: { L: 96.78, a: 0.1711, b: 8.1661 },
     lch: { L: 96.78, chroma: 8.1679, hue: 88.8 }
   },
   olivedrab: {
@@ -903,8 +903,8 @@ export const testColours: TestData = {
     hsl: { hue: 79.626, saturation: 0.60452, lightness: 0.347059 },
     hsv: { hue: 79.626, saturation: 0.753521, value: 0.556863 },
     cieXyz: { x: 0.160399, y: 0.225929, z: 0.051056 },
-    lab: { L: 54.6506, a: -28.2217, b: 49.6908 },
-    lch: { L: 54.6506, chroma: 57.1458, hue: 119.594 }
+    lab: { L: 54.6505, a: -28.2217, b: 49.6908 },
+    lch: { L: 54.6505, chroma: 57.1457, hue: 119.594 }
   },
   orange: {
     rgb: { red: 255, green: 165, blue: 0 },
@@ -943,7 +943,7 @@ export const testColours: TestData = {
     hsl: { hue: 120, saturation: 0.925234, lightness: 0.790196 },
     hsv: { hue: 120, saturation: 0.394422, value: 0.984314 },
     cieXyz: { x: 0.531111, y: 0.779337, z: 0.419438 },
-    lab: { L: 90.7496, a: -48.2968, b: 38.5278 },
+    lab: { L: 90.7496, a: -48.2968, b: 38.5277 },
     lch: { L: 90.7496, chroma: 61.7816, hue: 141.42 }
   },
   paleturquoise: {
@@ -959,7 +959,7 @@ export const testColours: TestData = {
     hsl: { hue: 340.374, saturation: 0.597765, lightness: 0.64902 },
     hsv: { hue: 340.374, saturation: 0.488584, value: 0.858824 },
     cieXyz: { x: 0.402758, y: 0.287587, z: 0.310279 },
-    lab: { L: 60.5681, a: 45.5189, b: 0.4024 },
+    lab: { L: 60.5681, a: 45.519, b: 0.4024 },
     lch: { L: 60.5681, chroma: 45.5207, hue: 0.507 }
   },
   papayawhip: {
@@ -968,14 +968,14 @@ export const testColours: TestData = {
     hsv: { hue: 37.143, saturation: 0.164706, value: 1 },
     cieXyz: { x: 0.841162, y: 0.877986, z: 0.754536 },
     lab: { L: 95.0761, a: 1.2707, b: 14.5255 },
-    lch: { L: 95.0761, chroma: 14.581, hue: 85.001 }
+    lch: { L: 95.0761, chroma: 14.5809, hue: 85 }
   },
   peachpuff: {
     rgb: { red: 255, green: 218, blue: 185 },
     hsl: { hue: 28.286, saturation: 1, lightness: 0.862745 },
     hsv: { hue: 28.286, saturation: 0.27451, value: 1 },
     cieXyz: { x: 0.750693, y: 0.749083, z: 0.56394 },
-    lab: { L: 89.3501, a: 8.085, b: 21.0226 },
+    lab: { L: 89.3501, a: 8.0851, b: 21.0226 },
     lch: { L: 89.3501, chroma: 22.5237, hue: 68.964 }
   },
   peru: {
@@ -984,7 +984,7 @@ export const testColours: TestData = {
     hsv: { hue: 29.577, saturation: 0.692683, value: 0.803922 },
     cieXyz: { x: 0.344641, y: 0.301163, z: 0.086996 },
     lab: { L: 61.7541, a: 21.3962, b: 47.9181 },
-    lch: { L: 61.7541, chroma: 52.478, hue: 65.939 }
+    lch: { L: 61.7541, chroma: 52.478, hue: 65.938 }
   },
   pink: {
     rgb: { red: 255, green: 192, blue: 203 },
@@ -999,7 +999,7 @@ export const testColours: TestData = {
     hsl: { hue: 300, saturation: 0.472868, lightness: 0.747059 },
     hsv: { hue: 300, saturation: 0.276018, value: 0.866667 },
     cieXyz: { x: 0.554395, y: 0.45736, z: 0.743002 },
-    lab: { L: 73.3739, a: 32.5308, b: -21.9856 },
+    lab: { L: 73.3739, a: 32.5309, b: -21.9856 },
     lch: { L: 73.3739, chroma: 39.2635, hue: 325.948 }
   },
   powderblue: {
@@ -1007,7 +1007,7 @@ export const testColours: TestData = {
     hsl: { hue: 186.667, saturation: 0.519231, lightness: 0.796078 },
     hsv: { hue: 186.667, saturation: 0.234783, value: 0.901961 },
     cieXyz: { x: 0.588388, y: 0.682522, z: 0.849214 },
-    lab: { L: 86.1323, a: -14.0928, b: -8.0077 },
+    lab: { L: 86.1323, a: -14.0928, b: -8.0078 },
     lch: { L: 86.1323, chroma: 16.209, hue: 209.606 }
   },
   rebeccapurple: {
@@ -1024,7 +1024,7 @@ export const testColours: TestData = {
     hsv: { hue: 0, saturation: 0.239362, value: 0.737255 },
     cieXyz: { x: 0.355199, y: 0.323211, z: 0.303489 },
     lab: { L: 63.6074, a: 17.0127, b: 6.6097 },
-    lch: { L: 63.6074, chroma: 18.2515, hue: 21.232 }
+    lch: { L: 63.6074, chroma: 18.2516, hue: 21.232 }
   },
   royalblue: {
     rgb: { red: 65, green: 105, blue: 225 },
@@ -1104,7 +1104,7 @@ export const testColours: TestData = {
     hsv: { hue: 210, saturation: 0.222222, value: 0.564706 },
     cieXyz: { x: 0.19434, y: 0.208962, z: 0.293896 },
     lab: { L: 52.8357, a: -2.1428, b: -10.571 },
-    lch: { L: 52.8357, chroma: 10.7859, hue: 258.541 }
+    lch: { L: 52.8357, chroma: 10.786, hue: 258.541 }
   },
   slategrey: {
     rgb: { red: 112, green: 128, blue: 144 },
@@ -1112,7 +1112,7 @@ export const testColours: TestData = {
     hsv: { hue: 210, saturation: 0.222222, value: 0.564706 },
     cieXyz: { x: 0.19434, y: 0.208962, z: 0.293896 },
     lab: { L: 52.8357, a: -2.1428, b: -10.571 },
-    lch: { L: 52.8357, chroma: 10.7859, hue: 258.541 }
+    lch: { L: 52.8357, chroma: 10.786, hue: 258.541 }
   },
   snow: {
     rgb: { red: 255, green: 250, blue: 250 },
@@ -1128,7 +1128,7 @@ export const testColours: TestData = {
     hsv: { hue: 149.882, saturation: 1, value: 1 },
     cieXyz: { x: 0.39587, y: 0.73047, z: 0.320876 },
     lab: { L: 88.4701, a: -76.902, b: 47.0285 },
-    lch: { L: 88.4701, chroma: 90.1421, hue: 148.553 }
+    lch: { L: 88.4701, chroma: 90.142, hue: 148.553 }
   },
   steelblue: {
     rgb: { red: 70, green: 130, blue: 180 },
@@ -1192,7 +1192,7 @@ export const testColours: TestData = {
     hsv: { hue: 0, saturation: 0, value: 0.960784 },
     cieXyz: { x: 0.867873, y: 0.913099, z: 0.994209 },
     lab: { L: 96.5375, a: 0, b: 0 },
-    lch: { L: 96.5375, chroma: 0, hue: 158.199 }
+    lch: { L: 96.5375, chroma: 0, hue: 180 }
   },
   yellowgreen: {
     rgb: { red: 154, green: 205, blue: 50 },

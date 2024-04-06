@@ -1,6 +1,6 @@
 import { type Hsl } from '../../types/Hsl';
 import { type Lab } from '../../types/Lab';
-import { cieXyzToHsl, hslToCieXyz } from './xyz';
+import { cieXyzToHsl, hslToCieXyz, whitePoint } from './xyz';
 import { type Xyz } from '../../types/Xyz';
 import { type Hsla } from '../../types/Hsla';
 import { type Laba } from '../../types/Laba';
@@ -11,16 +11,14 @@ export const hslToLab = (hsl: Hsl): Lab => {
 };
 
 const xyzToLab = ({ x, y, z }: Xyz): Lab => {
-  const xr = x / referenceWhite.x;
-  const yr = y / referenceWhite.y;
-  const zr = z / referenceWhite.z;
+  const xr = x / whitePoint.x;
+  const yr = y / whitePoint.y;
+  const zr = z / whitePoint.z;
   const L = 116 * f(yr) - 16;
   const a = 500 * (f(xr) - f(yr));
   const b = 200 * (f(yr) - f(zr));
   return { L, a, b };
 };
-
-const referenceWhite: Xyz = { x: 0.95047, y: 1.00000, z: 1.08883 };
 
 const f = (t: number): number =>
   t > epsilon ? Math.cbrt(t) : ((kappa * t + 16) / 116);
@@ -34,9 +32,9 @@ export const labToHsl = (lab: Lab): Hsl => {
 };
 
 const labToXyz = (lab: Lab): Xyz => {
-  const x = xr(lab) * referenceWhite.x;
-  const y = yr(lab) * referenceWhite.y;
-  const z = zr(lab) * referenceWhite.z;
+  const x = xr(lab) * whitePoint.x;
+  const y = yr(lab) * whitePoint.y;
+  const z = zr(lab) * whitePoint.z;
   return { x, y, z };
 };
 

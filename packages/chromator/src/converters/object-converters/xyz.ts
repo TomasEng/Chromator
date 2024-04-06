@@ -102,3 +102,5 @@ const xyzToRgbGreenZ = 0.041556;
 const xyzToRgbBlueX = 0.0556434;
 const xyzToRgbBlueY = -0.2040259;
 const xyzToRgbBlueZ = 1.0572252;
+
+export const whitePoint: Xyz = rgbToCieXyz({ red: 255, blue: 255, green: 255 });
