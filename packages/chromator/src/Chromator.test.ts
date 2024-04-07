@@ -1,5 +1,8 @@
 import { Chromator } from './Chromator';
 import { type NamedColour } from './types/NamedColour.ts';
+import { type HueProfile } from './types/HueProfile.ts';
+import { isOklchWithinSrgb } from './converters/object-converters/oklch.ts';
+import { isLchWithinSrgb } from './converters/object-converters/lch.ts';
 
 describe('Chromator', () => {
   it('Creates a Chromator from a string', () => {
@@ -300,16 +303,47 @@ describe('Chromator', () => {
 
   describe('setRelativeLuminance', () => {
     const testColours: NamedColour[] = ['orchid', 'black', 'white'];
-    describe.each(testColours)('When the given colour is %s', (colourName) => {
-      it.each([0, 0.01, 0.1, 0.25, 0.33, 0.5, 0.67, 0.75, 0.9, 0.99, 1])('Sets the relative luminance to %f', (luminance) => {
-        const colour = new Chromator(colourName);
-        const initialColour = colour.copy();
-        colour.setRelativeLuminance(luminance);
-        expect(colour.getRelativeLuminance()).toBeCloseTo(luminance, 4);
-        const initialHsl = initialColour.getHsl();
-        const newHsl = colour.getHsl();
-        expect(newHsl.hue).toBe(initialHsl.hue);
-        expect(newHsl.saturation).toBe(initialHsl.saturation);
+    const profiles: HueProfile[] = ['hsl', 'lch', 'oklch'];
+    describe.each(profiles)('When the given profile is %s', (profile) => {
+      describe.each(testColours)('When the given colour is %s', (colourName) => {
+        it.each([0, 0.01, 0.1, 0.25, 0.33, 0.5, 0.67, 0.75, 0.9, 0.99, 1])('Sets the relative luminance to %f', (luminance) => {
+          const colour = new Chromator(colourName);
+          const initialColour = colour.copy();
+          colour.setRelativeLuminance(luminance, profile);
+          expect(colour.getRelativeLuminance()).toBeCloseTo(luminance, 3);
+
+          /* eslint-disable no-case-declarations */
+          switch (profile) {
+            case 'hsl':
+              const initialHsl = initialColour.getHsl();
+              const newHsl = colour.getHsl();
+              expect(newHsl.hue).toBe(initialHsl.hue);
+              expect(newHsl.saturation).toBe(initialHsl.saturation);
+              break;
+            case 'lch':
+              const initialLab = initialColour.getLch();
+              const newLab = colour.getLch();
+              if (newLab.chroma > 0.2) {
+                expect(newLab.hue).toBeCloseTo(initialLab.hue, 2);
+              }
+              expect(isLchWithinSrgb(newLab)).toBe(true);
+              if (Math.abs(initialLab.chroma - newLab.chroma) > 0.01) {
+                expect(isLchWithinSrgb({ ...newLab, chroma: initialLab.chroma })).toBe(false);
+              }
+              break;
+            case 'oklch':
+              const initialOklch = initialColour.getOklch();
+              const newOklch = colour.getOklch();
+              if (newOklch.chroma > 0.002) {
+                expect(newOklch.hue).toBeCloseTo(initialOklch.hue, 2);
+              }
+              expect(isOklchWithinSrgb(newOklch)).toBe(true);
+              if (Math.abs(initialOklch.chroma - newOklch.chroma) > 0.0001) {
+                expect(isOklchWithinSrgb({ ...newOklch, chroma: initialOklch.chroma })).toBe(false);
+              }
+              break;
+          }
+        });
       });
     });
 

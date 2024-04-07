@@ -1,6 +1,6 @@
 import { testColours } from '../../test-data/namedColourList.ts';
 import { type NamedColour } from '../../types/NamedColour.ts';
-import { hslToOklab, oklabToHsl } from './oklab.ts';
+import { hslToOklab, isOklabWithinSrgb, oklabToHsl } from './oklab.ts';
 import { verifyHsl } from '../../test-data/utils.ts';
 
 describe('Oklab object converters', () => {

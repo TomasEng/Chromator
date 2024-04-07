@@ -1,6 +1,6 @@
 import { type Hsl } from '../../types/Hsl';
 import { type Rgb } from '../../types/Rgb';
-import { ensureWithinUnitInterval } from '../../utils';
+import { ensureWithinUnitInterval, roundTo0Or1IfCloseEnough } from '../../utils';
 import { type Hsla } from '../../types/Hsla';
 import { type Xyz } from '../../types/Xyz';
 import { type Xyza } from '../../types/Xyza';
@@ -58,18 +58,23 @@ export const cieXyzaToHsla = (xyz: Xyza): Hsla => {
 };
 
 export const cieXyzToHsl = (xyz: Xyz): Hsl => {
-  const rgb = cieXyzToRgb(xyz);
+  const rgb = cieXyzToSrgb(xyz);
   return rgbToHsl(rgb);
 };
 
-export const cieXyzToRgb = (xyz: Xyz): Rgb => {
+export const cieXyzToSrgb = (xyz: Xyz): Rgb => {
+  const compressedRgb = cieXyzToRgbInUnitInterval(xyz);
+  const boundedRgb = ensureRgbWithinUnitScale(compressedRgb);
+  return rgb1ToRgb255(boundedRgb);
+};
+
+const cieXyzToRgbInUnitInterval = (xyz: Xyz): Rgb => {
   const { x, y, z } = xyz;
   const red = x * xyzToRgbRedX + y * xyzToRgbRedY + z * xyzToRgbRedZ;
   const green = x * xyzToRgbGreenX + y * xyzToRgbGreenY + z * xyzToRgbGreenZ;
   const blue = x * xyzToRgbBlueX + y * xyzToRgbBlueY + z * xyzToRgbBlueZ;
-  const compressedRgb = gammaCompressedRgb({ red, green, blue });
-  const normalizedRgb = ensureRgbWithinUnitScale(compressedRgb);
-  return rgb1ToRgb255(normalizedRgb);
+  const gammaCompressed = gammaCompressedRgb({ red, green, blue });
+  return clearTooSmallValues(gammaCompressed);
 };
 
 const ensureRgbWithinUnitScale = (rgb: Rgb): Rgb => {
@@ -90,8 +95,22 @@ const gammaCompressedRgb = (linearRgb: Rgb): Rgb => {
   };
 };
 
+const clearTooSmallValues = (rgb: Rgb): Rgb => {
+  const { red, green, blue } = rgb;
+  return {
+    red: roundTo0Or1IfCloseEnough(red, 0.0000005),
+    green: roundTo0Or1IfCloseEnough(green, 0.0000005),
+    blue: roundTo0Or1IfCloseEnough(blue, 0.0000005)
+  };
+};
+
 const gammaCompress = (value: number): number =>
   value <= 0.0031308 ? value * 12.92 : 1.055 * Math.pow(value, 1 / 2.4) - 0.055;
+
+export const isXyzWithinSrgb = (xyz: Xyz): boolean => {
+  const { red, green, blue } = cieXyzToRgbInUnitInterval(xyz);
+  return red >= 0 && red <= 1 && green >= 0 && green <= 1 && blue >= 0 && blue <= 1;
+};
 
 const xyzToRgbRedX = 3.2404542;
 const xyzToRgbRedY = -1.5371385;

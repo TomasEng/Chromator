@@ -26,17 +26,32 @@ import { type Xyza } from './types/Xyza';
 import { hslaToRgba, hslToRgb } from './converters/object-converters/rgb';
 import { hslaToHsva, hslToHsv } from './converters/object-converters/hsv';
 import { type Lab } from './types/Lab';
-import { hslaToLaba, hslToLab } from './converters/object-converters/lab';
+import { hslaToLaba, hslToLab, labToHsl, relativeLuminanceFromLab } from './converters/object-converters/lab';
 import { type Laba } from './types/Laba';
-import { hslaToLcha, hslToLch } from './converters/object-converters/lch';
+import {
+  clampLchChromaWithinSrgb,
+  hslaToLcha,
+  hslToLch,
+  lchToHsl,
+  relativeLuminanceFromLch, adjustLchLightnessForRelativeLuminance
+} from './converters/object-converters/lch';
 import { type Lch } from './types/Lch';
 import { type Lcha } from './types/Lcha';
 import { type Oklab } from './types/Oklab';
-import { hslaToOklaba, hslToOklab } from './converters/object-converters/oklab';
+import { hslaToOklaba, hslToOklab, oklabToHsl, relativeLuminanceFromOklab } from './converters/object-converters/oklab';
 import { type Oklaba } from './types/Oklaba';
 import { type Oklch } from './types/Oklch';
-import { hslaToOklcha, hslToOklch } from './converters/object-converters/oklch';
+import {
+  adjustOklchLightnessForRelativeLuminance,
+  clampOklchChromaWithinSrgb,
+  hslaToOklcha,
+  hslToOklch,
+  oklchToHsl,
+  relativeLuminanceFromOklch
+} from './converters/object-converters/oklch';
 import { type Oklcha } from './types/Oklcha';
+import { type HueProfile } from './types/HueProfile';
+import { RELATIVE_LUMINANCE_ALGORITHM_PRECISION } from './constants';
 
 export class Chromator {
   private readonly hsl: Hsl; // HSL is used as the base since all conversion functions from the HSL space are mathematically surjective.
@@ -237,21 +252,21 @@ export class Chromator {
   }
 
   /**
-   * Returns the Oklab CSS code of the colour.
-   * @example
-   * const blue = new Chromator('blue');
-   * blue.getOklabCode(); // 'oklab(0.45 -0.03 -0.31)'
-   */
+     * Returns the Oklab CSS code of the colour.
+     * @example
+     * const blue = new Chromator('blue');
+     * blue.getOklabCode(); // 'oklab(0.45 -0.03 -0.31)'
+     */
   public getOklabCode(): string {
     return oklabaObjectToOklabString(this.getOklaba());
   }
 
   /**
-   * Returns the Oklch CSS code of the colour.
-   * @example
-   * const blue = new Chromator('blue');
-   * blue.getOklchCode(); // 'oklch(0.45 0.31 264deg)'
-   */
+     * Returns the Oklch CSS code of the colour.
+     * @example
+     * const blue = new Chromator('blue');
+     * blue.getOklchCode(); // 'oklch(0.45 0.31 264deg)'
+     */
   public getOklchCode(): string {
     return oklchaObjectToOklchString(this.getOklcha());
   }
@@ -334,12 +349,34 @@ export class Chromator {
 
   /**
      * Transforms the lightness of the colour in order to obtain the given relative luminance.
-     * Does not change the hue or saturation.
+     * Does not change the hue or chroma/saturation, unless if the colour is outside the SRGB gamut.
+     * Then the chroma is adjusted so that it is within the SRGB gamut.
+     * @param luminance - The relative luminance to obtain. Must be between 0 and 1.
+     * @param profile - The colour profile to use for the transformation. Valid profiles are 'hsl', 'lch', and 'oklch'. Default is 'hsl'.
      */
-  public setRelativeLuminance(luminance: number): this {
+  public setRelativeLuminance(luminance: number, profile: HueProfile = 'hsl'): this {
     if (luminance < 0 || luminance > 1) {
       throw new Error('Relative luminance must be between 0 and 1. Received ' + luminance + '.');
     }
+    if (luminance === 1) {
+      this.hsl.lightness = 1;
+      return this;
+    }
+    if (luminance === 0) {
+      this.hsl.lightness = 0;
+      return this;
+    }
+    switch (profile) {
+      case 'hsl':
+        return this.setRelativeLuminanceByAdjustingHSLLightness(luminance);
+      case 'lch':
+        return this.setRelativeLuminanceByAdjustingLchLightness(luminance);
+      case 'oklch':
+        return this.setRelativeLuminanceByAdjustingOklabLightness(luminance);
+    }
+  }
+
+  private setRelativeLuminanceByAdjustingHSLLightness(luminance: number): this {
     const lumFunc = (lightness: number): number => {
       const hsl: Hsl = {
         ...this.hsl,
@@ -350,8 +387,31 @@ export class Chromator {
     this.hsl.lightness = findInputToAlwaysIncreasingFunc(
       lumFunc,
       luminance,
-      0.00001
+      RELATIVE_LUMINANCE_ALGORITHM_PRECISION,
+      {
+        start: -0.5,
+        end: 1.5
+      }
     );
+    return this;
+  }
+
+  private setRelativeLuminanceByAdjustingLchLightness(luminance: number): this {
+    const lch: Lch = adjustLchLightnessForRelativeLuminance(this.getLch(), luminance);
+    const hsl: Hsl = lchToHsl(lch);
+    return this.updateHsl(hsl);
+  }
+
+  private setRelativeLuminanceByAdjustingOklabLightness(luminance: number): this {
+    const oklch = adjustOklchLightnessForRelativeLuminance(this.getOklch(), luminance);
+    const hsl = oklchToHsl(oklch);
+    return this.updateHsl(hsl);
+  }
+
+  private updateHsl(hsl: Hsl): this {
+    this.hsl.hue = hsl.hue;
+    this.hsl.saturation = hsl.saturation;
+    this.hsl.lightness = hsl.lightness;
     return this;
   }
 }

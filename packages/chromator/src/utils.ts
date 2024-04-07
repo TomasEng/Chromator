@@ -25,6 +25,12 @@ export const ensureWithinUnitInterval = (value: number): number => {
   return value;
 };
 
+export const roundTo0Or1IfCloseEnough = (value: number, threshold: number = Number.EPSILON): number => {
+  if (Math.abs(value) <= threshold) return 0;
+  if (Math.abs(value - 1) <= threshold) return 1;
+  return value;
+};
+
 /**
  * Runs the given function recursively within the given interval until an output value close to the target output is found.
  * It is assumed that the function is always increasing and that an answer exists within the given interval.
@@ -35,8 +41,9 @@ export const ensureWithinUnitInterval = (value: number): number => {
  */
 export const findInputToAlwaysIncreasingFunc = (fun: (input: number) => number, targetOutput: number, precision: number, interval: Interval = { start: 0, end: 1 }): number => {
   const input = middleOfInterval(interval);
-  if (Math.abs(fun(input) - targetOutput) <= precision) return input;
-  if (fun(input) < targetOutput) interval.start = input;
+  const currentResult = fun(input);
+  if (Math.abs(currentResult - targetOutput) <= precision) return input;
+  if (currentResult < targetOutput) interval.start = input;
   else interval.end = input;
   return findInputToAlwaysIncreasingFunc(fun, targetOutput, precision, interval);
 };

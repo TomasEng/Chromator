@@ -128,4 +128,17 @@ const colour = new Chromator(hsl);
 colour.setRelativeLuminance(0.5);
 const newHsl = colour.getHsl(); // { hue: 302, saturation: 0.59, lightness: 0.78 }
 ```
+By default, the function adjusts the HSL lightness value to match the desired luminance.
+It is also possible to make it adjust the lightness values of the L\*ch and Oklch colour spaces instead, by passing the desired colour space as the second argument:
+```typescript
+const oklch: Oklch = { l: 0.68, chroma: 0.11, hue: 222 };
+const colour = new Chromator(oklch);
+colour.setRelativeLuminance(0.5, 'oklch');
+const newOklch = colour.getOklch(); // { l: 0.7852, chroma: 0.11, hue: 222 }
+```
+In general, the hue and chroma values are kept constant when adjusting the lightness value.
+However, this is not always possible while keeping the colour inside the SRGB gamut.
+Therefore, when the colour is outside the SRGB gamut, the chroma value is also adjusted to keep the colour inside the gamut.
+This does not apply to the HSL colour space, since it is limited to the SRGB gamut.
+
 

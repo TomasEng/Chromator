@@ -1,6 +1,6 @@
 import { type Oklab } from '../../types/Oklab';
 import { type Xyz } from '../../types/Xyz';
-import { cieXyzToHsl, hslToCieXyz } from './xyz';
+import { cieXyzToHsl, hslToCieXyz, isXyzWithinSrgb } from './xyz';
 import { type Hsl } from '../../types/Hsl';
 import { type Oklaba } from '../../types/Oklaba';
 import { type Hsla } from '../../types/Hsla';
@@ -51,4 +51,14 @@ export const oklabaToHsla = (oklaba: Oklaba): Hsla => {
   const { alpha, ...oklab } = oklaba;
   const hsl = oklabToHsl(oklab);
   return { ...hsl, alpha };
+};
+
+export const relativeLuminanceFromOklab = (oklab: Oklab): number => {
+  const { y } = oklabToXyz(oklab);
+  return y;
+};
+
+export const isOklabWithinSrgb = (oklab: Oklab): boolean => {
+  const xyz = oklabToXyz(oklab);
+  return isXyzWithinSrgb(xyz);
 };

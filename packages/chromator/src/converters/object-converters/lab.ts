@@ -1,6 +1,6 @@
 import { type Hsl } from '../../types/Hsl';
 import { type Lab } from '../../types/Lab';
-import { cieXyzToHsl, hslToCieXyz, whitePoint } from './xyz';
+import { cieXyzToHsl, hslToCieXyz, isXyzWithinSrgb, whitePoint } from './xyz';
 import { type Xyz } from '../../types/Xyz';
 import { type Hsla } from '../../types/Hsla';
 import { type Laba } from '../../types/Laba';
@@ -72,4 +72,14 @@ export const labaToHsla = (laba: Laba): Hsla => {
   const { alpha, ...lab } = laba;
   const hsl = labToHsl(lab);
   return { ...hsl, alpha };
+};
+
+export const relativeLuminanceFromLab = (lab: Lab): number => {
+  const { y } = labToXyz(lab);
+  return y;
+};
+
+export const isLabWithinSrgb = (lab: Lab): boolean => {
+  const xyz = labToXyz(lab);
+  return isXyzWithinSrgb(xyz);
 };

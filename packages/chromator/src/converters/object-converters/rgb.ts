@@ -17,7 +17,7 @@ export const rgbToHsl = (rgb: Rgb): Hsl => {
   const min = Math.min(red, green, blue);
   const chroma = max - min;
   const lightness = (max + min) / 2;
-  const saturation = chroma === 0 ? 0 : chroma / (1 - Math.abs(2 * lightness - 1));
+  const saturation = chroma <= Number.EPSILON ? 0 : chroma / (1 - Math.abs(2 * lightness - 1));
   const hue1 = chroma === 0 ? 0 : calculateHue(red, green, blue, max, chroma);
   const hue = modulo(hue1 * 60, 360);
   return {

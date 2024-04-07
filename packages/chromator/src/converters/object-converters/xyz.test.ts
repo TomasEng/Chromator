@@ -1,7 +1,7 @@
 import { type NamedColour } from '../../types/NamedColour.ts';
 import {
   cieXyzToHsl,
-  cieXyzToRgb,
+  cieXyzToSrgb,
   hslToCieXyz,
   rgbToCieXyz
 } from './xyz.ts';
@@ -25,7 +25,7 @@ describe('CIE XYZ converters', () => {
     it.each(Object.keys(testColours) as NamedColour[])('Converts %s from CIE XYZ to RGB', (colour) => {
       const codes = testColours[colour];
       const { rgb, cieXyz } = codes;
-      expect(cieXyzToRgb(cieXyz)).toEqual({
+      expect(cieXyzToSrgb(cieXyz)).toEqual({
         red: expect.closeTo(rgb.red, 1),
         green: expect.closeTo(rgb.green, 1),
         blue: expect.closeTo(rgb.blue, 1)
