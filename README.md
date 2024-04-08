@@ -1,6 +1,6 @@
 # Chromator
 
-Chromator is a colour tool for websites. Currently it provides functions for converting between colour code formats.
+Chromator is a colour tool for websites. It provides functions for converting between colour code formats, and for computing relative luminance and contrast.
 
 ## Installation
 If using NPM, run the following command:
@@ -72,9 +72,83 @@ console.log(red.getHsva()); // {hue: 0, saturation: 1, value: 1, alpha: 1}
 console.log(red.getCieXyza()); // {x: 0.41246, y: 0.21267, z: 0.01933, alpha: 1}
 console.log(red.getLaba()); // {L: 53.2408, a: 80.0925, b: 67.2032, alpha: 1}
 console.log(red.getLcha()); // {L: 53.2408, chroma: 104.5518, hue: 39.999, alpha: 1}
-console.log(reg.getOklaba()) // {l: 0.627987, a: 0.22484, b: 0.125799, alpha: 1}
-console.log(reg.getOklcha()) // {l: 0.627987, chroma: 0.25764, hue: 29.227, alpha: 1}
+console.log(red.getOklaba()) // {l: 0.627987, a: 0.22484, b: 0.125799, alpha: 1}
+console.log(red.getOklcha()) // {l: 0.627987, chroma: 0.25764, hue: 29.227, alpha: 1}
 ```
+
+### Relative luminance
+Relative luminance is a measure of the brightness of a colour, and is used in the calculation of contrast ratios.
+It corresponds to the `Y` value in the CIE XYZ colour space. Chromator provides tools for both calculating the relative luminance of a colour and for adjusting the lightness of a colour to match a desired relative luminance.
+
+#### Computing relative luminance
+The `Chromator.getRelativeLuminance` method returns the relative luminance of the colour.
+```typescript
+const colour = new Chromator('#FF0000');
+console.log(colour.getRelativeLuminance()); // 0.21267
+```
+
+#### Manipulating the colour to match a desired relative luminance
+It is possible to set a desired relative luminance value using the `Chromator.setRelativeLuminance` method.
+This changes the lightness of the colour in order to obtain the desired luminance while keeping the hue and saturation constant.
+```typescript
+const hsl = { hue: 302, saturation: 0.59, lightness: 0.65 };
+const colour = new Chromator(hsl);
+colour.setRelativeLuminance(0.5);
+const newHsl = colour.getHsl(); // { hue: 302, saturation: 0.59, lightness: 0.78 }
+```
+By default, the function adjusts the HSL lightness value to match the desired luminance.
+It is possible to make it adjust the lightness values of the L\*ch and Oklch colour spaces instead, by passing `'lch'` or `'oklch'` respectively as the second argument:
+```typescript
+const oklch: Oklch = { l: 0.68, chroma: 0.11, hue: 222 };
+const colour = new Chromator(oklch);
+colour.setRelativeLuminance(0.5, 'oklch');
+const newOklch = colour.getOklch(); // { l: 0.7852, chroma: 0.11, hue: 222 }
+```
+In general, the hue and chroma values are kept constant when adjusting the lightness value.
+However, this is not always possible while keeping the colour inside the SRGB gamut.
+Therefore, when there is no such colour inside the SRGB gamut, the chroma value is also adjusted.
+This does not apply to the HSL colour space, since it is limited to the SRGB gamut.
+
+### Contrast ratio
+There may be several ways to define the contrast ratio between two colours, but the Web Content Accessibility Guidelines defines it like this:
+> (L1 + 0.05) / (L2 + 0.05), where L1 is the relative luminance of the lightest of the colours and L2 is the relative luminance of the darkest of the colours.
+
+This measure is important for ensuring that text is readable on a background, and for satisfying [accessibility requirements](https://www.w3.org/WAI/WCAG21/Understanding/contrast-minimum).
+
+Chromator provides tools for calculating the contrast as well as for adjusting the lightness of a colour to match a desired contrast ratio.
+
+#### Computing contrast ratio
+The `Chromator.getContrastRatio` method returns the contrast ratio between two colours.
+```typescript
+const red = new Chromator('red');
+const blue = new Chromator('blue');
+console.log(red.getContrastRatio(blue)); // 2.14
+```
+The colour code of the second colour can also be passed directly as in the class constructor:
+```typescript
+const red = new Chromator('red');
+console.log(red.getContrastRatio('blue')); // 2.14
+```
+
+#### Manipulating the colour to match a desired contrast ratio
+It is possible to set a desired contrast ratio value using the `Chromator.increaseLuminanceByContrast` and `Chromator.decreaseLuminanceByContrast` methods.
+This changes the lightness of the colour in order to obtain the desired contrast ratio while keeping the hue constant.
+Here is an example with the `decreaseLuminanceByContrast` method:
+```typescript
+const hsl: Hsl = { hue: 147, saturation: 0.72, lightness: 0.7 };
+const backgroundColour = new Chromator(hsl);
+const textColour = colour.copy().decreaseLuminanceByContrast(4.5);
+console.log(textColour.getHsl()); // { hue: 147, saturation: 0.72, lightness: 0.24 }
+```
+The methods can be used in the same way with respect to the L\*ch or Oklch colour spaces by passing `'lch'` or `'oklch'` as the second argument respectively.
+This will not change the hue in the desired colour space, but it may reduce the chroma value to keep the colour inside SRGB the gamut.
+```typescript
+const oklch: Oklch = { l: 0.773, chroma: 0.197, hue: 329 };
+const backgroundColour = new Chromator(oklch);
+const textColour = colour.copy().decreaseLuminanceByContrast(4.5, 'oklch');
+console.log(textColour!.getOklch()); // { l: 0.402, chroma: 0.177, hue: 329 }
+```
+Note that the chroma value in the example above is reduced by a small amount to keep the colour inside the SRGB gamut.
 
 ### Lightness manipulation
 The `Chromator.lighten` and `Chromator.darken` methods can be used to lighten or darken the colour respectively:
@@ -111,34 +185,3 @@ The `Chromator.invert` method is a combination of `Chromator.invertLightness` an
 const colour = new Chromator('#FFCCCC');
 console.log(colour.invert().getHexCode()); // #003333
 ```
-
-### Relative luminance
-The `Chromator.getRelativeLuminance` method returns the relative luminance of the colour, which is a measure of the brightness of the colour.
-It differs from the lightness in that it takes into account the human perception of brightness, and is used in the calculation of contrast ratios.
-The value corresponds to the `Y` value in the CIE XYZ colour space.
-```typescript
-const colour = new Chromator('#FF0000');
-console.log(colour.getRelativeLuminance()); // 0.21267
-```
-It is also possible to set a desired relative luminance value using the `Chromator.setRelativeLuminance` method.
-This changes the lightness of the colour in order to obtain the desired luminance while keeping the hue and saturation constant.
-```typescript
-const hsl = { hue: 302, saturation: 0.59, lightness: 0.65 };
-const colour = new Chromator(hsl);
-colour.setRelativeLuminance(0.5);
-const newHsl = colour.getHsl(); // { hue: 302, saturation: 0.59, lightness: 0.78 }
-```
-By default, the function adjusts the HSL lightness value to match the desired luminance.
-It is also possible to make it adjust the lightness values of the L\*ch and Oklch colour spaces instead, by passing the desired colour space as the second argument:
-```typescript
-const oklch: Oklch = { l: 0.68, chroma: 0.11, hue: 222 };
-const colour = new Chromator(oklch);
-colour.setRelativeLuminance(0.5, 'oklch');
-const newOklch = colour.getOklch(); // { l: 0.7852, chroma: 0.11, hue: 222 }
-```
-In general, the hue and chroma values are kept constant when adjusting the lightness value.
-However, this is not always possible while keeping the colour inside the SRGB gamut.
-Therefore, the chroma value is also adjusted in some cases to keep the colour inside the gamut.
-This does not apply to the HSL colour space, since it is limited to the SRGB gamut.
-
-
