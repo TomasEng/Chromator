@@ -1,6 +1,24 @@
 {
   "name": "chromator",
   "version": "0.0.9",
+  "description": "Library for converting colour codes and manipulating relative luminance and contrast ratio",
+  "author": "Tomas Engebretsen",
+  "license": "MIT",
+  "keywords": [
+    "colour",
+    "color",
+    "contrast",
+    "contrast ratio",
+    "luminance",
+    "lightness",
+    "brightness",
+    "saturation",
+    "hue",
+    "chroma",
+    "chromator",
+    "colour conversion"
+  ],
+  "homepage": "https://github.com/TomasEng/Chromator",
   "scripts": {
     "build": "tsc --outDir dist"
   },

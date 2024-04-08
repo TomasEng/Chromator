@@ -1,6 +1,23 @@
 {
   "name": "root",
   "version": "0.0.0",
+  "description": "Library for converting colour codes and manipulating relative luminance and contrast ratio",
+  "author": "Tomas Engebretsen",
+  "license": "MIT",
+  "keywords": [
+    "colour",
+    "color",
+    "contrast",
+    "contrast ratio",
+    "luminance",
+    "lightness",
+    "brightness",
+    "saturation",
+    "hue",
+    "chroma",
+    "chromator",
+    "colour conversion"
+  ],
   "homepage": "https://tomaseng.github.io/Chromator/",
   "scripts": {
     "lint:chromator": "npx eslint \"packages/chromator/src/**\"",
