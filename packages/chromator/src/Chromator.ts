@@ -26,28 +26,25 @@ import { type Xyza } from './types/Xyza';
 import { hslaToRgba, hslToRgb } from './converters/object-converters/rgb';
 import { hslaToHsva, hslToHsv } from './converters/object-converters/hsv';
 import { type Lab } from './types/Lab';
-import { hslaToLaba, hslToLab, labToHsl, relativeLuminanceFromLab } from './converters/object-converters/lab';
+import { hslaToLaba, hslToLab } from './converters/object-converters/lab';
 import { type Laba } from './types/Laba';
 import {
-  clampLchChromaWithinSrgb,
   hslaToLcha,
   hslToLch,
   lchToHsl,
-  relativeLuminanceFromLch, adjustLchLightnessForRelativeLuminance
+  adjustLchLightnessForRelativeLuminance
 } from './converters/object-converters/lch';
 import { type Lch } from './types/Lch';
 import { type Lcha } from './types/Lcha';
 import { type Oklab } from './types/Oklab';
-import { hslaToOklaba, hslToOklab, oklabToHsl, relativeLuminanceFromOklab } from './converters/object-converters/oklab';
+import { hslaToOklaba, hslToOklab } from './converters/object-converters/oklab';
 import { type Oklaba } from './types/Oklaba';
 import { type Oklch } from './types/Oklch';
 import {
   adjustOklchLightnessForRelativeLuminance,
-  clampOklchChromaWithinSrgb,
   hslaToOklcha,
   hslToOklch,
-  oklchToHsl,
-  relativeLuminanceFromOklch
+  oklchToHsl
 } from './converters/object-converters/oklch';
 import { type Oklcha } from './types/Oklcha';
 import { type HueProfile } from './types/HueProfile';
@@ -413,5 +410,56 @@ export class Chromator {
     this.hsl.saturation = hsl.saturation;
     this.hsl.lightness = hsl.lightness;
     return this;
+  }
+
+  /**
+   * Finds the contrast between this colour and another colour based on the relative luminance and some offset value.
+   * contrast = (lightest colour luminance + offset) / (darkest colour luminance + offset)
+   * @param otherColour The colour to compare with.
+   * @param offset The offset to use for the relative luminance. Defaults to 0.05, which is the value used by the WCAG definition of contrast.
+   * @returns The contrast between the two colours. The minimum value is 1, which means that the colours have the same luminance. With an offset of 0.05, the maximum contrast is 21 (1.05/0.05).
+   */
+  public findContrast(otherColour: Chromator | ColourCode, offset: number = 0.05): number {
+    if (offset === 0) throw Error('Offset must be non-zero.');
+    const otherChromator = Chromator.getChromatorObject(otherColour);
+    const thisRelativeLuminanceWithOffset = this.getRelativeLuminance() + offset;
+    const otherRelativeLuminanceWithOffset = otherChromator.getRelativeLuminance() + offset;
+    const lightest = Math.max(thisRelativeLuminanceWithOffset, otherRelativeLuminanceWithOffset);
+    const darkest = Math.min(thisRelativeLuminanceWithOffset, otherRelativeLuminanceWithOffset);
+    return lightest / darkest;
+  }
+
+  /**
+   * Increases the luminance of the colour by a given contrast value.
+   * @param contrast The target contrast of the new colour compared to the current colour. Must be greater than 1.
+   * @param profile The colour profile to use for the transformation. Valid profiles are 'hsl', 'lch', and 'oklch'. Default is 'hsl'. The hue of the given profile will be kept constant. So will the saturation/chroma, given that it is possible within the SRGB gamut.
+   * @param offset The offset value to use for the contrast calculation. Defaults to 0.05, which is the value used by the WCAG definition of contrast.
+   * @returns The Chromator instance with the increased luminance. If the target luminance is greater than 1, undefined is returned.
+   */
+  public increaseLuminanceByContrast(contrast: number, profile: HueProfile = 'hsl', offset: number = 0.05): this | undefined {
+    if (contrast < 1) throw Error('Contrast must be greater than or equal to 1.');
+    if (offset === 0) throw Error('Offset must be non-zero.');
+    const targetLuminance = contrast * (this.getRelativeLuminance() + offset) - offset;
+    if (targetLuminance > 1) return undefined;
+    return this.setRelativeLuminance(targetLuminance, profile);
+  }
+
+  /**
+   * Decreases the luminance of the colour by a given contrast value.
+   * @param contrast The target contrast of the new colour compared to the current colour. Must be greater than 1.
+   * @param profile The colour profile to use for the transformation. Valid profiles are 'hsl', 'lch', and 'oklch'. Default is 'hsl'. The hue of the given profile will be kept constant. So will the saturation/chroma, given that it is possible within the SRGB gamut.
+   * @param offset The offset value to use for the contrast calculation. Defaults to 0.05, which is the value used by the WCAG definition of contrast.
+   * @returns The Chromator instance with the decreased luminance. If the target luminance is less than 0, undefined is returned.
+   */
+  public decreaseLuminanceByContrast(contrast: number, profile: HueProfile = 'hsl', offset: number = 0.05): this | undefined {
+    if (contrast < 1) throw Error('Contrast must be greater than or equal to 1.');
+    if (offset === 0) throw Error('Offset must be non-zero.');
+    const targetLuminance = (this.getRelativeLuminance() + offset) / contrast - offset;
+    if (targetLuminance < 0) return undefined;
+    return this.setRelativeLuminance(targetLuminance, profile);
+  }
+
+  private static getChromatorObject(colour: Chromator | ColourCode): Chromator {
+    return colour instanceof Chromator ? colour : new Chromator(colour);
   }
 }

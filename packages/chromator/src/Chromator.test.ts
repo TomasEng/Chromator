@@ -357,4 +357,163 @@ describe('Chromator', () => {
       expect(() => chromator.setRelativeLuminance(1.1)).toThrow();
     });
   });
+
+  describe('findContrast', () => {
+    const colour1Hex = '#437B89';
+    const colour2Hex = '#EEDEC9';
+    const expectedContrast = 3.59;
+
+    it('Returns the contrast ratio between the two colours', () => {
+      const colour1 = new Chromator(colour1Hex);
+      const colour2 = new Chromator(colour2Hex);
+      expect(colour1.findContrast(colour2)).toBeCloseTo(expectedContrast, 2);
+    });
+
+    it('Returns the same contrast ratio regardless of the order of the colours', () => {
+      const colour1 = new Chromator(colour1Hex);
+      const colour2 = new Chromator(colour2Hex);
+      expect(colour2.findContrast(colour1)).toBeCloseTo(expectedContrast, 2);
+    });
+
+    it('Accepts a simple colour code as the second argument', () => {
+      const colour1 = new Chromator(colour1Hex);
+      expect(colour1.findContrast(colour2Hex)).toBeCloseTo(expectedContrast, 2);
+    });
+
+    it('Returns 1 when the two colours are the same', () => {
+      const colour1 = new Chromator(colour1Hex);
+      const colour2 = new Chromator(colour1Hex);
+      expect(colour1.findContrast(colour2)).toBe(1);
+    });
+
+    it('Returns 21 for black and white', () => {
+      const black = new Chromator('black');
+      const white = new Chromator('white');
+      expect(black.findContrast(white)).toBeCloseTo(21, 5);
+    });
+
+    it('Returns 2 for black and white when the offset is set to 1', () => {
+      const black = new Chromator('black');
+      const white = new Chromator('white');
+      expect(black.findContrast(white, 1)).toBeCloseTo(2, 6);
+    });
+
+    it('Throws an error when the offset is set to 0', () => {
+      const black = new Chromator('black');
+      const white = new Chromator('white');
+      expect(() => black.findContrast(white, 0)).toThrow();
+    });
+  });
+
+  describe('increaseLuminanceByContrast', () => {
+    const colourHex = '#437B89';
+    const colour = new Chromator(colourHex);
+
+    it('Increases the luminance of the colour by the given contrast', () => {
+      const contrast = 3.59;
+      const newColour = colour.copy().increaseLuminanceByContrast(contrast);
+      expect(newColour).toBeDefined();
+      expect(newColour!.getRelativeLuminance()).toBeCloseTo(0.75, 2);
+      expect(newColour!.findContrast(colour)).toBeCloseTo(contrast, 2);
+    });
+
+    const hueProfiles: HueProfile[] = ['hsl', 'lch', 'oklch'];
+    it.each(hueProfiles)('Keeps the hue when the profile is %s', (profile) => {
+      const contrast = 3.59;
+      const newColour = colour.copy().increaseLuminanceByContrast(contrast, profile);
+      expect(newColour).toBeDefined();
+      expect(newColour!.getRelativeLuminance()).toBeCloseTo(0.75, 2);
+      expect(newColour!.findContrast(colour)).toBeCloseTo(contrast, 2);
+      switch (profile) {
+        case 'hsl':
+          expect(newColour!.getHsl().hue).toBe(colour.getHsl().hue);
+          break;
+        case 'lch':
+          expect(newColour!.getLch().hue).toBeCloseTo(colour.getLch().hue, 2);
+          break;
+        case 'oklch':
+          expect(newColour!.getOklch().hue).toBeCloseTo(colour.getOklch().hue, 2);
+          break;
+      }
+    });
+
+    it('Returns undefined when the contrast is too high', () => {
+      const contrast = 10;
+      const newColour = colour.copy().increaseLuminanceByContrast(contrast);
+      expect(newColour).toBeUndefined();
+    });
+
+    it('Takes the offset value into account', () => {
+      const contrast = 3.59;
+      const offset = 0.01;
+      const newColour = colour.copy().increaseLuminanceByContrast(contrast, 'hsl', offset);
+      expect(newColour).toBeDefined();
+      expect(newColour!.getRelativeLuminance()).toBeCloseTo(0.64, 2);
+      expect(newColour!.findContrast(colour, offset)).toBeCloseTo(contrast, 2);
+    });
+
+    it('Throws an error when the offset is 0', () => {
+      expect(() => colour.increaseLuminanceByContrast(3.59, 'hsl', 0)).toThrow();
+    });
+
+    it('Throws an error when the contrast is less than 1', () => {
+      expect(() => colour.increaseLuminanceByContrast(0.5)).toThrow();
+    });
+  });
+
+  describe('decreaseLuminanceByContrast', () => {
+    const colourHex = '#daeaee';
+    const colour = new Chromator(colourHex);
+
+    it('Decreases the luminance of the colour by the given contrast', () => {
+      const contrast = 3.59;
+      const newColour = colour.copy().decreaseLuminanceByContrast(contrast);
+      expect(newColour).toBeDefined();
+      expect(newColour!.getRelativeLuminance()).toBeCloseTo(0.19, 2);
+      expect(newColour!.findContrast(colour)).toBeCloseTo(contrast, 2);
+    });
+
+    const hueProfiles: HueProfile[] = ['hsl', 'lch', 'oklch'];
+    it.each(hueProfiles)('Keeps the hue when the profile is %s', (profile) => {
+      const contrast = 3.59;
+      const newColour = colour.copy().decreaseLuminanceByContrast(contrast, profile);
+      expect(newColour).toBeDefined();
+      expect(newColour!.getRelativeLuminance()).toBeCloseTo(0.19, 2);
+      expect(newColour!.findContrast(colour)).toBeCloseTo(contrast, 2);
+      switch (profile) {
+        case 'hsl':
+          expect(newColour!.getHsl().hue).toBe(colour.getHsl().hue);
+          break;
+        case 'lch':
+          expect(newColour!.getLch().hue).toBeCloseTo(colour.getLch().hue, 2);
+          break;
+        case 'oklch':
+          expect(newColour!.getOklch().hue).toBeCloseTo(colour.getOklch().hue, 2);
+          break;
+      }
+    });
+
+    it('Returns undefined when the contrast is too high', () => {
+      const contrast = 100;
+      const newColour = colour.copy().decreaseLuminanceByContrast(contrast);
+      expect(newColour).toBeUndefined();
+    });
+
+    it('Takes the offset value into account', () => {
+      const contrast = 3.59;
+      const offset = 0.01;
+      const newColour = colour.copy().decreaseLuminanceByContrast(contrast, 'hsl', offset);
+      expect(newColour).toBeDefined();
+      expect(newColour!.getRelativeLuminance()).toBeCloseTo(0.22, 2);
+      expect(newColour!.findContrast(colour, offset)).toBeCloseTo(contrast, 2);
+    });
+
+    it('Throws an error when the offset is 0', () => {
+      expect(() => colour.decreaseLuminanceByContrast(3.59, 'hsl', 0)).toThrow();
+    });
+
+    it('Throws an error when the contrast is less than 1', () => {
+      expect(() => colour.decreaseLuminanceByContrast(0.5)).toThrow();
+    });
+  });
 });

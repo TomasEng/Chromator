@@ -3,6 +3,7 @@ export type { Hsl } from './types/Hsl';
 export type { Hsla } from './types/Hsla';
 export type { Hsv } from './types/Hsv';
 export type { Hsva } from './types/Hsva';
+export type { HueProfile } from './types/HueProfile';
 export type { Lab } from './types/Lab';
 export type { Laba } from './types/Laba';
 export type { Lch } from './types/Lch';
